@@ -1,11 +1,8 @@
+import Routings from "./routing";
+import "./App.css";
 
 function App() {
-
-  return (
-    <>
-     Hello
-    </>
-  )
+  return <Routings />;
 }
 
 export default App
