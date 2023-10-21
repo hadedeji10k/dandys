@@ -4,6 +4,8 @@ import PageLoading from "./component/PageLoading/PageLoading";
 import Home from "./pages/Home";
 import PageNotFound from "./component/PageError";
 import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import OTPVerification from "./pages/SignUp/OTP";
 
 function Routings() {
   return (
@@ -22,6 +24,22 @@ function Routings() {
             element={
               <Suspense fallback={<PageLoading />}>
                 <SignUp />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/sign-in"
+            element={
+              <Suspense fallback={<PageLoading />}>
+                <SignIn />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/otp"
+            element={
+              <Suspense fallback={<PageLoading />}>
+                <OTPVerification />
               </Suspense>
             }
           />
