@@ -22,3 +22,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+.no_scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -2,6 +2,7 @@ import FormInput from "../../component/FormInput";
 import {MdOutlineMailOutline} from "react-icons/md"
 import { BiSolidLock } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import Button from "../../component/Button";
 
 const SignIn = () => {
   const navigate = useNavigate()
@@ -31,13 +32,21 @@ const SignIn = () => {
               placeholder="Enter your password"
               icon={<BiSolidLock />}
             />
+
+            <Button
+              handleClick={() => navigate("/")}
+              className={"w-full mt-5"}
+              type={"button"}
+              title={"Sign in"}
+              disabled={false}
+            />
           </div>
           <div className="w-full mt-5 flex flex-row items-center justify-between gap-x-3 flex-wrap">
             <div className="flex flex-row">
               <input type="checkbox" className="w-4 h-4 mr-2 bg-white" />
               <p className="text-sm">Remember Me</p>
             </div>
-            <p className="text-sm cursor-pointer">Forgot password</p>
+            <p className="text-sm cursor-pointer" onClick={() => navigate("/forgot-password")}>Forgot password</p>
           </div>
         </div>
         <div className="w-full flex items-center justify-center mt-10">
@@ -46,7 +55,9 @@ const SignIn = () => {
             onClick={() => navigate("/sign-up")}
           >
             Don’t have an account?{" "}
-            <span className="font-semibold text-[#903677]">Sign up</span>
+            <span className="font-semibold text-[#903677] cursor-pointer">
+              Sign up
+            </span>
           </p>
         </div>
       </div>

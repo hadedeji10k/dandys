@@ -34,10 +34,10 @@ const FormInput = ({
     type === "password" ? (showPassword === true ? "text" : "password") : type;
 
   return (
-    <div className={`flex flex-col my-3 ${className}`}>
+    <div className={`flex flex-col my-2 ${className}`}>
       <label
         htmlFor=""
-        className={`text-[13px] font-normal mb-2 ${labelClassName}`}
+        className={`text-[13px] font-semibold mb-1 ${labelClassName}`}
       >
         {label}
       </label>

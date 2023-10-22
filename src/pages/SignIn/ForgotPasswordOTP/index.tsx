@@ -7,7 +7,7 @@ import Button from "../../../component/Button";
 
 const { Countdown } = Statistic;
 
-const OTPVerification = () => {
+const ForgotPasswordOTPVerification = () => {
   const navigate = useNavigate();
   const [pin, setPin] = useState("");
   const [otpExpired, setOtpExpired] = useState(false);
@@ -22,7 +22,7 @@ const OTPVerification = () => {
       <div className="w-1/2 h-full bg-white flex flex-col p-20 justify-center">
         <div className="w-full flex flex-col">
           <div className="w-full flex flex-col mb-2 items-center justify-center">
-            <h3 className="text-2xl font-semibold mb-4">OTP Verification</h3>
+            <h3 className="text-2xl font-semibold mb-4">Verify it's you</h3>
             <p className="text-sm mb-2 text-center">
               We emailed you a security code at h********@gmail.com. it may take
               a moment to arrive.
@@ -66,7 +66,7 @@ const OTPVerification = () => {
         )}
 
         <Button
-          handleClick={() => navigate("/")}
+          handleClick={() => navigate("/reset-password")}
           className={"w-full mt-5"}
           type={"button"}
           title={"Continue"}
@@ -87,4 +87,4 @@ const OTPVerification = () => {
   );
 };
 
-export default OTPVerification;
+export default ForgotPasswordOTPVerification;
