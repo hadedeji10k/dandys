@@ -1,10 +1,10 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BiSolidLock } from "react-icons/bi";
-import FormInput from "../../component/FormInput";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { IoCheckbox } from "react-icons/io5";
 import { FaUserLarge } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import FormInput from "../../component/FormInput";
 import Button from "../../component/Button";
 
 const SignUp = () => {
