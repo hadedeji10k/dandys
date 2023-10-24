@@ -7,7 +7,7 @@ import {
 } from "../constant";
 import { decode } from "../helpers";
 
-const baseURL = runtimeEnvironment === "dev" ? devBaseUrl : prodBaseUrl;
+export const baseURL = runtimeEnvironment === "dev" ? devBaseUrl : prodBaseUrl;
 
 const API = axios.create({ baseURL });
 
