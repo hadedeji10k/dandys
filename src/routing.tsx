@@ -8,6 +8,11 @@ import SignIn from "./pages/SignIn";
 import OTPVerification from "./pages/SignUp/OTP";
 import ForgotPassword from "./pages/SignIn/ForgotPassword";
 import PasswordReset from "./pages/SignIn/PasswordReset";
+import ProductPage from "./pages/somepages/ProductPage";
+import OrderPage from "./pages/somepages/OrderPage";
+import OrderDetails from "./pages/somepages/OrderDetails";
+import NewProduct from "./pages/somepages/NewProduct";
+import Profile from "./pages/somepages/Profile";
 
 
 function Routings() {
@@ -19,6 +24,46 @@ function Routings() {
           element={
             <Suspense fallback={<PageLoading />}>
               <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Suspense fallback={<PageLoading />}>
+              <Profile />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/new-product"
+          element={
+            <Suspense fallback={<PageLoading />}>
+              <NewProduct />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/product"
+          element={
+            <Suspense fallback={<PageLoading />}>
+              <ProductPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/order"
+          element={
+            <Suspense fallback={<PageLoading />}>
+              <OrderPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/order-details"
+          element={
+            <Suspense fallback={<PageLoading />}>
+              <OrderDetails />
             </Suspense>
           }
         />
