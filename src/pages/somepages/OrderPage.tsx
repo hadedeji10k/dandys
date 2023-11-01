@@ -1,30 +1,33 @@
 import { AiOutlineExport } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiFilter } from "react-icons/fi";
+import Image from "@/assets/image.jpg"
+import { Badge } from "antd";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const OrderPage = () => {
   return (
-    <div className="w-full flex flex-col p-6">
-      <div className="flex flex-row justify-between gap-x-3 items-center bg-white p-3 rounded-lg">
-        <div className="flex flex-row gap-x-2">
+    <div className="w-full flex flex-col">
+      <div className="flex flex-row justify-between gap-4 flex-wrap items-center bg-white p-3 rounded-lg">
+        <div className="flex flex-row gap-3 flex-wrap">
           <button className="py-2 px-3 text-[14px] font-medium bg-[#DEC3D6]/90 text-shades-gray border border-[#DEC3D6] hover:bg-[#DEC3D6] hover:text-shades-white rounded-lg">
             All
           </button>
-          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
+          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray/30 text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
             Shipped
           </button>
-          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
+          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray/30 text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
             Cancelled
           </button>
-          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
+          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray/30 text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
             Partial
           </button>
-          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
+          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray/30 text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
             Paid
           </button>
         </div>
-        <div className="flex flex-row gap-x-2">
-          <button className="text-shades-secondary py-2 px-3 rounded-md text-[14px] border border-shades-secondary hover:bg-shades-secondary hover:text-white transition-all ease-in-out flex flex-row items-center gap-x-2">
+        <div className="flex flex-row gap-3 flex-wrap">
+          <button className="text-shades-secondary py-2 px-3 rounded-md text-[14px] font-semibold border-2 border-shades-secondary hover:bg-shades-secondary hover:text-white transition-all ease-in-out flex flex-row items-center gap-x-2">
             <AiOutlineExport /> Export
           </button>
           <button className="bg-shades-secondary text-white hover:text-shades-secondary hover:bg-white py-2 px-3 rounded-md text-[14px] border hover:border-shades-secondary transition-all ease-in-out flex flex-row items-center gap-x-2">
@@ -46,10 +49,72 @@ const OrderPage = () => {
         </button>
       </div>
 
-      
       {/* Table */}
-      <div className="grid">
-        
+      <div className="flex w-full flex-col mt-3 overflow-x-scroll no_scrollbar">
+        {/* Head */}
+        <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
+          <div className="min-w-[50px] max-w-[50px] w-full"></div>
+          <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
+            Order No
+          </div>
+          <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
+            Date
+          </div>
+          <div className="min-w-[150px] max-w-[150px] w-full flex items-center">
+            Customer
+          </div>
+          <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
+            Paid
+          </div>
+          <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
+            Status
+          </div>
+          <div className="min-w-[50px] max-w-[50px] w-full flex items-center">
+            Items
+          </div>
+          <div className="min-w-[110px] max-w-[110px] w-full flex items-center">
+            Total
+          </div>
+          <div className="min-w-[20px] max-w-[20px] w-full flex items-center cursor-pointer">
+            <BsThreeDotsVertical />
+          </div>
+        </div>
+        {/* body */}
+        <div className="w-full">
+          <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-white my-1">
+            <div className="min-w-[50px] max-w-[50px] w-full flex items-center">
+              <img src={Image} className="w-[45px] h-[45px] rounded-lg" />
+            </div>
+            <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
+              #12345
+            </div>
+            <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
+              16/10/2023
+            </div>
+            <div className="min-w-[150px] max-w-[150px] w-full flex items-center">
+              Kelvin Mesh
+            </div>
+            <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
+              <span className="py-2 px-2.5 rounded-md bg-shades-lightGreen text-status-success">
+                <Badge status="success" /> Paid
+              </span>
+            </div>
+            <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
+              <span className="py-2 px-2.5 rounded-md bg-shades-lightGreen text-status-success">
+                <Badge status="success" /> Shipped
+              </span>
+            </div>
+            <div className="min-w-[50px] max-w-[50px] w-full flex items-center">
+              5
+            </div>
+            <div className="min-w-[110px] max-w-[110px] w-full flex items-center">
+              #20,000
+            </div>
+            <div className="min-w-[20px] max-w-[20px] w-full flex items-center cursor-pointer">
+              <BsThreeDotsVertical />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

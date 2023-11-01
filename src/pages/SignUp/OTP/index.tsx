@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FcAlarmClock } from "react-icons/fc";
 import { Statistic } from "antd";
 import Button from "../../../component/Button";
+import Swal from "sweetalert2";
 
 const { Countdown } = Statistic;
 
@@ -16,16 +17,36 @@ const OTPVerification = () => {
     setPin(pin);
   };
 
+  const email = localStorage.getItem("userEmail")
+
+  const handleSubmit = () => {
+    setTimeout(() => {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully verified your email address.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          // getCurrentUser();
+          navigate("/account")
+        }
+      });
+    }, 3000)
+  }
+
   return (
     <div className="w-full h-screen flex items-start">
-      <div className="relative w-1/2 flex flex-col h-full bg-[linear-gradient(to_right_bottom,#903677,rgba(179,70,148,0.8)),url('/public/img/female.png')]"></div>
+      <div className="relative w-1/2 flex flex-col h-full bg-no-repeat bg-cover bg-[linear-gradient(to_right_bottom,#903677,rgba(179,70,148,0.8)),url('/public/img/female.png')]"></div>
       <div className="w-1/2 h-full bg-white flex flex-col p-20 justify-center">
         <div className="w-full flex flex-col">
           <div className="w-full flex flex-col mb-2 items-center justify-center">
-            <h3 className="text-2xl font-semibold mb-4">OTP Verification</h3>
-            <p className="text-sm mb-2 text-center">
-              We emailed you a security code at h********@gmail.com. it may take
-              a moment to arrive.
+            <h3 className="xs:text-2xl text-xl font-semibold mb-4">
+              OTP Verification
+            </h3>
+            <p className="xs:text-sm text-[13px] mb-2 text-center">
+              We emailed you a security code at {email}. it may take a moment to
+              arrive.
             </p>
           </div>
           <div className="w-full flex flex-col">
@@ -66,7 +87,7 @@ const OTPVerification = () => {
         )}
 
         <Button
-          handleClick={() => navigate("/")}
+          handleClick={handleSubmit}
           className={"w-full mt-5"}
           type={"button"}
           title={"Continue"}

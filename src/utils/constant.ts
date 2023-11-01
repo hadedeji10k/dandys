@@ -1,4 +1,5 @@
 export const dandysToken = "dDys_^U&T";
+export const dandysUser = "dDys_^US&T";
 export const runtimeEnvironment =
   import.meta.env.VITE_APP_RUNTIME_ENVIRONMENT || "dev";
 

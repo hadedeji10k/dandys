@@ -21,7 +21,8 @@ module.exports = {
           lightGray: "#D9D9D9",
           secondary: "#903677",
           primary: "#8F3677",
-          red: "#EA4336"
+          red: "#EA4336",
+          lightGreen: "#D2EEDF"
         },
       },
       animation: {
@@ -43,6 +44,14 @@ module.exports = {
         sans: ["Open Sans", "ubuntu", ...defaultTheme.fontFamily.sans],
       },
     },
+    screens: {
+      'xs': '500px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
   },
-  plugins: [],
+  plugins: [require('daisyui')],
 }

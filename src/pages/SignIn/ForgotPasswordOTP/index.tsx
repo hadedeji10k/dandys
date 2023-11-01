@@ -18,12 +18,14 @@ const ForgotPasswordOTPVerification = () => {
 
   return (
     <div className="w-full h-screen flex items-start">
-      <div className="relative w-1/2 flex flex-col h-full bg-[linear-gradient(to_right_bottom,#903677,rgba(179,70,148,0.8)),url('/public/img/female.png')]"></div>
-      <div className="w-1/2 h-full bg-white flex flex-col p-20 justify-center">
+      <div className="relative sm:w-1/2 sm:flex flex-col h-full bg-no-repeat bg-cover bg-[linear-gradient(to_right_bottom,#903677,rgba(179,70,148,0.8)),url('/public/img/female.png')]"></div>
+      <div className="sm:w-1/2 w-full h-full bg-white flex flex-col xs:p-16 p-5 justify-center">
         <div className="w-full flex flex-col">
           <div className="w-full flex flex-col mb-2 items-center justify-center">
-            <h3 className="text-2xl font-semibold mb-4">Verify it's you</h3>
-            <p className="text-sm mb-2 text-center">
+            <h3 className="xs:text-2xl text-xl font-semibold mb-4">
+              Verify it's you
+            </h3>
+            <p className="xs:text-sm text-[13px] mb-2 text-center">
               We emailed you a security code at h********@gmail.com. it may take
               a moment to arrive.
             </p>

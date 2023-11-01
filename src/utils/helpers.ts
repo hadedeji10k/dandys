@@ -1,5 +1,6 @@
 import jwt_decode from "jwt-decode";
 import { dandysToken } from "./constant";
+import { format } from "date-fns";
 
 export const encode = (jwt: string) => {
   if (typeof jwt === "string") {
@@ -42,3 +43,64 @@ export const getLocalAccessToken = () => {
   const encodedToken = window.localStorage.getItem(dandysToken);
   return decode(encodedToken!);
 };
+
+export const formatDate = (dateString: Date | string) => {
+  if (dateString === "" || dateString === undefined || dateString === null) {
+    return 
+  }
+  const date = new Date(dateString);
+  return format(date, "yyyy-MM-dd")
+}
+
+
+  // const downloadFile = (
+  //   filename: string,
+  //   mimeType: string,
+  //   content: string
+  // ) => {
+  //   const url = URL.createObjectURL(
+  //     new File([content], filename, { type: mimeType })
+  //   );
+  //   const a = document.createElement("a");
+  //   a.style.display = "none";
+  //   a.setAttribute("download", filename);
+  //   a.setAttribute("href", url);
+  //   document.body.appendChild(a);
+  //   a.click();
+  //   document.body.removeChild(a);
+  //   URL.revokeObjectURL(url);
+  // };
+
+  // const handleDownload = (values: DownloadDetailsForm) => {
+  //   setShowDownloadModal(false);
+  //   if (values.inference) {
+  //     let videoInputs = new Set(["WEB_CAMERA", "IP_CAMERA", "FILE"]);
+  //     let sourceType = deployment?.deploymentInput?.inputSourceType || "-";
+  //     if (deployment?.inferenceResults && !videoInputs.has(sourceType)) {
+  //       downloadFile(
+  //         "inferenceResults.json",
+  //         "application/json",
+  //         JSON.stringify(JSON.parse(deployment.inferenceResults), null, 2)
+  //       );
+  //     }
+  //   }
+  //   if (values.appDetails) {
+  //     if (deployment) {
+  //       const application = deployment?.applicationId
+  //         ? projectData?.applications?.[deployment.applicationId]
+  //         : undefined;
+  //       const detailsBag = {
+  //         application,
+  //         project: projectData,
+  //         test: deployment,
+  //         intl,
+  //       };
+  //       const details = renderToObject(detailsBag);
+  //       downloadFile(
+  //         "applicationDetails.json",
+  //         "application/json",
+  //         JSON.stringify(details, null, 2)
+  //       );
+  //     }
+  //   }
+  // };

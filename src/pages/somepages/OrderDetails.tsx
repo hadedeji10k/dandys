@@ -3,12 +3,17 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { BiSolidBank, BiSolidEditAlt } from "react-icons/bi";
 import { Badge } from "antd";
 import Image from "@/assets/image.jpg";
+import { useNavigate } from "react-router-dom";
 
 const OrderDetails = () => {
+  const navigate = useNavigate()
   return (
     <div className="w-full flex flex-col p-6">
       <div className="flex flex-row justify-start gap-x-3 items-center">
-        <div className="p-1.5 rounded-md bg-white">
+        <div
+          onClick={() => navigate(-1)}
+          className="p-1.5 rounded-md bg-white cursor-pointer"
+        >
           <IoIosArrowBack size="1.5rem" />
         </div>
         <h2 className="font-semibold text-[20px] text-shades-gray">

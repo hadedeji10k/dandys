@@ -12,7 +12,8 @@ export const baseURL = runtimeEnvironment === "dev" ? devBaseUrl : prodBaseUrl;
 const API = axios.create({ baseURL });
 
 API.interceptors.request.use(async (req: any) => {
-  const encodedToken = window.localStorage.getItem(dandysToken);
+  const userToken = window.localStorage.getItem(dandysToken)
+  const encodedToken = JSON.parse(userToken as string)?.value
   const token = decode(encodedToken!);
 
   req.headers.Authorization = `Bearer ${token}`;

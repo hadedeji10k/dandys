@@ -6,13 +6,96 @@ import { IoCheckbox } from "react-icons/io5";
 import { FaUserLarge } from "react-icons/fa6";
 import FormInput from "../../component/FormInput";
 import Button from "../../component/Button";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import Logo from "@/assets/Logo 1.png";
+import Logo2 from "@/assets/Logo 2.png";
+import {
+  useGetCurrentUserQuery,
+  useSignUpMutation,
+} from "@/api/sellerApiCalls";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { dandysToken } from "@/utils/constant";
+import { encode } from "@/utils/helpers";
+import { saveUser } from "@/api/slices/user";
+import { useAppDispatch } from "@/api/hook";
+import useAuth from "@/api/context";
+
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
+
+  const [signUp] = useSignUpMutation();
+  const dispatch = useAppDispatch();
+
+  const {
+    data: userData,
+    error: _,
+    refetch: refetchUser,
+  } = useGetCurrentUserQuery();
+
+  const signUpSchema = Yup.object().shape({
+    fullName: Yup.string()
+      .min(2, "Full name is too short!")
+      .required("Full name required"),
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters!")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(.{8,}$)/,
+        "Password must meet the specified criteria"
+      )
+      .required("Password is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email address is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      password: "",
+      email: "",
+    },
+    validationSchema: signUpSchema,
+    onSubmit: (values, { setSubmitting }) => {
+      signUp(values)
+        .unwrap()
+        .then((res) => {
+          const encodedToken = encode(res?.data?.token);
+          const token = {
+            value: encodedToken,
+            expires: res?.data?.expiresIn,
+          };
+          login(res?.data?.user, token);
+
+          Swal.fire({
+            title: "Success!",
+            text: "You have successfully signed up",
+            icon: "success",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.isConfirmed || result.isDenied || result.isDismissed) {
+              refetchUser();
+
+              const currentUser = (userData as any)?.data;
+              dispatch(saveUser(currentUser));
+
+              navigate("/otp");
+            }
+          });
+        })
+        .catch((err) => {
+          console.log("Err Response>>>", err);
+          toast.error(err?.data?.message || "Signup failed, try again later");
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+      return;
+    },
   });
 
   // states for mananging validation
@@ -43,38 +126,44 @@ const SignUp = () => {
 
     // has eight characters
     setHasEightCharacters(value.length >= 8 ? true : false);
-    setForm({
-      ...form,
-      password: value,
-    });
+    formik.setFieldValue("password", value);
   };
 
   return (
     <div className="w-full h-screen max-h-full flex">
-      <div className="relative w-1/2 flex flex-col h-full bg-[linear-gradient(to_right_bottom,#903677,rgba(179,70,148,0.8)),url('/public/img/female.png')]"></div>
-      <div className="w-1/2 min-h-screen no_scrollbar overflow-y-scroll bg-white flex flex-col px-10 py-16 justify-start">
+      <div className="relative sm:w-1/2 sm:flex flex-col h-full bg-no-repeat bg-cover bg-[linear-gradient(to_right_bottom,#903677,rgba(179,70,148,0.8)),url('/public/img/female.png')]">
+        <img src={Logo} className="absolute top-5 left-5 w-[120px] h-[40px]" />
+      </div>
+      <div className="sm:w-1/2 w-full min-h-screen no_scrollbar overflow-y-scroll bg-white flex flex-col px-10 py-16 justify-center">
         <div className="w-full flex flex-col">
+          <div className="flex items-center w-full justify-center mb-10 sm:hidden">
+            <img src={Logo2} className="top-5 left-5 w-[120px] h-[40px]" />
+          </div>
           <div className="w-full flex flex-col mb-2 items-center justify-center">
-            <h3 className="text-2xl font-semibold mb-4">Sign up</h3>
-            <p className="text-sm mb-2">
+            <h3 className="xs:text-2xl text-xl font-semibold mb-4">Sign up</h3>
+            <p className="xs:text-sm text-[13px] mb-2 text-center">
               Create an account, let’s get you started.
             </p>
           </div>
 
           <div className="w-full flex flex-col">
             <FormInput
-              name="email"
-              type="email"
+              name="fullName"
+              type="text"
               label="Full name"
               placeholder="Enter your full name"
+              onChange={formik.handleChange}
               icon={<FaUserLarge />}
+              error={formik.touched.email && formik.errors.fullName}
             />
             <FormInput
               name="email"
               type="email"
               label="Email Address"
               placeholder="Enter your email address"
+              onChange={formik.handleChange}
               icon={<MdOutlineMailOutline />}
+              error={formik.touched.email && formik.errors.email}
             />
             <FormInput
               name="password"
@@ -82,7 +171,11 @@ const SignUp = () => {
               type="password"
               placeholder="Enter your password"
               icon={<BiSolidLock />}
-              onChange={handlePasswordChange}
+              onChange={(e: any) => {
+                formik.handleChange(e);
+                handlePasswordChange(e);
+              }}
+              error={formik.touched.password && formik.errors.password}
             />
             <div>
               {/* <div className="w-full flex flex-row gap-x-2">
@@ -90,7 +183,7 @@ const SignUp = () => {
                 <div className="h-2 w-full rounded-md bg-green-600"></div>
                 <div className="h-2 w-full rounded-md bg-green-600"></div>
               </div> */}
-              {form.password.length > 0 && (
+              {formik.values.password.length > 0 && (
                 <div>
                   <div
                     className={`flex flex-row gap-x-3 items-center my-2 ${
@@ -137,14 +230,14 @@ const SignUp = () => {
             </div>
 
             <Button
-              handleClick={() => navigate("/otp")}
+              handleClick={formik.handleSubmit}
               className={"w-full mt-5"}
               type={"button"}
               title={"Sign up"}
-              disabled={false}
+              disabled={formik.isSubmitting}
+              loading={formik.isSubmitting}
             />
           </div>
-
         </div>
         <div className="w-full flex items-center justify-center mt-10">
           <p

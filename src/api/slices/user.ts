@@ -1,31 +1,40 @@
+import { IUser } from "@/interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
 
-export interface CounterState {
+export interface UserState {
   value: number;
-  language: {
-    name: string;
-    url: string
-  }[]
+  user: IUser;
+  notifications: any,
+  numberOfUnreadNotifications: number,
+  notificationPagination: any,
 }
 
-const initialState: CounterState = {
+const initialState: UserState = {
   value: 0,
-  language: []
+  user: {} as IUser,
+  notifications: [],
+  numberOfUnreadNotifications: 0,
+  notificationPagination: {},
 };
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    saveUser: (state, action: PayloadAction<IUser>) => {
+      state.user = action.payload;
     },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    saveLanguage: (state, action: PayloadAction<{name: string; url: string}[]>) => {
-      state.language = action.payload;
+    saveNotification: (state, action: PayloadAction<any>) => {
+      state.notifications = action.payload?.results;
+      state.numberOfUnreadNotifications = action.payload?.totalUnreadCount;
+      state.notificationPagination = {
+        currentPage: action.payload?.currentPage,
+        hasNext: action.payload?.hasNext,
+        hasPrevious: action.payload?.hasPrevious,
+        pageSize: action.payload?.pageSize,
+        totalCount: action.payload?.totalCount,
+        totalPages: action.payload?.totalPages,
+      };
     },
     incrementByAmount: (state, action: PayloadAction<number>) => {
       state.value += action.payload;
@@ -33,8 +42,6 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { increment, decrement, saveLanguage, incrementByAmount } = counterSlice.actions;
+export const { incrementByAmount, saveUser, saveNotification } = userSlice.actions;
 
-export const selectCount = (state: RootState) => state.counter.value;
-
-export default counterSlice.reducer;
+export default userSlice.reducer;
