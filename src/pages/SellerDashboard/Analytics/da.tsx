@@ -68,9 +68,9 @@ const Analytics = () => {
             <Sales />
           </>
         ) : active.id === 2 ? (
-          <Expenses/>
+          <Expenses />
         ) : active.id === 3 ? (
-          <Products/>
+          <Products />
         ) : active.id === 4 ? (
           <Invoices />
         ) : null}
