@@ -6,7 +6,7 @@ import { IProduct } from "@/interface";
 import { Badge } from "antd";
 
 const Dashboard = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [products, _] = useState<IProduct[]>([]);
 
   return (
     <div className="w-full flex flex-col">

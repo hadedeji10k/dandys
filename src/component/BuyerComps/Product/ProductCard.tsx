@@ -1,7 +1,6 @@
-import React from 'react';
 import './ProductStyles.scss';
 import { IProductCard } from '@/interface';
-import { BsCart, BsCart2, BsHeart, BsSearch } from 'react-icons/bs';
+import { BsCart2, BsHeart, BsSearch } from 'react-icons/bs';
 
 interface ProductCard {
   product: IProductCard;

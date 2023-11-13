@@ -1,5 +1,5 @@
 import Image from "@/assets/avatar.png";
-import PlanCheckout from "./PlanCheckout";
+
 const StoreDetails = () => {
   return (
     <div className="w-full mx-auto mt-6">

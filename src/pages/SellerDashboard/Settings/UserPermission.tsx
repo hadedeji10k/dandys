@@ -1,5 +1,4 @@
 import TabComponent from '@/component/Tab'
-import React from 'react'
 
 const UserPermission = () => {
   return (

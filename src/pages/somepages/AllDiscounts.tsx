@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineExport } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiFilter } from "react-icons/fi";

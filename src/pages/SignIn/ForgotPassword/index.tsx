@@ -20,6 +20,7 @@ const ForgotPassword = () => {
     },
     validationSchema: signInSchema,
     onSubmit: (values) => {
+      console.log("Values>>", values)
       navigate("/otp")
     },
   });

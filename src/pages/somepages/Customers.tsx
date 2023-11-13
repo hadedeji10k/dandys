@@ -5,7 +5,7 @@ import { FiFilter } from "react-icons/fi";
 import { useEffect, useState } from 'react';
 import { useGetSellerProductsQuery } from "@/api/sellerApiCalls";
 import { IProduct } from "@/interface";
-import { Badge, Popover } from "antd";
+import { Popover } from "antd";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Image from "@/assets/image.jpg";
 

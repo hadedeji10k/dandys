@@ -16,7 +16,6 @@ import {
 } from "@/api/sellerApiCalls";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { dandysToken } from "@/utils/constant";
 import { encode } from "@/utils/helpers";
 import { saveUser } from "@/api/slices/user";
 import { useAppDispatch } from "@/api/hook";

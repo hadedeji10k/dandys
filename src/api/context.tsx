@@ -3,9 +3,6 @@ import { isFuture } from "date-fns";
 import { createContext, useContext } from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useGetCurrentUserQuery } from "./sellerApiCalls";
-import { useAppDispatch } from "./hook";
-import { saveUser } from "./slices/user";
 import Loader from "@/component/Loader";
 
 export interface IToken {

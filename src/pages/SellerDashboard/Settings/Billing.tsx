@@ -3,11 +3,9 @@ import { AiOutlineExport } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiFilter } from "react-icons/fi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 import Button from "@/component/Button";
 import { RiMastercardLine } from "react-icons/ri";
-import Image from "@/assets/image.jpg";
-import FormInput from "@/component/FormInput";
 
 const Billing = () => {
   return (

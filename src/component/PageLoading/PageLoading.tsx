@@ -1,5 +1,3 @@
-import React from "react";
-
 const PageLoading = (props: any) => {
   if (props && props.error) {
     return <div>Error!</div>;

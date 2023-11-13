@@ -10,7 +10,7 @@ import {
 } from "@/api/sellerApiCalls";
 import FormInput from "@/component/FormInput";
 import FormSelect from "@/component/FormSelect";
-import { IDiscount } from "@/interface";
+// import { IDiscount } from "@/interface";
 import { useFormik } from "formik";
 import { IoIosArrowBack } from "react-icons/io";
 import { Spin } from "antd";
@@ -28,7 +28,7 @@ const NewDiscount = () => {
     setIsOpen(!isOpen);
   };
 
-  const [discount, setDiscount] = useState<IDiscount>();
+  // const [discount, setDiscount] = useState<IDiscount>();
 
   const { data: fetchedDiscount, error: _ } = useGetDiscountByIdQuery(id!);
   const [deleteDiscount, { isLoading }] = useDeleteDiscountMutation();

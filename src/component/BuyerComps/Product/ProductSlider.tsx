@@ -1,4 +1,3 @@
-import React from 'react';
 import Slider from 'react-slick';
 import { product } from './ProductData';
 import ProductCard from './ProductCard';

@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import PageLoading from './component/PageLoading/PageLoading';
-import Home from './pages/Home';
 import PageNotFound from './component/PageError';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
@@ -16,7 +15,6 @@ import Profile from './pages/somepages/Profile';
 import AllProduct from './pages/somepages/AllProduct';
 import CreateAccount from './pages/somepages/CreateAccount';
 import SellerDashboardLayout from './layout/SellerDashboardLayout';
-import SellersHome from './pages/SellerDashboard/Home';
 import Notification from './pages/somepages/Notification';
 import Prefernces from './pages/somepages/Prefernces';
 import ProductCategory from './pages/somepages/ProductCategory';
@@ -31,8 +29,8 @@ import Plan from './pages/SellerDashboard/Settings/Plan';
 import Billing from './pages/SellerDashboard/Settings/Billing';
 import Payment from './pages/SellerDashboard/Settings/Payment';
 import UserPermission from './pages/SellerDashboard/Settings/UserPermission';
-import Analytics from './pages/SellerDashboard/Analytics';
 import BuyerHome from './pages/Buyer/BuyerHome';
+import Analytics from './pages/SellerDashboard/Analytics';
 
 function Routings() {
   return (

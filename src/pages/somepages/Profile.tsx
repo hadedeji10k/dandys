@@ -157,7 +157,7 @@ const EditAccountInformation = ({ handleClose }: { handleClose: any }) => {
     onSubmit: (values, { setSubmitting, resetForm }) => {
       updateUser(values)
         .unwrap()
-        .then((res) => {
+        .then(() => {
           refetchUser();
 
           const currentUser = (userData as any)?.data;
@@ -269,7 +269,7 @@ const PasswordModal = ({ handleClose }: { handleClose: any }) => {
     onSubmit: (values, { setSubmitting, resetForm }) => {
       updatePassword(values)
         .unwrap()
-        .then((res) => {
+        .then(() => {
           Swal.fire({
             title: "Success!",
             text: "You have successfully updated your password.",

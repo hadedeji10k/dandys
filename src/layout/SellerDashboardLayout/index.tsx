@@ -1,5 +1,4 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import SellerDashboardLayoutSidebar from "./Sidebar";
 import SellerDashboardLayoutHeader from "./Header";
 
@@ -8,12 +7,6 @@ interface Props {
 }
 
 const SellerDashboardLayout = ({ children }: Props) => {
-  //   const { isSidebarOpen, closeSidebar, navBar } = useContext(SidebarContext);
-  let location = useLocation();
-
-  //   useEffect(() => {
-  //     closeSidebar();
-  //   }, [location]);
 
   return (
     <div className={`flex flex-col h-screen bg-gray-50`}>

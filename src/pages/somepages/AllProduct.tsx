@@ -23,8 +23,8 @@ const AllProduct = () => {
 
   const [products, setProducts] = useState<IProduct[]>([]);
 
-  const { data: fetchedProducts, error: _ } = useGetSellerProductsQuery();
-  const { data: fetchedProductsByCategory, error: categoryError } = useGetSellerProductsByCategoryIdQuery(categoryId!);
+  const { data: fetchedProducts } = useGetSellerProductsQuery();
+  const { data: fetchedProductsByCategory } = useGetSellerProductsByCategoryIdQuery(categoryId!);
   
   useEffect(() => {
     if (categoryId) {

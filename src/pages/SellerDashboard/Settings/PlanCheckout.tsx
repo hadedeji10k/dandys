@@ -1,6 +1,5 @@
 import FormInput from "@/component/FormInput";
 import { IoIosArrowBack } from "react-icons/io";
-import { RiMastercardLine } from "react-icons/ri";
 import OrderSummary from "./OrderSummary";
 
 const PlanCheckout = () => {

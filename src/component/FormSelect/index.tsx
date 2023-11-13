@@ -27,7 +27,6 @@ const FormSelect = ({
   label,
   options,
   onChange,
-  onBlur,
   icon,
   placeholder,
   required,

@@ -18,7 +18,6 @@ import {
 import { encode } from "@/utils/helpers";
 import { saveUser } from "@/api/slices/user";
 import useAuth from "@/api/context";
-import { dandysToken, dandysUser } from "@/utils/constant";
 
 const SignIn = () => {
   const navigate = useNavigate();
