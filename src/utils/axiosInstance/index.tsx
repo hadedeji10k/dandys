@@ -9,6 +9,8 @@ import { decode } from "../helpers";
 
 export const baseURL = runtimeEnvironment === "dev" ? devBaseUrl : prodBaseUrl;
 
+console.log("Hello base", runtimeEnvironment, baseURL)
+
 const API = axios.create({ baseURL });
 
 API.interceptors.request.use(async (req: any) => {

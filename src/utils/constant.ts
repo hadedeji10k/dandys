@@ -9,4 +9,5 @@ export const devBaseUrl =
 
 //prod
 export const prodBaseUrl =
-  import.meta.env.VITE_APP_PROD_BASE_URL || "https://dandys.server";
+  import.meta.env.VITE_APP_PROD_BASE_URL ||
+  "http://dandysapp-env.eba-88au25kz.us-east-1.elasticbeanstalk.com";
