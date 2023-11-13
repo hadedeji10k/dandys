@@ -16,7 +16,7 @@ const Loader = ({
       <div className="flex flex-col items-center justify-center">
         <div className="loader">
           <ImSpinner10
-            fill="#679B71"
+            fill="#903677"
             size="6rem"
             className="animate-spin-slow absolute"
           />

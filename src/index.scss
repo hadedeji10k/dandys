@@ -1,0 +1,103 @@
+
+:root {
+  --mainColor: #903677;
+  --green: #83b528;
+  --grey1: #f6f7ff;
+  --grey2: #66666666;
+  --white: #fff;
+}
+
+/* === Styles for carousel arrorw start=== */
+
+.slick-prev::before,
+.slick-next::before {
+  z-index: 1000;
+  color: var(--mainColor);
+}
+
+.slick-next:hover,
+.slick-prev:hover {
+  color: var(--white);
+}
+/* === Styles for carousel arrorw end === */
+
+.main-btn {
+  color: var(--white);
+  background: var(--mainColor);
+  padding: 0.5em 1.5em;
+  border-radius: 6px;
+}
+
+.active {
+  color: var(--white);
+  background: var(--mainColor);
+  cursor: pointer;
+  padding: 0.5em 1.5em;
+  border-radius: 6px;
+}
+.notActive {
+  padding: 0.5em 1.5em;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--grey2);
+  background: var(--grey1);
+}
+
+/* === Card with Hover effect start=== */
+.cardContainer {
+  position: relative;
+  overflow: hidden;
+}
+.hoverBg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: inherit;
+  padding: 0 2em;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background: color-mix(in sRGB, transparent 20%, var(--mainColor) 80%);
+  color: var(--white);
+  transform: translateY(100%);
+  transition: all 0.5s ease-in-out;
+  .main-btn {
+    background: var(--green);
+  }
+}
+
+.cardContainer:hover .hoverBg {
+  right: 0;
+  transform: translateY(0);
+  transition: all 0.5s ease-in-out;
+}
+
+/* This is for secondaryFooter images */
+.faceCards {
+  height: 100%;
+}
+.faceCards img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+}
+
+.followUs a {
+  background: color-mix(in sRGB, transparent 80%, var(--mainColor) 20%);
+  color: var(--mainColor);
+  padding: 0.5em;
+  border-radius: 6px;
+}
+
+.secFooter small {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* This is for secondaryFooter images */
+
+/* === Card with Hover effect end=== */

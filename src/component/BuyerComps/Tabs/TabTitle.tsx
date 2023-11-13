@@ -1,13 +1,11 @@
-import React from 'react';
-
 interface TabProps {
   id: string;
   title: string;
-  activeTab?: Record<string, boolean>;
+  activeTab?: string | boolean;
   setActiveTab?: (id: string) => void;
 }
 
-function TabTitle({ id, title, activeTab = {}, setActiveTab }: TabProps) {
+function TabTitle({ id, title, activeTab = "", setActiveTab }: TabProps) {
   console.log(id);
 
   const handTabSwitch = (id: string) => {

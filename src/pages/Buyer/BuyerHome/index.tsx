@@ -11,7 +11,6 @@ import Fragrance from '@/component/BuyerComps/Product/Fragrance';
 import TabContents from '@/component/BuyerComps/Tabs/TabContents';
 import { images } from '@/exports/images';
 import CategoryCard from '@/component/BuyerComps/CategoryCard/CategoryCard';
-import { BsInstagram } from 'react-icons/bs';
 import SecondaryFooter from '@/component/BuyerComps/SecondaryFooter/SecondaryFooter';
 import BlogCard from '@/component/BuyerComps/BlogCard/BlogCard';
 import { IBlogCard } from '@/interface';
@@ -19,7 +18,7 @@ import { IBlogCard } from '@/interface';
 interface TabProps {
   id: string;
   title: string;
-  comp?: ReactNode;
+  comp?: React.FC;
   activeTab?: boolean;
   setActiveTab?: (id: string) => void;
 }
@@ -87,8 +86,8 @@ function BuyerHome() {
           </section>
 
           <section className='tabComps'>
-            {tabsComps.map(({ id, comp }: TabProps) => (
-              <TabContents activeTab={activeTab} id={id} comps={comp} />
+            {tabsComps.map((item) => (
+              <TabContents activeTab={activeTab} id={item.id} comps={item.comp} />
             ))}
           </section>
         </article>
@@ -99,7 +98,7 @@ function BuyerHome() {
             { imageUrl: images.brand2 },
             { imageUrl: images.brand3 },
             { imageUrl: images.brand4 },
-          ].map((item: any, idx: string) => (
+          ].map((item: any, idx: number) => (
             <div key={idx} className='w-6/12 md:w-3/12'>
               <figure>
                 <img src={item.imageUrl} alt='' />
@@ -146,7 +145,7 @@ function BuyerHome() {
               { imageUrl: images.face7 },
               { imageUrl: images.undies },
               { imageUrl: images.legFlower },
-            ].map((item: any, idx: string) => (
+            ].map((item: any, idx: number) => (
               <div key={idx} className='w-full md:w-4/12 p-2'>
                 <CategoryCard imageUrl={item.imageUrl} />
               </div>
