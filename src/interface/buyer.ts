@@ -4,6 +4,9 @@ export interface IProductCard {
   imageUrl: string;
   oldPrice: string;
   newPrice: string;
+  newProd?: string;
+  sale?: string;
+  off?: string;
 }
 export interface IBlogCard {
   id: string;

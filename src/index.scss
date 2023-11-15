@@ -63,9 +63,6 @@
   color: var(--white);
   transform: translateY(100%);
   transition: all 0.5s ease-in-out;
-  .main-btn {
-    background: var(--green);
-  }
 }
 
 .cardContainer:hover .hoverBg {
@@ -99,5 +96,23 @@
 }
 
 /* This is for secondaryFooter images */
+
+.search {
+  position: relative;
+}
+
+.search input {
+  display: flex;
+  padding: 0.5em 1em;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7ef;
+  width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  font-size: 1.5rem;
+  right: 5%;
+}
 
 /* === Card with Hover effect end=== */
