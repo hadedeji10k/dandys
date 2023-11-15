@@ -7,28 +7,33 @@ interface ProductCard {
 }
 
 function ProductCard({ product }: ProductCard) {
-  const { title, imageUrl, oldPrice, newPrice } = product;
+  const { title, imageUrl, oldPrice, newPrice, off, sale, newProd } = product;
   return (
-    <main className='productCard '>
-      <figure className='productImage cardContainer'>
-        <img src={imageUrl} alt='Dandys product image' />
-        <div className='hoverBg'>
-          <div className='hoverIcon'>
+    <main className="productCard ">
+      {off && <p className="off"> {off} </p>}
+      <div className="newProd">
+        {newProd && <p className="newP"> {newProd}</p>}
+        {sale && <p className="newSale"> {sale}</p>}
+      </div>
+      <figure className="productImage cardContainer">
+        <img src={imageUrl} alt="Dandys product image" />
+        <div className="hoverBg">
+          <div className="hoverIcon">
             <BsSearch />
           </div>
-          <div className='hoverIcon'>
+          <div className="hoverIcon">
             <BsCart2 />
           </div>
-          <div className='hoverIcon'>
+          <div className="hoverIcon">
             <BsHeart />
           </div>
         </div>
       </figure>
 
-      <section className='flex flex-col px-3 justify-center p-10'>
-        <h3 className='text-center'> {title} </h3>
-        <div className='flex justify-center gap-3 w-12/12 container mx-auto'>
-          <p className='oldPrice'> ₦{oldPrice} </p>
+      <section className="flex flex-col px-3 justify-center p-10">
+        <h3 className="text-center"> {title} </h3>
+        <div className="flex justify-center gap-3 w-12/12 container mx-auto">
+          <p className="oldPrice"> ₦{oldPrice} </p>
           <p> ₦{newPrice} </p>
         </div>
       </section>

@@ -1,0 +1,42 @@
+.shop {
+  width: 100%;
+  margin: 0 auto;
+  background-color: var(--white);
+
+  .search {
+    color: var(--mainColor);
+    input {
+      background: #f7f0f5;
+      &::placeholder {
+        color: var(--mainColor);
+      }
+    }
+  }
+
+  select {
+    background: var(--white);
+    border-radius: 6px;
+    padding: 0.5em 1em;
+    border: solid 1px var(--grey2);
+  }
+
+  .sale {
+    border-radius: 6px;
+
+    padding: 0.5em 1em;
+    border: solid 1px var(--grey2);
+    svg {
+      fill: var(--mainColor);
+    }
+  }
+  .new {
+    border-radius: 6px;
+
+    padding: 0.5em 1em;
+    border: solid 1px var(--grey2);
+
+    svg {
+      fill: #f7f0f5;
+    }
+  }
+}
