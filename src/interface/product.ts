@@ -1,3 +1,5 @@
+import { IUser } from ".";
+
 export interface ICreateProduct {
   title: string;
   description: string;
@@ -21,10 +23,10 @@ export interface ICreateProduct {
 }
 
 export interface ICategory {
-   id: string;
-   name: string;
-   imageUrl?: string;
-   description?: string;
+  id: string;
+  name: string;
+  imageUrl?: string;
+  description?: string;
 }
 
 export interface IProduct {
@@ -50,4 +52,51 @@ export interface IProduct {
   eanNumber: string;
   categoryId: string;
   category: ICategory;
+}
+
+export interface IOrderItem {
+  id: string;
+  quantity: number;
+  amount: number;
+  productId: string;
+  product: IProduct;
+  orderId: string;
+  Order: IOrder;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}
+
+export interface IOrder {
+  description: string;
+  status: string;
+  amount: number;
+  orderItem: IOrderItem[];
+  billingAddressId: string;
+  billingAddress: IBillingAddress;
+  review: IReview;
+  userId: string;
+  user: IUser;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}
+
+export interface IReview {
+  id: string;
+  comment: string;
+  star: string;
+  orderId: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}
+
+export interface IBillingAddress {
+  id: string;
+  street: string;
+  zip: string;
+  city: string;
+  state: string;
+  country: string;
+  userId: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
 }

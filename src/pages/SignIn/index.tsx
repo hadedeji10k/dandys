@@ -33,7 +33,6 @@ const SignIn = () => {
   const [signIn] = useSignInMutation();
   const {
     data: userData,
-    error: getUserError,
     refetch: refetchUser,
   } = useGetCurrentUserQuery();
 
@@ -60,7 +59,8 @@ const SignIn = () => {
             expires: res?.data?.expiresIn,
           };
           login(res?.data?.user, token);
-
+          
+          refetchUser();
           Swal.fire({
             title: "Success!",
             text: "You have successfully logged in",
@@ -68,7 +68,6 @@ const SignIn = () => {
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed || result.isDenied || result.isDismissed) {
-              refetchUser();
 
               const currentUser = (userData as any)?.data;
               dispatch(saveUser(currentUser));

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { IoIosArrowBack, IoMdAddCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import Image from "@/assets/image.jpg";
@@ -9,6 +9,8 @@ import * as Yup from "yup";
 import {
   useCreateProductMutation,
   useGetCategoriesQuery,
+  useGetProductByIdQuery,
+  useUpdateProductMutation,
 } from "@/api/sellerApiCalls";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
@@ -20,18 +22,42 @@ interface ICategory {
   value: string;
 }
 
-const NewProduct = () => {
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  description: Yup.string().required("Description is required"),
+  brandName: Yup.string().required("Brand name is required"),
+  model: Yup.string().required("Model is required"),
+  vendor: Yup.string(),
+  expiryDate: Yup.string().required("Expiry date is required"),
+  manufactureDate: Yup.string().required("Manufacture date is required"),
+  isoNumber: Yup.string().required("ISO number is required"),
+  nafdacNumber: Yup.string().required("NAFDAC number is required"),
+  height: Yup.string(),
+  weight: Yup.string(),
+  quantity: Yup.number().moreThan(0).required("Quantity is required"),
+  stockLimit: Yup.number(),
+  costPrice: Yup.number().required("Cost price is required"),
+  sellingPrice: Yup.number().required("Selling price is required"),
+  saleStart: Yup.string(),
+  saleEnd: Yup.string(),
+  eanNumber: Yup.string().required("EAN/UPC/ISBN is required"),
+  categoryId: Yup.string().required("Category is required"),
+});
+
+const EditProduct = () => {
   const navigate = useNavigate();
 
-  const search = useLocation().search;
-  const categoryId = new URLSearchParams(search).get("categoryId");
+  const { id } = useParams();
 
   const [count, setCount] = useState<number[]>([]);
 
   const [categories, setCategories] = useState<ICategory[]>([]);
+  const { data: fetchedCategories, isLoading: categoriesLoading } =
+    useGetCategoriesQuery();
 
-  const [createProduct] = useCreateProductMutation();
-  const { data: fetchedCategories, error: _ } = useGetCategoriesQuery();
+  const { data: fetchedProduct, isLoading: productLoading } =
+    useGetProductByIdQuery(id!);
+  const [updateProduct] = useUpdateProductMutation();
 
   useEffect(() => {
     const mapped = (fetchedCategories as any)?.data?.map((item: any) => {
@@ -42,36 +68,6 @@ const NewProduct = () => {
     });
     setCategories(mapped);
   }, [fetchedCategories]);
-
-  const handleRemoveImage = (id: number) => {
-    const newCount = count.filter((_, index) => index !== id);
-    setCount(newCount as any);
-  };
-  const handleAddImage = () => {
-    setCount([...count, count.length + 1]);
-  };
-
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required("Title is required"),
-    description: Yup.string().required("Description is required"),
-    brandName: Yup.string().required("Brand name is required"),
-    model: Yup.string().required("Model is required"),
-    vendor: Yup.string(),
-    expiryDate: Yup.string().required("Expiry date is required"),
-    manufactureDate: Yup.string().required("Manufacture date is required"),
-    isoNumber: Yup.string().required("ISO number is required"),
-    nafdacNumber: Yup.string().required("NAFDAC number is required"),
-    height: Yup.string(),
-    weight: Yup.string(),
-    quantity: Yup.number().moreThan(0).required("Quantity is required"),
-    stockLimit: Yup.number(),
-    costPrice: Yup.number().required("Cost price is required"),
-    sellingPrice: Yup.number().required("Selling price is required"),
-    saleStart: Yup.string(),
-    saleEnd: Yup.string(),
-    eanNumber: Yup.string().required("EAN/UPC/ISBN is required"),
-    categoryId: Yup.string().required("Category is required"),
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -93,16 +89,16 @@ const NewProduct = () => {
       saleStart: "",
       saleEnd: "",
       eanNumber: "",
-      categoryId: categoryId || "",
+      categoryId: "",
     },
     validationSchema,
     onSubmit: (values, { setSubmitting }) => {
-      createProduct(values)
+      updateProduct({ payload: values, id: id! })
         .unwrap()
         .then(() => {
           Swal.fire({
             title: "Success!",
-            text: "Product created successfully",
+            text: "Product updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           }).then((result) => {
@@ -115,7 +111,7 @@ const NewProduct = () => {
           console.log("Err Response>>>", err);
           toast.error(
             err?.data?.message ||
-              "Error creating product, please try again later"
+              "Error updating product, please try again later"
           );
         })
         .finally(() => {
@@ -125,7 +121,45 @@ const NewProduct = () => {
     },
   });
 
-  return (
+  useEffect(() => {
+    const data = (fetchedProduct as any)?.data;
+
+    formik.setValues({
+      title: data?.title,
+      description: data?.description,
+      brandName: data?.brandName,
+      model: data?.model,
+      vendor: data?.vendor,
+      expiryDate: data?.expiryDate,
+      manufactureDate: data?.manufactureDate,
+      isoNumber: data?.isoNumber,
+      nafdacNumber: data?.nafdacNumber,
+      height: data?.height,
+      weight: data?.weight,
+      quantity: data?.quantity,
+      stockLimit: data?.stockLimit,
+      costPrice: data?.costPrice,
+      sellingPrice: data?.sellingPrice,
+      saleStart: data?.saleStart,
+      saleEnd: data?.saleEnd,
+      eanNumber: data?.eanNumber,
+      categoryId: data?.categoryId,
+    });
+  }, [fetchedProduct]);
+
+  const handleRemoveImage = (id: number) => {
+    const newCount = count.filter((_, index) => index !== id);
+    setCount(newCount as any);
+  };
+  const handleAddImage = () => {
+    setCount([...count, count.length + 1]);
+  };
+
+  return categoriesLoading || productLoading ? (
+    <Loader spinning={true}>
+      <></>
+    </Loader>
+  ) : (
     <Loader spinning={formik.isSubmitting}>
       <div className="w-full flex flex-col">
         <div className="flex flex-row justify-start gap-x-3 items-center">
@@ -136,7 +170,7 @@ const NewProduct = () => {
             <IoIosArrowBack size="1.5rem" />
           </div>
           <h2 className="font-semibold text-[20px] text-shades-gray">
-            New Product
+            Edit Product
           </h2>
         </div>
 
@@ -197,6 +231,7 @@ const NewProduct = () => {
                 name="title"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.title}
                 required
                 label="Title"
                 placeholder="Enter your title"
@@ -206,6 +241,7 @@ const NewProduct = () => {
                 name="brandName"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.brandName}
                 required
                 label="Brand name"
                 placeholder="Enter your brand name"
@@ -215,6 +251,7 @@ const NewProduct = () => {
                 name="model"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.model}
                 required
                 label="Model"
                 placeholder="Enter model"
@@ -224,6 +261,7 @@ const NewProduct = () => {
                 name="vendor"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.vendor}
                 label="Vendor"
                 placeholder="Select vendor"
                 error={formik.touched.vendor && formik.errors.vendor}
@@ -233,6 +271,7 @@ const NewProduct = () => {
                 type="textarea"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.description}
                 required
                 label="Description"
                 placeholder="Enter your description"
@@ -243,6 +282,9 @@ const NewProduct = () => {
                 type="date"
                 onChange={(value) => formik.setFieldValue("expiryDate", value)}
                 onBlur={formik.handleBlur}
+                defaultValue={new Date(
+                  formik.values.expiryDate || ""
+                )?.toString()}
                 required
                 label="Product expiry date"
                 placeholder="Enter date"
@@ -256,6 +298,9 @@ const NewProduct = () => {
                   formik.setFieldValue("manufactureDate", value)
                 }
                 onBlur={formik.handleBlur}
+                defaultValue={new Date(
+                  formik.values.manufactureDate || ""
+                )?.toString()}
                 required
                 label="Product manufacture date"
                 placeholder="Enter date"
@@ -268,6 +313,7 @@ const NewProduct = () => {
                 name="isoNumber"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.isoNumber}
                 required
                 label="ISO certification number"
                 placeholder="Enter number"
@@ -277,8 +323,9 @@ const NewProduct = () => {
                 name="nafdacNumber"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.nafdacNumber}
                 required
-                label="NAFDAC registration number *"
+                label="NAFDAC registration number"
                 placeholder="Enter number"
                 error={
                   formik.touched.nafdacNumber && formik.errors.nafdacNumber
@@ -292,8 +339,7 @@ const NewProduct = () => {
               <FormSelect
                 onChange={(value) => formik.setFieldValue("categoryId", value)}
                 onBlur={formik.handleBlur}
-                disabled={categoryId?.length! > 0}
-                defaultValue={categoryId!}
+                defaultValue={formik.values.categoryId!}
                 required
                 label="Category"
                 placeholder="Select category"
@@ -305,6 +351,7 @@ const NewProduct = () => {
                 type="number"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.quantity}
                 required
                 label="Quantity"
                 placeholder="Enter item quantity"
@@ -314,6 +361,7 @@ const NewProduct = () => {
                 name="height"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.height}
                 label="Height"
                 placeholder="Enter height unit"
                 error={formik.touched.height && formik.errors.height}
@@ -322,6 +370,7 @@ const NewProduct = () => {
                 name="weight"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.weight}
                 label="Weight"
                 placeholder="Enter weight unit"
                 error={formik.touched.weight && formik.errors.weight}
@@ -330,6 +379,7 @@ const NewProduct = () => {
                 name="costPrice"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.costPrice}
                 required
                 type="number"
                 label="Cost price"
@@ -340,6 +390,7 @@ const NewProduct = () => {
                 name="sellingPrice"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.sellingPrice}
                 required
                 type="number"
                 label="Sale price"
@@ -353,6 +404,9 @@ const NewProduct = () => {
                 type="date"
                 onChange={(value) => formik.setFieldValue("saleStart", value)}
                 onBlur={formik.handleBlur}
+                defaultValue={new Date(
+                  formik.values.saleStart || ""
+                )?.toString()}
                 label="Sale start"
                 placeholder="Enter date"
                 error={formik.touched.saleStart && formik.errors.saleStart}
@@ -362,6 +416,7 @@ const NewProduct = () => {
                 type="date"
                 onChange={(value) => formik.setFieldValue("saleEnd", value)}
                 onBlur={formik.handleBlur}
+                defaultValue={new Date(formik.values.saleEnd || "")?.toString()}
                 label="Sale end"
                 placeholder="Enter date"
                 error={formik.touched.saleEnd && formik.errors.saleEnd}
@@ -371,6 +426,7 @@ const NewProduct = () => {
                 name="stockLimit"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.stockLimit}
                 required
                 type="number"
                 label="Low stock limit"
@@ -381,6 +437,7 @@ const NewProduct = () => {
                 name="eanNumber"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                defaultValue={formik.values.eanNumber}
                 required
                 label="EAN/UPC/ISBN"
                 placeholder="Input EAN/UPC/ISBN"
@@ -394,4 +451,4 @@ const NewProduct = () => {
   );
 };
 
-export default NewProduct;
+export default EditProduct;

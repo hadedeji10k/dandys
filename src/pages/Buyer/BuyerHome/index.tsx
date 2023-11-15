@@ -13,15 +13,7 @@ import { images } from '@/exports/images';
 import CategoryCard from '@/component/BuyerComps/CategoryCard/CategoryCard';
 import SecondaryFooter from '@/component/BuyerComps/SecondaryFooter/SecondaryFooter';
 import BlogCard from '@/component/BuyerComps/BlogCard/BlogCard';
-import { IBlogCard } from '@/interface';
-
-interface TabProps {
-  id: string;
-  title: string;
-  comp?: React.FC;
-  activeTab?: boolean;
-  setActiveTab?: (id: string) => void;
-}
+import { IBlogCard, TabProps } from '@/interface';
 
 function BuyerHome() {
   const [activeTab, setActiveTab] = useState<string>('1');
@@ -73,21 +65,23 @@ function BuyerHome() {
           </section>
 
           <section className='flex flex-wrap   justify-between mx-auto md:w-9/12 w-11/12 '>
-            {tabsTitle.map(({ id, title }: TabProps) => (
+            {tabsTitle.map(({ id, title }) => (
               <section key={id} className='my-2'>
                 <TabTitle
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
                   id={id}
                   title={title}
+                  activeClass='active'
+                  notActiveClass='notActive'
                 />
               </section>
             ))}
           </section>
 
           <section className='tabComps'>
-            {tabsComps.map((item) => (
-              <TabContents activeTab={activeTab} id={item.id} comps={item.comp} />
+            {tabsComps.map(({ id, comp }) => (
+              <TabContents activeTab={activeTab} id={id} comps={comp} />
             ))}
           </section>
         </article>
@@ -98,7 +92,7 @@ function BuyerHome() {
             { imageUrl: images.brand2 },
             { imageUrl: images.brand3 },
             { imageUrl: images.brand4 },
-          ].map((item: any, idx: number) => (
+          ].map((item, idx) => (
             <div key={idx} className='w-6/12 md:w-3/12'>
               <figure>
                 <img src={item.imageUrl} alt='' />
@@ -145,7 +139,7 @@ function BuyerHome() {
               { imageUrl: images.face7 },
               { imageUrl: images.undies },
               { imageUrl: images.legFlower },
-            ].map((item: any, idx: number) => (
+            ].map((item, idx) => (
               <div key={idx} className='w-full md:w-4/12 p-2'>
                 <CategoryCard imageUrl={item.imageUrl} />
               </div>

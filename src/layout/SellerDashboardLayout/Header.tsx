@@ -13,8 +13,15 @@ import {
   useGetNotificationsQuery,
 } from "@/api/sellerApiCalls";
 import { saveNotification, saveUser } from "@/api/slices/user";
+import { MdClose, MdMenu } from "react-icons/md";
 
-const SellerDashboardLayoutHeader = () => {
+const SellerDashboardLayoutHeader = ({
+  setSidebarIsOpen,
+  sidebarIsOpen,
+}: {
+  setSidebarIsOpen: any;
+  sidebarIsOpen: boolean;
+}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -30,6 +37,11 @@ const SellerDashboardLayoutHeader = () => {
     dispatch(saveNotification(fetchedNotifications));
   }, [userData]);
 
+  // useEffect(() => {
+  //   console.log("Width>>", window?.innerWidth)
+
+  // }, [window?.innerWidth, window?.onresize])
+
   const { isAuthenticated, isLoading, user } = useAuth();
 
   if (!isAuthenticated && !isLoading) {
@@ -44,11 +56,12 @@ const SellerDashboardLayoutHeader = () => {
       >
         <img src={Logo} alt="" />
       </div>
-      <div className="flex flex-row gap-x-8">
+
+      <div className="hidden md:flex flex-row gap-x-8">
         <h3 className="text-[20px] font-semibold text-shades-white">Route</h3>
       </div>
 
-      <div className="flex flex-row gap-x-3 items-center">
+      <div className="hidden md:flex flex-row gap-x-3 items-center">
         {isAuthenticated && user ? (
           <>
             <div className="rounded-[50%] p-3 bg-white/25">
@@ -76,9 +89,7 @@ const SellerDashboardLayoutHeader = () => {
               content={<ProfilePop />}
               trigger="click"
             >
-              <div
-                className="bg-shades-white/20 pl-4 pr-2 py-2 rounded-md flex flex-row gap-3 items-center cursor-pointer"
-              >
+              <div className="bg-shades-white/20 pl-4 pr-2 py-2 rounded-md flex flex-row gap-3 items-center cursor-pointer">
                 <h3 className="text-shades-white font-medium hidden sm:block">
                   {user?.fullName!}
                 </h3>
@@ -112,6 +123,22 @@ const SellerDashboardLayoutHeader = () => {
             />
           </>
         )}
+      </div>
+
+      <div className="md:hidden">
+        <div onClick={() => setSidebarIsOpen(!sidebarIsOpen)}>
+          {sidebarIsOpen ? (
+            <MdClose
+              size="1.5rem"
+              className="cursor-pointer animate-fadeAndScaleInFast text-shades-white"
+            />
+          ) : (
+            <MdMenu
+              size="1.5rem"
+              className="cursor-pointer animate-fadeAndScaleInFast text-shades-white"
+            />
+          )}
+        </div>
       </div>
     </div>
   );

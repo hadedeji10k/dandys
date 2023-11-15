@@ -1,11 +1,23 @@
 import { AiOutlineExport } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiFilter } from "react-icons/fi";
-import Image from "@/assets/image.jpg"
+import Image from "@/assets/image.jpg";
 import { Badge } from "antd";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useState, useEffect } from "react";
+import { useGetSellerOrdersQuery } from "@/api/sellerApiCalls";
+import { IOrder } from "@/interface";
+import { formatDate } from "@/utils/helpers";
 
 const OrderPage = () => {
+  const [orders, setOrders] = useState<IOrder[]>([]);
+
+  const { data: fetchedOrders } = useGetSellerOrdersQuery();
+
+  useEffect(() => {
+    setOrders((fetchedOrders as any)?.data?.result);
+  }, [fetchedOrders]);
+
   return (
     <div className="w-full flex flex-col">
       <div className="flex flex-row justify-between gap-4 flex-wrap items-center bg-white p-3 rounded-lg">
@@ -30,9 +42,6 @@ const OrderPage = () => {
           <button className="text-shades-secondary py-2 px-3 rounded-md text-[14px] font-semibold border-2 border-shades-secondary hover:bg-shades-secondary hover:text-white transition-all ease-in-out flex flex-row items-center gap-x-2">
             <AiOutlineExport /> Export
           </button>
-          <button className="bg-shades-secondary text-white hover:text-shades-secondary hover:bg-white py-2 px-3 rounded-md text-[14px] border hover:border-shades-secondary transition-all ease-in-out flex flex-row items-center gap-x-2">
-            Add new order
-          </button>
         </div>
       </div>
       <div className="w-full mt-3 flex flex-row justify-between gap-x-3 items-center bg-white py-2 px-3 rounded-lg text-shades-primary">
@@ -50,74 +59,83 @@ const OrderPage = () => {
       </div>
 
       {/* Table */}
-      <div className="flex w-full flex-col mt-3 overflow-x-scroll no_scrollbar">
-        {/* Head */}
-        <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
-          <div className="min-w-[50px] max-w-[50px] w-full"></div>
-          <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
-            Order No
-          </div>
-          <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
-            Date
-          </div>
-          <div className="min-w-[150px] max-w-[150px] w-full flex items-center">
-            Customer
-          </div>
-          <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
-            Paid
-          </div>
-          <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
-            Status
-          </div>
-          <div className="min-w-[50px] max-w-[50px] w-full flex items-center">
-            Items
-          </div>
-          <div className="min-w-[110px] max-w-[110px] w-full flex items-center">
-            Total
-          </div>
-          <div className="min-w-[20px] max-w-[20px] w-full flex items-center cursor-pointer">
-            <BsThreeDotsVertical />
-          </div>
-        </div>
-        {/* body */}
-        <div className="w-full">
-          <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-white my-1">
-            <div className="min-w-[50px] max-w-[50px] w-full flex items-center">
-              <img src={Image} className="w-[45px] h-[45px] rounded-lg" />
-            </div>
+      {orders?.length > 0 ? (
+        <div className="flex w-full flex-col mt-3 overflow-x-scroll no_scrollbar">
+          {/* Head */}
+          <div className="min-w-max w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
+            <div className="min-w-[50px] max-w-[50px] w-full"></div>
             <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
-              #12345
+              Order No
             </div>
             <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
-              16/10/2023
+              Date
             </div>
             <div className="min-w-[150px] max-w-[150px] w-full flex items-center">
-              Kelvin Mesh
+              Customer
             </div>
-            <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
-              <span className="py-2 px-2.5 rounded-md bg-shades-lightGreen text-status-success">
-                <Badge status="success" /> Paid
-              </span>
-            </div>
+            {/* <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
+              Paid
+            </div> */}
             <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
-              <span className="py-2 px-2.5 rounded-md bg-shades-lightGreen text-status-success">
-                <Badge status="success" /> Shipped
-              </span>
+              Status
             </div>
             <div className="min-w-[50px] max-w-[50px] w-full flex items-center">
-              5
+              Items
             </div>
             <div className="min-w-[110px] max-w-[110px] w-full flex items-center">
-              #20,000
+              Total
             </div>
             <div className="min-w-[20px] max-w-[20px] w-full flex items-center cursor-pointer">
               <BsThreeDotsVertical />
             </div>
           </div>
+          {/* body */}
+          <div className="w-full">
+            {orders?.map((item) => (
+              <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-white my-1">
+                <div className="min-w-[50px] max-w-[50px] w-full flex items-center">
+                  <img src={Image} className="w-[45px] h-[45px] rounded-lg" />
+                </div>
+                <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
+                  {item?.amount}
+                </div>
+                <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
+                  {formatDate(item?.createdAt)}
+                </div>
+                <div className="min-w-[150px] max-w-[150px] w-full flex items-center">
+                  Kelvin Mesh
+                </div>
+                <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
+                  <span className="py-2 px-2.5 rounded-md bg-shades-lightGreen text-status-success">
+                    <Badge status="success" /> {item?.status}
+                  </span>
+                </div>
+                {/* <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
+                  <span className="py-2 px-2.5 rounded-md bg-shades-lightGreen text-status-success">
+                    <Badge status="success" /> Shipped
+                  </span>
+                </div> */}
+                <div className="min-w-[50px] max-w-[50px] w-full flex items-center">
+                  {item?.orderItem?.length || 0}
+                </div>
+                <div className="min-w-[110px] max-w-[110px] w-full flex items-center">
+                  {item?.amount}
+                </div>
+                <div className="min-w-[20px] max-w-[20px] w-full flex items-center cursor-pointer">
+                  <BsThreeDotsVertical />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="min-h-[30vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
+          <h2 className="text-[18px] font-semibold">No orders Yet!</h2>
+          <p>Your history will appear here when you have one</p>
+        </div>
+      )}
     </div>
   );
-}
+};
 
-export default OrderPage
+export default OrderPage;

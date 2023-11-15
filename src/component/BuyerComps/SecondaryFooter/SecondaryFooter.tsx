@@ -1,3 +1,4 @@
+import React from 'react';
 import { images } from '@/exports/images';
 import {
   BsFacebook,
@@ -21,7 +22,7 @@ function SecondaryFooter() {
           { imageUrl: images.face4 },
           { imageUrl: images.face5 },
           { imageUrl: images.face6 },
-        ].map((item: any, idx: number) => (
+        ].map((item, idx) => (
           <figure
             key={idx}
             className=' cardContainer faceCards w-full md:w-2/12'

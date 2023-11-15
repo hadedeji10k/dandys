@@ -1,3 +1,4 @@
+import React from 'react';
 import Slider from 'react-slick';
 import { product } from './ProductData';
 import ProductCard from './ProductCard';
@@ -37,7 +38,7 @@ function ProductSlider() {
   };
 
   return (
-    <main className='productSlider w-10/12'>
+    <main className='productSlider'>
       <section className=''>
         <Slider {...settings}>
           {product.map((item: IProductCard) => (

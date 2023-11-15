@@ -1,3 +1,4 @@
+import React from 'react';
 import ProductSlider from './ProductSlider';
 
 function Fragrance() {

@@ -2,7 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseURL } from "@/utils/axiosInstance";
 import { dandysToken } from "@/utils/constant";
 import { decode } from "@/utils/helpers";
-import { ICreateDiscount, ICreateProduct, ISignIn, ISignUp, IUpdatePassword, IUpdateUser } from "@/interface";
+import {
+  ICreateDiscount,
+  ICreateProduct,
+  ISignIn,
+  ISignUp,
+  IUpdatePassword,
+  IUpdateUser,
+  ISellerPreference,
+  ICreateSellerInformation,
+  ICreateBankDetails,
+} from "@/interface";
 
 export const sellerApi = createApi({
   reducerPath: "sellerApi",
@@ -53,7 +63,26 @@ export const sellerApi = createApi({
     deleteAccount: builder.mutation<void, void>({
       query: () => ({
         url: `/user`,
-        method: "DELETE"
+        method: "DELETE",
+      }),
+    }),
+    getUserBankDetails: builder.query<void, void>({
+      query: () => `/user/bank-details`,
+    }),
+    createBankAccount: builder.mutation<any, ICreateBankDetails>({
+      query: (body) => ({
+        url: `/user/bank-details`,
+        method: "POST",
+        body,
+      }),
+    }),
+
+    // SELLER
+    sellerCreateInformation: builder.mutation<any, ICreateSellerInformation>({
+      query: (body) => ({
+        url: `/seller`,
+        method: "POST",
+        body,
       }),
     }),
 
@@ -116,6 +145,21 @@ export const sellerApi = createApi({
       }),
     }),
 
+    getSellerDashboard: builder.query<void, void>({
+      query: () => `/seller/dashboard`,
+    }),
+
+    // ORDER
+    getOrderById: builder.query<void, string>({
+      query: (id) => `/products/seller/category/${id}`,
+    }),
+    getSellerOrders: builder.query<void, void>({
+      query: () => `/products/order/seller`,
+    }),
+    getSellerCustomers: builder.query<void, void>({
+      query: () => `/seller/customer`,
+    }),
+
     // Discount
     getDiscounts: builder.query<void, void>({
       query: () => `/discounts`,
@@ -163,6 +207,17 @@ export const sellerApi = createApi({
         method: "DELETE",
       }),
     }),
+    // PREFERENCE
+    getSellerPreferences: builder.query<{ data: ISellerPreference }, void>({
+      query: () => `/seller/preferences`,
+    }),
+    setSellerPreferences: builder.mutation<any, ISellerPreference>({
+      query: (body) => ({
+        url: `/seller/preferences`,
+        method: "PUT",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -176,6 +231,15 @@ export const {
   useUpdateUserMutation,
   useUpdatePasswordMutation,
   useDeleteAccountMutation,
+  useCreateBankAccountMutation,
+  useGetUserBankDetailsQuery,
+
+  // SELLER
+  useSellerCreateInformationMutation,
+  useGetSellerDashboardQuery,
+  useGetOrderByIdQuery,
+  useGetSellerOrdersQuery,
+  useGetSellerCustomersQuery,
 
   // Category
   useGetCategoriesQuery,
@@ -204,4 +268,8 @@ export const {
   useGetNotificationsQuery,
   useGetNotificationByIdQuery,
   useDeleteNotificationMutation,
+
+  // PREFERENCES
+  useGetSellerPreferencesQuery,
+  useSetSellerPreferencesMutation,
 } = sellerApi;

@@ -8,7 +8,7 @@ import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { TbDiscount, TbSettingsFilled } from "react-icons/tb";
 import { GiCardboardBox, GiPieChart } from "react-icons/gi";
 
-const Menu = [
+export const Menu = [
   {
     key: 1,
     name: "Dashboard",

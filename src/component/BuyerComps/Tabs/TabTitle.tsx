@@ -1,11 +1,23 @@
-interface TabProps {
-  id: string;
-  title: string;
-  activeTab?: string | boolean;
-  setActiveTab?: (id: string) => void;
-}
+import React from 'react';
+import { TabProps } from '@/interface';
 
-function TabTitle({ id, title, activeTab = "", setActiveTab }: TabProps) {
+// interface TabProps {
+//   id: string;
+//   title: string;
+//   activeClass: string;
+//   notActiveClass: string;
+//   activeTab?: string;
+//   setActiveTab?: (id: string) => void;
+// }
+
+function TabTitle({
+  id,
+  title,
+  activeClass,
+  notActiveClass,
+  activeTab,
+  setActiveTab,
+}: TabProps) {
   console.log(id);
 
   const handTabSwitch = (id: string) => {
@@ -17,10 +29,10 @@ function TabTitle({ id, title, activeTab = "", setActiveTab }: TabProps) {
   return (
     <main
       onClick={() => handTabSwitch(id)}
-      className={activeTab === id ? 'active' : 'notActive'}
+      className={activeTab === id ? activeClass : notActiveClass}
     >
       <ul className=' tabTitle'>
-        <li className='d-flex flex-row align-items-center '>
+        <li className=''>
           <h4>{title}</h4>
         </li>
       </ul>

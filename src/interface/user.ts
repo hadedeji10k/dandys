@@ -15,3 +15,10 @@ export interface IUser {
   lastLogin: string | Date;
   has_pin: boolean;
 }
+
+export interface ICreateBankDetails {
+  accountNumber: string;
+  accountName: string;
+  bankName: string;
+  bankCode: string;
+}

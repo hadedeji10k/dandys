@@ -59,8 +59,8 @@ const AllProduct = () => {
             onClick={() =>
               navigate(
                 categoryId
-                  ? `/new-product?categoryId=${categoryId}`
-                  : "/new-product"
+                  ? `/seller/new-product?categoryId=${categoryId}`
+                  : "/seller/new-product"
               )
             }
             className="bg-shades-secondary text-white hover:text-shades-secondary hover:bg-white py-2 px-3 rounded-md text-[14px] border hover:border-shades-secondary transition-all ease-in-out flex flex-row items-center gap-x-2"
@@ -87,7 +87,7 @@ const AllProduct = () => {
       {products?.length > 0 ? (
         <div className="flex w-full flex-col mt-3 overflow-x-scroll font-medium no_scrollbar bg-white rounded-lg mb-5">
           {/* Head */}
-          <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
+          <div className="min-w-max w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
             <div className="min-w-[50px] max-w-[50px] w-full"></div>
             <div className="min-w-[150px] max-w-[150px] w-full flex items-center text-[14px]">
               Product
@@ -124,7 +124,7 @@ const AllProduct = () => {
           <div className="w-full">
             {products?.map((item, index) => (
               <div
-              key={index}
+                key={index}
                 className={`w-full flex flex-row gap-x-3 justify-between py-2.5 px-3 bg-shades-white/80 my-1 border-shades-lightGray ${
                   index + 1 === products.length ? "" : "border-b-2"
                 }`}
@@ -139,7 +139,7 @@ const AllProduct = () => {
                   {item?.sku}
                 </div>
                 <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
-                  {item?.title}
+                  {item?.category?.name}
                 </div>
                 <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
                   {item?.vendor}
@@ -235,7 +235,7 @@ const ProductMenu = ({ id }: { id: string }) => {
           View
         </p>
         <p
-          onClick={() => navigate(`/edit-product/${id}`)}
+          onClick={() => navigate(`/seller/edit-product/${id}`)}
           className="text-[14px] cursor-pointer hover:bg-shades-primary/5 px-6 py-2.5"
         >
           Edit

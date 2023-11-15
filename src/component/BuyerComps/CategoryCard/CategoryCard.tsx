@@ -1,3 +1,4 @@
+import React from 'react';
 import './CategoryCard.scss';
 import { Link } from 'react-router-dom';
 

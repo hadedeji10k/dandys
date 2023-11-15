@@ -13,10 +13,15 @@ import {
   LineElement,
   ArcElement
 } from "chart.js";
+import dayjs from "dayjs";
+import * as isLeapYear from "dayjs/plugin/isLeapYear";
 import Routings from "./routing";
 import "./App.css";
 
 import "react-toastify/dist/ReactToastify.css";
+
+
+dayjs.extend(isLeapYear) 
 
 
 ChartJS.register(

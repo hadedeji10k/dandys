@@ -29,8 +29,8 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-[class*="ant"] {
-  font-family: "Poppins", sans-serif !important;
+[class*='ant'] {
+  font-family: 'Poppins', sans-serif !important;
 }
 
 .no_scrollbar::-webkit-scrollbar {
@@ -96,4 +96,16 @@ img {
   .ant-steps-icon-dot {
   background: #8f3677;
   padding: 6px;
+}
+
+.ant-switch {
+  background: gray;
+}
+
+.ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+    background: #8f3677;
+}
+
+.ant-switch.ant-switch-checked {
+  background: #8f3677;
 }

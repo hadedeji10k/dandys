@@ -68,7 +68,7 @@ const AllDiscounts = () => {
       {discounts?.length > 0 ? (
         <div className="flex w-full flex-col mt-3 overflow-x-scroll font-medium no_scrollbar bg-white rounded-lg mb-5">
           {/* Head */}
-          <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
+          <div className="min-w-max w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
             <div className="min-w-[150px] max-w-[150px] w-full flex items-center text-[14px]">
               Title
             </div>

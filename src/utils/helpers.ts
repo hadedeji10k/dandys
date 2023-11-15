@@ -52,6 +52,12 @@ export const formatDate = (dateString: Date | string) => {
   return format(date, "yyyy-MM-dd")
 }
 
+export const getBase64 = (img: any, callback: any) => {
+  const reader = new FileReader();
+  reader.addEventListener("load", () => callback(reader.result));
+  reader.readAsDataURL(img);
+};
+
 
   // const downloadFile = (
   //   filename: string,

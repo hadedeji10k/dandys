@@ -1,6 +1,9 @@
+import { getBase64 } from "@/utils/helpers";
 import { DatePicker, DatePickerProps } from "antd";
 import React, { useState } from "react";
 import { BsFillEyeSlashFill, BsFillEyeFill } from "react-icons/bs";
+import dayjs from "dayjs";
+import { isBefore } from "date-fns";
 
 export interface IFormInputProps {
   label?: string;
@@ -18,6 +21,7 @@ export interface IFormInputProps {
   icon?: JSX.Element | string;
   required?: boolean;
   disabled?: boolean;
+  startDate?: string | Date;
 }
 
 const FormInput = ({
@@ -34,6 +38,7 @@ const FormInput = ({
   disabled,
   defaultValue,
   error,
+  startDate,
 }: IFormInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -52,6 +57,26 @@ const FormInput = ({
   const handleDateChange: DatePickerProps["onChange"] = (_, dateString) => {
     onChange && onChange(dateString);
   };
+
+  const handleFileChange = (e: any) => {
+    const file = e.target.files[0];
+    getBase64(file, (url: any) => {
+      onChange && onChange(url);
+    });
+  };
+
+  const disabledDate = (current: any) => {
+    if (startDate) {
+      const date = new Date(startDate);
+      return isBefore(current.toDate(), date);
+    } else {
+      return false;
+    }
+  };
+
+  if (type === "date") {
+    console.log("Date>>", defaultValue);
+  }
 
   return (
     <div className={`flex flex-col mt-3 ${error ? "" : "mb-3"} ${className}`}>
@@ -80,12 +105,15 @@ const FormInput = ({
           <DatePicker
             className={`resize-none no_scrollbar bg-transparent text-[14px] !border-none hover:!border-none focus:!border-none !shadow-none hover:!shadow-none focus:!shadow-none focus:!outline-none w-full text-[#666365]`}
             onChange={handleDateChange}
+            defaultValue={dayjs("01/01/2015", "YYYY-MM-DD")}
+            placeholder={placeholder}
+            disabledDate={disabledDate}
           />
         ) : (
           <input
             type={inputType}
             name={name}
-            onChange={onChange}
+            onChange={inputType === "file" ? handleFileChange : onChange}
             onBlur={onBlur}
             className={`bg-transparent text-[14px] border-none hover:border-none focus:border-none focus:outline-none w-full text-[#666365]`}
             placeholder={placeholder}

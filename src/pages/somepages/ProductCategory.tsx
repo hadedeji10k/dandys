@@ -100,7 +100,7 @@ const CategoryMenu = ({ id }: { id: string }) => {
     <>
       <div className="flex flex-col">
         <p
-          onClick={() => navigate(`/products?categoryId=${id}`)}
+          onClick={() => navigate(`/seller/products?categoryId=${id}`)}
           className="text-[14px] cursor-pointer hover:bg-shades-primary/5 px-6 py-2.5"
         >
           View

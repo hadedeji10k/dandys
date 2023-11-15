@@ -106,7 +106,7 @@ const Billing = () => {
       {/* Table */}
       <div className="flex w-full flex-col mt-3 overflow-x-scroll no_scrollbar">
         {/* Head */}
-        <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
+        <div className="min-w-max w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
           <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
             ID
           </div>

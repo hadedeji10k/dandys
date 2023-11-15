@@ -1,3 +1,4 @@
+import React from 'react';
 import { IBlogCard } from '@/interface';
 import { Link } from 'react-router-dom';
 import './BlogCard.scss';

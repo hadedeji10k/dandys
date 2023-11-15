@@ -70,6 +70,7 @@ const SignUp = () => {
           };
           login(res?.data?.user, token);
 
+          refetchUser();
           Swal.fire({
             title: "Success!",
             text: "You have successfully signed up",
@@ -77,9 +78,9 @@ const SignUp = () => {
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed || result.isDenied || result.isDismissed) {
-              refetchUser();
 
               const currentUser = (userData as any)?.data;
+              
               dispatch(saveUser(currentUser));
 
               navigate("/otp");
