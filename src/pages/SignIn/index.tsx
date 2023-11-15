@@ -73,12 +73,7 @@ const SignIn = () => {
               const currentUser = (userData as any)?.data;
               dispatch(saveUser(currentUser));
 
-              if (userData) {
-                navigate("/seller-dashboard");
-              } else if (getUserError as any) {
-                const error = getUserError as any;
-                toast.error(error?.data?.message || "Login Failed");
-              }
+              navigate("/seller-dashboard");
             }
           });
         })
@@ -91,7 +86,7 @@ const SignIn = () => {
       return;
     },
   });
-  
+
   return (
     <div className="w-full h-screen flex items-start">
       <div className="relative sm:w-1/2 sm:flex flex-col h-full bg-no-repeat bg-cover bg-[linear-gradient(to_right_bottom,#903677,rgba(179,70,148,0.8)),url('/public/img/female.png')]">
