@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { BiLogOut } from "react-icons/bi";
-import useAuth from "@/api/context";
+// import useAuth from "@/api/context";
 import { Menu } from "./Sidebar";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
@@ -13,21 +12,21 @@ const MobileSidebar = ({
   setSidebarIsOpen: any;
   sidebarIsOpen: boolean;
 }) => {
-  const { isAuthenticated, logout, user } = useAuth();
+//   const { logout } = useAuth();
 
   const navigate = useNavigate();
   const [menu, setMenu] = useState(Menu);
 
-  const goTo = (route: string) => {
-    setSidebarIsOpen(!sidebarIsOpen);
-    navigate(route);
-  };
+//   const goTo = (route: string) => {
+//     setSidebarIsOpen(!sidebarIsOpen);
+//     navigate(route);
+//   };
 
-  const handleLogout = () => {
-    logout();
-    setSidebarIsOpen(!sidebarIsOpen);
-    navigate("/");
-  };
+//   const handleLogout = () => {
+//     logout();
+//     setSidebarIsOpen(!sidebarIsOpen);
+//     navigate("/");
+//   };
 
   const handleSubMenuClick = (id: number) => {
     const newMenu = menu.map((item) => {
