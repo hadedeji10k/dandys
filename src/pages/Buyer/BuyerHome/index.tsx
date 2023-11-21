@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ProductSlider from '@/component/BuyerComps/Product/ProductSlider';
 import './BuyerHome.scss';
 import TabTitle from '@/component/BuyerComps/Tabs/TabTitle';
@@ -13,7 +13,7 @@ import { images } from '@/exports/images';
 import CategoryCard from '@/component/BuyerComps/CategoryCard/CategoryCard';
 import SecondaryFooter from '@/component/BuyerComps/SecondaryFooter/SecondaryFooter';
 import BlogCard from '@/component/BuyerComps/BlogCard/BlogCard';
-import { IBlogCard, TabProps } from '@/interface';
+import { IBlogCard } from '@/interface';
 
 function BuyerHome() {
   const [activeTab, setActiveTab] = useState<string>('1');

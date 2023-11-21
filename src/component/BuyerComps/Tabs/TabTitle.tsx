@@ -1,4 +1,3 @@
-import React from 'react';
 import { TabProps } from '@/interface';
 
 // interface TabProps {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './ProductDetails.scss';
 import { useParams } from 'react-router-dom';
 import { FaSquare } from 'react-icons/fa6';
@@ -19,9 +19,9 @@ function ProductDetails() {
   const [activeTab, setActiveTab] = useState<string>('1');
   const [quantity, setQuantity] = useState<number>(0);
 
-  const productToView: IProductCard | undefined = product.find(
+  const productToView: IProductCard = product.find(
     (item: IProductCard) => item.id === id,
-  );
+  )!;
 
   const {
     title,
@@ -68,7 +68,7 @@ function ProductDetails() {
       <section className='container mx-auto '>
         <section className='productDetails flex flex-col md:flex-row justify-between'>
           <article className='w-full md:w-5/12'>
-            <Gallery imageList={imageList} />
+            <Gallery imageList={imageList!} />
           </article>
 
           <article className='productContent divide-y w-full md:w-6/12 mt-5 lg:mt-0'>

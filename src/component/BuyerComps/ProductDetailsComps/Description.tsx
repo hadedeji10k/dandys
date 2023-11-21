@@ -1,6 +1,4 @@
-import React from 'react';
-
-function Description({ produtDesc }: { produtDesc: string }) {
+const Description = ({ produtDesc }: { produtDesc: string }) => {
   return (
     <div>
       <p>{produtDesc} </p>

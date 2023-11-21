@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Additionalinfo({
   weight,
   dimensions,
@@ -7,7 +5,7 @@ function Additionalinfo({
 }: {
   weight: string;
   dimensions: string;
-  capColors: [];
+  capColors: string[];
 }) {
   return (
     <main>
@@ -23,7 +21,7 @@ function Additionalinfo({
         <p>
           <span className='greyText'>Cover cap colors: </span>
 
-          {capColors.map((item: string, idx: string) => (
+          {capColors.map((item: string, idx: number) => (
             <span key={idx}> {item}, </span>
           ))}
         </p>

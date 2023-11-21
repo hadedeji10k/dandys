@@ -1,7 +1,5 @@
-import React from 'react';
 import { BiSearch } from 'react-icons/bi';
 import './Shop.scss';
-import { RiCheckboxBlankFill } from 'react-icons/ri';
 import { FaSquare } from 'react-icons/fa6';
 import ProductCard from '@/component/BuyerComps/Product/ProductCard';
 import { product } from '@/component/BuyerComps/Product/ProductData';

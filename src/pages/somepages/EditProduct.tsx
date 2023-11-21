@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack, IoMdAddCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import Image from "@/assets/image.jpg";
@@ -7,7 +7,6 @@ import FormInput from "@/component/FormInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  useCreateProductMutation,
   useGetCategoriesQuery,
   useGetProductByIdQuery,
   useUpdateProductMutation,

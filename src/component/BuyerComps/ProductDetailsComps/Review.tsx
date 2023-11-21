@@ -1,6 +1,5 @@
-import React from 'react';
 
-function Review() {
+const Review = () => {
   return <div>Review</div>;
 }
 
