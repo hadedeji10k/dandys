@@ -36,7 +36,6 @@ const BuyerAccount = () => {
 
   const [menu, setMenu] = useState(Menu);
 
-
   const handleTabChange = (id: number) => {
     const newMenu = menu.map((item) => {
       return {
@@ -64,55 +63,61 @@ const BuyerAccount = () => {
         ))}
       </div>
 
-      <div className="w-full flex sm:flex-col flex-col p-4">
-        <div className="w-full flex sm:flex-row flex-col flex-wrap justify-between gap-x-4">
-          <FormInput
-            className="max-w-full flex flex-1"
-            disabled
-            label="First name"
-            defaultValue={user?.fullName?.split(" ")[0]}
-          />
-          <FormInput
-            className="max-w-full flex flex-1"
-            disabled
-            label="Last name"
-            defaultValue={user?.fullName?.split(" ")[0]}
-          />
-        </div>
-        <div className="w-full flex sm:flex-row flex-col flex-wrap justify-between gap-x-4">
-          <FormInput
-            className="max-w-full flex flex-1"
-            disabled
-            label="Email"
-            defaultValue={user?.email}
-          />
-          <FormInput
-            className="max-w-full flex flex-1"
-            disabled
-            label="Phone"
-            defaultValue={user?.phone!}
-          />
-        </div>
-        <div className="flex flex-col my-3 max-w-full flex-1 mb-6">
-          <label htmlFor="" className="text-[14px] font-semibold mb-[0.8px]">
-            Business Logo
-          </label>
-        </div>
-
-        <div>
-          <Button
-            // handleClick={() => navigate("/sign-up")}
-            className={
-              "px-8 py-3 mt-5"
-            }
-            type={"button"}
-            title={"UPDATE"}
-            disabled={false}
-          />
-        </div>
-      </div>
+      <Account />
     </div>
   );
 };
 
 export default BuyerAccount;
+
+const Account = () => {
+  const user = useAppSelector((state) => state.user.user);
+
+  return (
+    <div className="w-full flex sm:flex-col flex-col p-4">
+      <div className="w-full flex sm:flex-row flex-col flex-wrap justify-between gap-x-4">
+        <FormInput
+          className="max-w-full flex flex-1"
+          disabled
+          label="First name"
+          defaultValue={user?.fullName?.split(" ")[0]}
+        />
+        <FormInput
+          className="max-w-full flex flex-1"
+          disabled
+          label="Last name"
+          defaultValue={user?.fullName?.split(" ")[0]}
+        />
+      </div>
+      <div className="w-full flex sm:flex-row flex-col flex-wrap justify-between gap-x-4">
+        <FormInput
+          className="max-w-full flex flex-1"
+          disabled
+          label="Email"
+          defaultValue={user?.email}
+        />
+        <FormInput
+          className="max-w-full flex flex-1"
+          disabled
+          label="Phone"
+          defaultValue={user?.phone!}
+        />
+      </div>
+      <div className="flex flex-col my-3 max-w-full flex-1 mb-6">
+        <label htmlFor="" className="text-[14px] font-semibold mb-[0.8px]">
+          Business Logo
+        </label>
+      </div>
+
+      <div>
+        <Button
+          // handleClick={() => navigate("/sign-up")}
+          className={"px-8 py-3 mt-5"}
+          type={"button"}
+          title={"UPDATE"}
+          disabled={false}
+        />
+      </div>
+    </div>
+  );
+};

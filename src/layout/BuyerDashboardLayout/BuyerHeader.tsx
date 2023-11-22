@@ -46,9 +46,9 @@ const BuyerDashboardLayoutHeader = ({
 
   const { isAuthenticated, isLoading, user } = useAuth();
 
-  if (!isAuthenticated && !isLoading) {
-    navigate("/sign-in");
-  }
+  // if (!isAuthenticated && !isLoading) {
+  //   navigate("/sign-in");
+  // }
 
   return (
     <div className="w-full min-h-[100px] max-h-[100px] px-4 bg-shades-primary sticky top-0 flex flx-row items-center justify-between z-[1000]">
