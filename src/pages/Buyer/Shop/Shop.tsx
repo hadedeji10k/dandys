@@ -4,7 +4,6 @@ import { FaSquare } from 'react-icons/fa6';
 import ProductCard from '@/component/BuyerComps/Product/ProductCard';
 import { product } from '@/component/BuyerComps/Product/ProductData';
 import { IProductCard } from '@/interface';
-import SecondaryFooter from '@/component/BuyerComps/SecondaryFooter/SecondaryFooter';
 
 function Shop() {
   return (
@@ -52,10 +51,6 @@ function Shop() {
               <ProductCard product={item} />
             </section>
           ))}
-        </section>
-
-        <section>
-          <SecondaryFooter />
         </section>
       </section>
     </main>

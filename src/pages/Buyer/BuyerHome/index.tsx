@@ -11,7 +11,6 @@ import Fragrance from '@/component/BuyerComps/Product/Fragrance';
 import TabContents from '@/component/BuyerComps/Tabs/TabContents';
 import { images } from '@/exports/images';
 import CategoryCard from '@/component/BuyerComps/CategoryCard/CategoryCard';
-import SecondaryFooter from '@/component/BuyerComps/SecondaryFooter/SecondaryFooter';
 import BlogCard from '@/component/BuyerComps/BlogCard/BlogCard';
 import { IBlogCard } from '@/interface';
 
@@ -199,10 +198,6 @@ function BuyerHome() {
           </section>
         </article>
         {/*== Blog end=== */}
-
-        <article className='d-flex flex-col my-8'>
-          <SecondaryFooter />
-        </article>
       </section>
     </main>
   );

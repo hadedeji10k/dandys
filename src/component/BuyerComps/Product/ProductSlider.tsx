@@ -1,7 +1,7 @@
-import Slider from 'react-slick';
-import { product } from './ProductData';
-import ProductCard from './ProductCard';
-import { IProductCard } from '@/interface';
+import Slider from "react-slick";
+import { product } from "./ProductData";
+import ProductCard from "./ProductCard";
+import { IProductCard } from "@/interface";
 
 function ProductSlider() {
   const settings = {
@@ -37,11 +37,11 @@ function ProductSlider() {
   };
 
   return (
-    <main className='productSlider'>
-      <section className=''>
+    <main className="productSlider">
+      <section className="">
         <Slider {...settings}>
           {product.map((item: IProductCard) => (
-            <section key={item.id} className='p-3'>
+            <section key={item.id} className="p-3">
               <ProductCard product={item} />
             </section>
           ))}

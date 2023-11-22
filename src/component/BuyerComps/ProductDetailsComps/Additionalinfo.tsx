@@ -21,7 +21,7 @@ function Additionalinfo({
         <p>
           <span className='greyText'>Cover cap colors: </span>
 
-          {capColors.map((item: string, idx: number) => (
+          {capColors.map((item, idx) => (
             <span key={idx}> {item}, </span>
           ))}
         </p>

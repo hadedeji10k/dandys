@@ -1,46 +1,48 @@
-import { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import PageLoading from './component/PageLoading/PageLoading';
-import PageNotFound from './component/PageError';
-import SignUp from './pages/SignUp';
-import SignIn from './pages/SignIn';
-import OTPVerification from './pages/SignUp/OTP';
-import ForgotPassword from './pages/SignIn/ForgotPassword';
-import PasswordReset from './pages/SignIn/PasswordReset';
-import ProductPage from './pages/somepages/ProductPage';
-import OrderPage from './pages/somepages/OrderPage';
-import OrderDetails from './pages/somepages/OrderDetails';
-import NewProduct from './pages/somepages/NewProduct';
-import Profile from './pages/somepages/Profile';
-import AllProduct from './pages/somepages/AllProduct';
-import CreateAccount from './pages/somepages/CreateAccount';
-import SellerDashboardLayout from './layout/SellerDashboardLayout';
-import Notification from './pages/somepages/Notification';
-import Prefernces from './pages/somepages/Prefernces';
-import ProductCategory from './pages/somepages/ProductCategory';
-import AllDiscounts from './pages/somepages/AllDiscounts';
-import NewDiscount from './pages/somepages/NewDiscount';
-import Customers from './pages/somepages/Customers';
-import CustomerDetails from './pages/somepages/CustomerDetails';
-import EditDiscount from './pages/somepages/EditDiscount';
-import Dashboard from './pages/somepages/Dashboard';
-import Settings from './pages/SellerDashboard/Settings';
-import Plan from './pages/SellerDashboard/Settings/Plan';
-import Billing from './pages/SellerDashboard/Settings/Billing';
-import Payment from './pages/SellerDashboard/Settings/Payment';
-import UserPermission from './pages/SellerDashboard/Settings/UserPermission';
-import BuyerHome from './pages/Buyer/BuyerHome';
-import Analytics from './pages/SellerDashboard/Analytics';
-import Shop from './pages/Buyer/Shop/Shop';
-import ProductDetails from './pages/Buyer/ProductDetails/ProductDetails';
-import EditProduct from './pages/somepages/EditProduct';
+import { Suspense } from "react";
+import { Routes, Route } from "react-router-dom";
+import PageLoading from "./component/PageLoading/PageLoading";
+import PageNotFound from "./component/PageError";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import OTPVerification from "./pages/SignUp/OTP";
+import ForgotPassword from "./pages/SignIn/ForgotPassword";
+import PasswordReset from "./pages/SignIn/PasswordReset";
+import ProductPage from "./pages/somepages/ProductPage";
+import OrderPage from "./pages/somepages/OrderPage";
+import OrderDetails from "./pages/somepages/OrderDetails";
+import NewProduct from "./pages/somepages/NewProduct";
+import Profile from "./pages/somepages/Profile";
+import AllProduct from "./pages/somepages/AllProduct";
+import CreateAccount from "./pages/somepages/CreateAccount";
+import SellerDashboardLayout from "./layout/SellerDashboardLayout";
+import Notification from "./pages/somepages/Notification";
+import Prefernces from "./pages/somepages/Prefernces";
+import ProductCategory from "./pages/somepages/ProductCategory";
+import AllDiscounts from "./pages/somepages/AllDiscounts";
+import NewDiscount from "./pages/somepages/NewDiscount";
+import Customers from "./pages/somepages/Customers";
+import CustomerDetails from "./pages/somepages/CustomerDetails";
+import EditDiscount from "./pages/somepages/EditDiscount";
+import Dashboard from "./pages/somepages/Dashboard";
+import Settings from "./pages/SellerDashboard/Settings";
+import Plan from "./pages/SellerDashboard/Settings/Plan";
+import Billing from "./pages/SellerDashboard/Settings/Billing";
+import Payment from "./pages/SellerDashboard/Settings/Payment";
+import UserPermission from "./pages/SellerDashboard/Settings/UserPermission";
+import BuyerHome from "./pages/Buyer/BuyerHome";
+import Analytics from "./pages/SellerDashboard/Analytics";
+import Shop from "./pages/Buyer/Shop/Shop";
+import ProductDetails from "./pages/Buyer/ProductDetails/ProductDetails";
+import EditProduct from "./pages/somepages/EditProduct";
+import BuyerDashboardLayout from "./layout/BuyerDashboardLayout";
+import BuyerAccount from "./pages/Buyer/BuyerAccount";
 
 function Routings() {
   return (
     <Routes>
       {/* -------------------------->>> SELLER DASHBOARD -------------->>>>>>>>>>>>>>>> */}
       <Route
-        path='/seller-dashboard'
+        path="/seller-dashboard"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -50,7 +52,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/preferences'
+        path="/seller/preferences"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -60,7 +62,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/notification'
+        path="/seller/notification"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -71,7 +73,7 @@ function Routings() {
       />
 
       <Route
-        path='/seller/profile'
+        path="/seller/profile"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -83,7 +85,7 @@ function Routings() {
 
       {/* PRODUCT */}
       <Route
-        path='/seller/new-product'
+        path="/seller/new-product"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -93,7 +95,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/products'
+        path="/seller/products"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -103,7 +105,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/products/categories'
+        path="/seller/products/categories"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -113,7 +115,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/product-details/:id'
+        path="/seller/product-details/:id"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -135,7 +137,7 @@ function Routings() {
 
       {/* DISCOUNT */}
       <Route
-        path='/seller/discount-details/:id'
+        path="/seller/discount-details/:id"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -145,7 +147,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/discounts'
+        path="/seller/discounts"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -155,7 +157,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/new-discount'
+        path="/seller/new-discount"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -165,7 +167,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/edit-discount/:id'
+        path="/seller/edit-discount/:id"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -177,7 +179,7 @@ function Routings() {
 
       {/* ORDER */}
       <Route
-        path='/seller/orders'
+        path="/seller/orders"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -187,7 +189,7 @@ function Routings() {
         }
       />
       <Route
-        path='/order-details'
+        path="/order-details"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -198,7 +200,7 @@ function Routings() {
       />
       {/* Analytics*/}
       <Route
-        path='/seller/analytics'
+        path="/seller/analytics"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -210,7 +212,7 @@ function Routings() {
 
       {/* CUSTOMER*/}
       <Route
-        path='/seller/customers'
+        path="/seller/customers"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -220,7 +222,7 @@ function Routings() {
         }
       />
       <Route
-        path='/customers/customer-details'
+        path="/customers/customer-details"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -232,7 +234,7 @@ function Routings() {
 
       {/* SETTINGS */}
       <Route
-        path='/seller/settings'
+        path="/seller/settings"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -242,7 +244,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/settings/plan'
+        path="/seller/settings/plan"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -252,7 +254,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/settings/billing'
+        path="/seller/settings/billing"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -262,7 +264,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/settings/payment'
+        path="/seller/settings/payment"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -272,7 +274,7 @@ function Routings() {
         }
       />
       <Route
-        path='/seller/settings/user-permission'
+        path="/seller/settings/user-permission"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -287,7 +289,7 @@ function Routings() {
       {/* -------------------------->>> AUTHENTICATION -------------->>>>>>>>>>>>>>>> */}
 
       <Route
-        path='/account'
+        path="/account"
         element={
           <Suspense fallback={<PageLoading />}>
             <CreateAccount />
@@ -295,7 +297,7 @@ function Routings() {
         }
       />
       <Route
-        path='/sign-up'
+        path="/sign-up"
         element={
           <Suspense fallback={<PageLoading />}>
             <SignUp />
@@ -303,7 +305,7 @@ function Routings() {
         }
       />
       <Route
-        path='/sign-in'
+        path="/sign-in"
         element={
           <Suspense fallback={<PageLoading />}>
             <SignIn />
@@ -311,7 +313,7 @@ function Routings() {
         }
       />
       <Route
-        path='/forgot-password'
+        path="/forgot-password"
         element={
           <Suspense fallback={<PageLoading />}>
             <ForgotPassword />
@@ -319,7 +321,7 @@ function Routings() {
         }
       />
       <Route
-        path='/otp'
+        path="/otp"
         element={
           <Suspense fallback={<PageLoading />}>
             <OTPVerification />
@@ -327,7 +329,7 @@ function Routings() {
         }
       />
       <Route
-        path='/password-reset'
+        path="/password-reset"
         element={
           <Suspense fallback={<PageLoading />}>
             <PasswordReset />
@@ -340,37 +342,56 @@ function Routings() {
       {/* -------------------------->>> BUYERS -------------->>>>>>>>>>>>>>>> */}
 
       <Route
-        path='/'
+        path="/"
         element={
           <Suspense fallback={<PageLoading />}>
-            <BuyerHome />
+            <BuyerDashboardLayout>
+              <BuyerHome />
+            </BuyerDashboardLayout>
           </Suspense>
         }
       />
 
       <Route
-        path='/buyer-dashboard'
+        path="/buyer-dashboard"
         element={
           <Suspense fallback={<PageLoading />}>
-            <BuyerHome />
+            <BuyerDashboardLayout>
+              <BuyerHome />
+            </BuyerDashboardLayout>
           </Suspense>
         }
       />
 
       <Route
-        path='/buyer-shop'
+        path="/buyer-shop"
         element={
           <Suspense fallback={<PageLoading />}>
-            <Shop />
+            <BuyerDashboardLayout>
+              <Shop />
+            </BuyerDashboardLayout>
           </Suspense>
         }
       />
 
       <Route
-        path='/:id'
+        path="/:id"
         element={
           <Suspense fallback={<PageLoading />}>
-            <ProductDetails />
+            <BuyerDashboardLayout>
+              <ProductDetails />
+            </BuyerDashboardLayout>
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="/buyer-account"
+        element={
+          <Suspense fallback={<PageLoading />}>
+            <BuyerDashboardLayout>
+              <BuyerAccount />
+            </BuyerDashboardLayout>
           </Suspense>
         }
       />
@@ -378,7 +399,7 @@ function Routings() {
       {/* -------------------------->>> END BUYERS -------------->>>>>>>>>>>>>>>> */}
 
       <Route
-        path='*'
+        path="*"
         element={
           <Suspense fallback={<PageLoading />}>
             <PageNotFound />
