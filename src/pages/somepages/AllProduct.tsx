@@ -59,8 +59,8 @@ const AllProduct = () => {
             onClick={() =>
               navigate(
                 categoryId
-                  ? `/seller/new-product?categoryId=${categoryId}`
-                  : "/seller/new-product"
+                  ? `/new-product?categoryId=${categoryId}`
+                  : "/new-product"
               )
             }
             className="bg-shades-secondary text-white hover:text-shades-secondary hover:bg-white py-2 px-3 rounded-md text-[14px] border hover:border-shades-secondary transition-all ease-in-out flex flex-row items-center gap-x-2"
@@ -235,7 +235,7 @@ const ProductMenu = ({ id }: { id: string }) => {
           View
         </p>
         <p
-          onClick={() => navigate(`/seller/edit-product/${id}`)}
+          onClick={() => navigate(`/edit-product/${id}`)}
           className="text-[14px] cursor-pointer hover:bg-shades-primary/5 px-6 py-2.5"
         >
           Edit

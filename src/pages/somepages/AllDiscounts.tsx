@@ -43,7 +43,7 @@ const AllDiscounts = () => {
             <AiOutlineExport /> Export
           </button>
           <button
-            onClick={() => navigate("/seller/new-discount")}
+            onClick={() => navigate("/new-discount")}
             className="bg-shades-secondary text-white hover:text-shades-secondary hover:bg-white py-2 px-3 rounded-md text-[14px] border hover:border-shades-secondary transition-all ease-in-out flex flex-row items-center gap-x-2"
           >
             Add new discount

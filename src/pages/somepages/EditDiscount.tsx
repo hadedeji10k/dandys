@@ -128,7 +128,7 @@ const NewDiscount = () => {
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed || result.isDenied || result.isDismissed) {
-              navigate("/seller/discounts");
+              navigate("/discounts");
             }
           });
         })
@@ -211,7 +211,7 @@ const NewDiscount = () => {
           confirmButtonText: "Ok",
         }).then((result) => {
           if (result.isConfirmed || result.isDenied || result.isDismissed) {
-            navigate("/seller/discounts");
+            navigate("/discounts");
           }
         });
       })

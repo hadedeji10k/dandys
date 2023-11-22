@@ -52,7 +52,7 @@ const SellerDashboardLayoutHeader = ({
     <div className="w-full min-h-[100px] max-h-[100px] px-4 bg-shades-primary sticky top-0 flex flx-row items-center justify-between z-[1000]">
       <div
         className="cursor-pointer"
-        onClick={() => navigate("/seller-dashboard")}
+        onClick={() => navigate("/dashboard")}
       >
         <img src={Logo} alt="" />
       </div>
@@ -161,13 +161,13 @@ const ProfilePop = () => {
 
       <div className="w-full flex flex-col cursor-pointer">
         <div
-          onClick={() => navigate("/seller/profile")}
+          onClick={() => navigate("/profile")}
           className="w-full py-5 md:pl-8 pl-5 pr-3 font-medium text-base hover:bg-shades-primary/5"
         >
           Manage account
         </div>
         <div
-          onClick={() => navigate("/seller/preferences")}
+          onClick={() => navigate("/preferences")}
           className="w-full py-5 md:pl-8 pl-5 pr-3 font-medium text-base hover:bg-shades-primary/5"
         >
           Preferences
@@ -244,7 +244,7 @@ const Notification = () => {
           <div className="w-full flex flex-col justify-center items-center cursor-pointer hover:underline">
             <p
               className="my-3"
-              onClick={() => navigate("/seller/notification")}
+              onClick={() => navigate("/notification")}
             >
               View more
             </p>

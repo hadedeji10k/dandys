@@ -26,7 +26,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
-      navigate("/seller-dashboard");
+      navigate("/dashboard");
     }
   }, []);
 
@@ -72,7 +72,7 @@ const SignIn = () => {
               const currentUser = (userData as any)?.data;
               dispatch(saveUser(currentUser));
 
-              navigate("/seller-dashboard");
+              navigate("/dashboard");
             }
           });
         })

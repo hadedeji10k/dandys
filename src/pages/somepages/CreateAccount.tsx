@@ -94,7 +94,7 @@ const CreateAccount = () => {
           icon: "success",
           confirmButtonText: "Ok",
         }).then(() => {
-          navigate("/seller-dashboard");
+          navigate("/dashboard");
         });
       })
       .catch((err: any) => {

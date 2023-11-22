@@ -37,7 +37,7 @@ function Routings() {
     <Routes>
       {/* -------------------------->>> SELLER DASHBOARD -------------->>>>>>>>>>>>>>>> */}
       <Route
-        path="/seller-dashboard"
+        path="/"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -47,7 +47,17 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/preferences"
+        path="/dashboard"
+        element={
+          <Suspense fallback={<PageLoading />}>
+            <SellerDashboardLayout>
+              <Dashboard />
+            </SellerDashboardLayout>
+          </Suspense>
+        }
+      />
+      <Route
+        path="/preferences"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -57,7 +67,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/notification"
+        path="/notification"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -68,7 +78,7 @@ function Routings() {
       />
 
       <Route
-        path="/seller/profile"
+        path="/profile"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -80,7 +90,7 @@ function Routings() {
 
       {/* PRODUCT */}
       <Route
-        path="/seller/new-product"
+        path="/new-product"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -90,7 +100,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/products"
+        path="/products"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -100,7 +110,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/products/categories"
+        path="/products/categories"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -110,7 +120,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/product-details/:id"
+        path="/product-details/:id"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -120,7 +130,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/edit-product/:id"
+        path="/edit-product/:id"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -132,7 +142,7 @@ function Routings() {
 
       {/* DISCOUNT */}
       <Route
-        path="/seller/discount-details/:id"
+        path="/discount-details/:id"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -142,7 +152,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/discounts"
+        path="/discounts"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -152,7 +162,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/new-discount"
+        path="/new-discount"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -162,7 +172,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/edit-discount/:id"
+        path="/edit-discount/:id"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -174,7 +184,7 @@ function Routings() {
 
       {/* ORDER */}
       <Route
-        path="/seller/orders"
+        path="/orders"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -195,7 +205,7 @@ function Routings() {
       />
       {/* Analytics*/}
       <Route
-        path="/seller/analytics"
+        path="/analytics"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -207,7 +217,7 @@ function Routings() {
 
       {/* CUSTOMER*/}
       <Route
-        path="/seller/customers"
+        path="/customers"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -229,7 +239,7 @@ function Routings() {
 
       {/* SETTINGS */}
       <Route
-        path="/seller/settings"
+        path="/settings"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -239,7 +249,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/settings/plan"
+        path="/settings/plan"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -249,7 +259,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/settings/billing"
+        path="/settings/billing"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -259,7 +269,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/settings/payment"
+        path="/settings/payment"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>
@@ -269,7 +279,7 @@ function Routings() {
         }
       />
       <Route
-        path="/seller/settings/user-permission"
+        path="/settings/user-permission"
         element={
           <Suspense fallback={<PageLoading />}>
             <SellerDashboardLayout>

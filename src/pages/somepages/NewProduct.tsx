@@ -107,7 +107,7 @@ const NewProduct = () => {
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed || result.isDenied || result.isDismissed) {
-              navigate("/seller/products");
+              navigate("/products");
             }
           });
         })
