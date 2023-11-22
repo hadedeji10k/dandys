@@ -29,13 +29,8 @@ import Plan from "./pages/SellerDashboard/Settings/Plan";
 import Billing from "./pages/SellerDashboard/Settings/Billing";
 import Payment from "./pages/SellerDashboard/Settings/Payment";
 import UserPermission from "./pages/SellerDashboard/Settings/UserPermission";
-import BuyerHome from "./pages/Buyer/BuyerHome";
 import Analytics from "./pages/SellerDashboard/Analytics";
-import Shop from "./pages/Buyer/Shop/Shop";
-import ProductDetails from "./pages/Buyer/ProductDetails/ProductDetails";
 import EditProduct from "./pages/somepages/EditProduct";
-import BuyerDashboardLayout from "./layout/BuyerDashboardLayout";
-import BuyerAccount from "./pages/Buyer/BuyerAccount";
 
 function Routings() {
   return (
@@ -338,65 +333,6 @@ function Routings() {
       />
 
       {/* -------------------------->>> END AUTHENTICATION -------------->>>>>>>>>>>>>>>> */}
-
-      {/* -------------------------->>> BUYERS -------------->>>>>>>>>>>>>>>> */}
-
-      <Route
-        path="/"
-        element={
-          <Suspense fallback={<PageLoading />}>
-            <BuyerDashboardLayout>
-              <BuyerHome />
-            </BuyerDashboardLayout>
-          </Suspense>
-        }
-      />
-
-      <Route
-        path="/buyer-dashboard"
-        element={
-          <Suspense fallback={<PageLoading />}>
-            <BuyerDashboardLayout>
-              <BuyerHome />
-            </BuyerDashboardLayout>
-          </Suspense>
-        }
-      />
-
-      <Route
-        path="/buyer-shop"
-        element={
-          <Suspense fallback={<PageLoading />}>
-            <BuyerDashboardLayout>
-              <Shop />
-            </BuyerDashboardLayout>
-          </Suspense>
-        }
-      />
-
-      <Route
-        path="/:id"
-        element={
-          <Suspense fallback={<PageLoading />}>
-            <BuyerDashboardLayout>
-              <ProductDetails />
-            </BuyerDashboardLayout>
-          </Suspense>
-        }
-      />
-
-      <Route
-        path="/buyer-account"
-        element={
-          <Suspense fallback={<PageLoading />}>
-            <BuyerDashboardLayout>
-              <BuyerAccount />
-            </BuyerDashboardLayout>
-          </Suspense>
-        }
-      />
-
-      {/* -------------------------->>> END BUYERS -------------->>>>>>>>>>>>>>>> */}
 
       <Route
         path="*"

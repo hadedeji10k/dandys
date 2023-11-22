@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import SellerDashboardLayoutSidebar from "./Sidebar";
 import SellerDashboardLayoutHeader from "./Header";
 import MobileSidebar from "./MobileSidebar";
-import SellerDashboardLayoutHeader2 from "./BuyerHeader";
 
 interface Props {
   children: React.ReactNode | JSX.Element;
@@ -13,7 +12,7 @@ const SellerDashboardLayout = ({ children }: Props) => {
 
   return (
     <div className={`flex flex-col h-screen bg-gray-50`}>
-      <SellerDashboardLayoutHeader2
+      <SellerDashboardLayoutHeader
         setSidebarIsOpen={setSidebarIsOpen}
         sidebarIsOpen={sidebarIsOpen}
       />
