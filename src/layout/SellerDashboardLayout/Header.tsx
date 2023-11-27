@@ -14,6 +14,7 @@ import {
 } from "@/api/sellerApiCalls";
 import { saveNotification, saveUser } from "@/api/slices/user";
 import { MdClose, MdMenu } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa6";
 
 const SellerDashboardLayoutHeader = ({
   setSidebarIsOpen,
@@ -93,11 +94,17 @@ const SellerDashboardLayoutHeader = ({
                 <h3 className="text-shades-white font-medium hidden sm:block">
                   {user?.fullName!}
                 </h3>
-                <img
-                  src={Avatar}
-                  className="w-[45px] h-[45px] rounded-md"
-                  alt=""
-                />
+                {user?.avatar?.length > 0 ? (
+                  <img
+                    src={Avatar}
+                    className="w-[45px] h-[45px] rounded-md"
+                    alt=""
+                  />
+                ) : (
+                  <span className="p-2 rounded-md bg-shades-white">
+                    <FaRegUser size="1.8rem" />
+                  </span>
+                )}
               </div>
             </Popover>
           </>
@@ -152,7 +159,13 @@ const ProfilePop = () => {
   return (
     <div className="md:min-w-[300px] max-w-[300px]">
       <div className="px-5 py-6 border-b-2 border-shades-lightGray w-full flex items-center flex-wrap gap-x-3">
-        <img src={Avatar} className="w-[80px] h-[80px] rounded-md" alt="" />
+        {user?.avatar?.length > 0 ? (
+          <img src={Avatar} className="w-[70px] h-[70px] rounded-md mb-1" alt="" />
+        ) : (
+          <span className="p-2 rounded-md bg-shades-primary/20">
+            <FaRegUser size="1.8rem" />
+          </span>
+        )}
         <div>
           <h2 className="text-[18px] font-semibold mb-1">{user?.fullName}</h2>
           <h4 className="text-[13px] font-medium">{user?.email}</h4>
