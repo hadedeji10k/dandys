@@ -10,7 +10,6 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
   useCreateBankAccountMutation,
-  useSellerCreateInformationMutation,
 } from "@/api/sellerApiCalls";
 import { ICreateBankDetails, ICreateSellerInformation } from "@/interface";
 import { toast } from "react-toastify";
@@ -18,15 +17,17 @@ import Loader from "@/component/Loader";
 import { useAppSelector } from "@/api/hook";
 import FormSelect from "@/component/FormSelect";
 import banks from "@/api/banks.json";
+import API from "@/utils/axiosInstance";
 
 const CreateAccount = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [image, setImage] = useState<any>({});
 
   const [formData, setFormData] = useState<ICreateSellerInformation>({
     managerFullName: "",
-    businessImage: "",
     shopName: "",
     cacNumber: "",
     documentType: "",
@@ -42,7 +43,6 @@ const CreateAccount = () => {
     bankCode: "",
   });
 
-  const [createSellerInformation] = useSellerCreateInformationMutation();
   const [createBankAccount] = useCreateBankAccountMutation();
 
   const handleStep1 = () => {
@@ -59,8 +59,19 @@ const CreateAccount = () => {
 
   const handleStep2 = () => {
     setIsLoading(true);
-    createSellerInformation(formData)
-      .unwrap()
+
+    let form_data = new FormData();
+    for (let [key, value] of Object.entries(formData)) {
+      form_data.append(key, value.toString());
+    }
+
+    form_data.append("businessImage", image);
+
+    API.post("/seller", form_data, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    })
       .then(() => {
         Swal.fire({
           title: "Success!",
@@ -155,7 +166,11 @@ const CreateAccount = () => {
           {step === 0 ? (
             <CreateAccount1 formData={formData} setFormData={setFormData} />
           ) : step === 1 ? (
-            <CreateAccount2 formData={formData} setFormData={setFormData} />
+            <CreateAccount2
+              formData={formData}
+              setFormData={setFormData}
+              setImage={setImage}
+            />
           ) : step === 2 ? (
             <CreateAccount3 bankForm={bankForm} setBankForm={setBankForm} />
           ) : null}
@@ -271,9 +286,17 @@ const CreateAccount1 = ({
   );
 };
 
-const CreateAccount2 = ({formData, setFormData}: {formData: ICreateSellerInformation, setFormData: any}) => {
+const CreateAccount2 = ({
+  formData,
+  setFormData,
+  setImage,
+}: {
+  formData: ICreateSellerInformation;
+  setFormData: any;
+  setImage: any;
+}) => {
   const user = useAppSelector((state) => state.user.user);
-  console.log("User>", user)
+  console.log("User>", user);
 
   const meansOfIdentification = [
     {
@@ -296,14 +319,14 @@ const CreateAccount2 = ({formData, setFormData}: {formData: ICreateSellerInforma
       label: "International Passport",
       value: "International Passport",
     },
-  ]
+  ];
 
-   const handleChange = (e: any) => {
-     setFormData({
-       ...formData,
-       [e.target.name]: e.target.value,
-     });
-   };
+  const handleChange = (e: any) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <div className="w-full lg:max-w-[90%] max-w-[400px]">
@@ -311,11 +334,11 @@ const CreateAccount2 = ({formData, setFormData}: {formData: ICreateSellerInforma
         Tell us about your business
       </h2>
 
-      <div className="mt-4 w-full flex flex-col md:flex-row md:gap-3 flex-wrap justify-between">
+      <div className="mt-4 w-full flex flex-col md:flex-row md:gap-x-8 flex-wrap justify-between">
         <div className="w-full flex-1 flex flex-col sm:min-w-[200px]">
           <FormInput
             label="Account manager’s first & last name"
-            labelClassName="font-medium text-lg !mb-2"
+            labelClassName="font-medium text-[16px] !mb-2"
             placeholder="Enter first & last name"
             required
             name="managerFullName"
@@ -325,7 +348,7 @@ const CreateAccount2 = ({formData, setFormData}: {formData: ICreateSellerInforma
           <FormInput
             label="Phone number"
             type="tel"
-            labelClassName="font-medium text-lg !mb-2"
+            labelClassName="font-medium text-[16px] !mb-2"
             placeholder="Enter phone number"
             required
             name="phoneNumber"
@@ -336,14 +359,14 @@ const CreateAccount2 = ({formData, setFormData}: {formData: ICreateSellerInforma
         <div className="w-full flex-1 flex flex-col sm:min-w-[200px]">
           <FormInput
             label="Email Address"
-            labelClassName="font-medium text-lg !mb-2"
+            labelClassName="font-medium text-[16px] !mb-2"
             placeholder="Email address"
             defaultValue={user?.email}
             disabled
           />
           <FormInput
             label="CAC"
-            labelClassName="font-medium text-lg !mb-2"
+            labelClassName="font-medium text-[16px] !mb-2"
             placeholder="Enter your CAC number"
             name="cacNumber"
             defaultValue={formData.cacNumber}
@@ -364,19 +387,14 @@ const CreateAccount2 = ({formData, setFormData}: {formData: ICreateSellerInforma
             options={meansOfIdentification}
             defaultValue={formData.documentType}
           />
-
           <FormInput
             label="Upload ID"
             type="file"
-            labelClassName="font-medium text-lg !mb-2"
+            labelClassName="font-medium text-[16px] !mb-2"
             placeholder="Choose file to upload"
             required
-            onChange={(value) =>
-              setFormData({
-                ...formData,
-                document: value,
-              })
-            }
+            returnRawFile
+            onChange={(value) => setImage(value)}
           />
         </div>
       </div>
@@ -391,7 +409,6 @@ const CreateAccount3 = ({
   bankForm: ICreateBankDetails;
   setBankForm: any;
 }) => {
-  
   const handleChange = (e: any) => {
     setBankForm({
       ...bankForm,
@@ -402,9 +419,9 @@ const CreateAccount3 = ({
   const options = banks.map((item) => {
     return {
       label: item.name,
-      value: item.code
-    }
-  })
+      value: item.code,
+    };
+  });
 
   return (
     <div className="w-full max-w-[500px]">
@@ -433,7 +450,7 @@ const CreateAccount3 = ({
         <FormInput
           name="accountNumber"
           label="Bank account number"
-          labelClassName="font-medium text-lg !mb-2"
+          labelClassName="font-medium !mb-2"
           placeholder="Bank account number"
           className="mb-4"
           onChange={handleChange}
@@ -442,7 +459,7 @@ const CreateAccount3 = ({
         <FormInput
           name="accountName"
           label="Bank account name"
-          labelClassName="font-medium text-lg !mb-2"
+          labelClassName="font-medium !mb-2"
           placeholder="Bank account name"
           className="mb-4"
           onChange={handleChange}

@@ -16,6 +16,7 @@ export interface IFormInputProps {
   inputClassName?: string;
   labelClassName?: string;
   className?: string;
+  returnRawFile?: boolean;
   onChange?: (e: any) => void;
   onBlur?: (e: any) => void;
   icon?: JSX.Element | string;
@@ -39,6 +40,7 @@ const FormInput = ({
   defaultValue,
   error,
   startDate,
+  returnRawFile,
 }: IFormInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -60,9 +62,13 @@ const FormInput = ({
 
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
-    getBase64(file, (url: any) => {
-      onChange && onChange(url);
-    });
+    if (returnRawFile) {
+      onChange && onChange(file);
+    } else {
+      getBase64(file, (url: any) => {
+        onChange && onChange(url);
+      });
+    }
   };
 
   const disabledDate = (current: any) => {
@@ -85,7 +91,7 @@ const FormInput = ({
     setTimeout(() => {
       e.target.focus();
     }, 0);
-  }
+  };
 
   return (
     <div className={`flex flex-col mt-3 ${error ? "" : "mb-3"} ${className}`}>

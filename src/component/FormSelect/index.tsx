@@ -57,7 +57,7 @@ const FormSelect = ({
           onChange={onChange}
           filterOption={filterOption}
           options={options}
-          className={`bg-transparent text-[14px] flex flex-row gap-x-3 justify-center items-center p-2 !h-11 border-[2px] border-[#d6d6da] rounded-md w-full text-[#666365]`}
+          className={`bg-transparent text-[14px] flex flex-row gap-x-3 justify-center items-center p-2 !h-11 border border-[#d6d6da] rounded-md w-full text-[#666365]`}
           disabled={disabled}
         />
       {error && <p className="text-shades-red text-[14px] mb-3">{error}</p>}

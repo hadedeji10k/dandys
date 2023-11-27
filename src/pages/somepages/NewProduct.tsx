@@ -47,7 +47,6 @@ const NewProduct = () => {
     images.forEach((image: any) => {
       newImageUrls.push(URL.createObjectURL(image));
     });
-    console.log("Images>>>", images);
     setImageUrls(newImageUrls);
   }, [images]);
 

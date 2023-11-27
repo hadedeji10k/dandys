@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiSolidLock } from "react-icons/bi";
 import { MdOutlineMailOutline } from "react-icons/md";
@@ -23,10 +23,17 @@ import useAuth from "@/api/context";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, isAuthenticated, isLoading } = useAuth();
 
   const [signUp] = useSignUpMutation();
   const dispatch = useAppDispatch();
+
+  
+  useEffect(() => {
+    if (isAuthenticated && !isLoading) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   const {
     data: userData,

@@ -6,7 +6,7 @@ export interface ISellerPreference {
 
 export interface ICreateSellerInformation {
   managerFullName: string;
-  businessImage: string;
+  businessImage?: string;
   shopName: string;
   cacNumber: string;
   documentType: string;

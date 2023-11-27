@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
 import { useNavigate } from "react-router-dom";
 import { FcAlarmClock } from "react-icons/fc";
@@ -33,9 +33,11 @@ const OTPVerification = () => {
   const [verifyOTP] = useVerifyOTPMutation();
   const [resendOTP] = useResendOTPMutation();
 
-  if (!email) {
-    navigate(-1);
-  }
+  useEffect(() => {
+    if (!email) {
+      navigate(-1);
+    }
+  }, [])
 
   const verifyData = () => {
     if (pin.length !== 6) {
