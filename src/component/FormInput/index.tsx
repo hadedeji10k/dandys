@@ -93,6 +93,8 @@ const FormInput = ({
     }, 0);
   };
 
+  console.log("name>>", name, defaultValue)
+
   return (
     <div className={`flex flex-col mt-3 ${error ? "" : "mb-3"} ${className}`}>
       <label
@@ -120,7 +122,7 @@ const FormInput = ({
           <DatePicker
             className={`resize-none no_scrollbar bg-transparent text-[14px] !border-none hover:!border-none focus:!border-none !shadow-none hover:!shadow-none focus:!shadow-none focus:!outline-none w-full text-[#666365]`}
             onChange={handleDateChange}
-            defaultValue={dayjs(new Date(), "YYYY-MM-DD")}
+            defaultValue={defaultValue && dayjs(defaultValue) as any}
             placeholder={placeholder}
             disabledDate={disabledDate}
           />

@@ -299,6 +299,7 @@ const NewProduct = () => {
                 placeholder="Enter date"
                 error={formik.touched.expiryDate && formik.errors.expiryDate}
                 startDate={formik.values.manufactureDate}
+                defaultValue={formik.values.expiryDate}
               />
               <FormInput
                 name="manufactureDate"
@@ -314,6 +315,7 @@ const NewProduct = () => {
                   formik.touched.manufactureDate &&
                   formik.errors.manufactureDate
                 }
+                defaultValue={formik.values.manufactureDate}
               />
               <FormInput
                 name="isoNumber"
@@ -346,7 +348,9 @@ const NewProduct = () => {
                 onChange={(value) => formik.setFieldValue("categoryId", value)}
                 onBlur={formik.handleBlur}
                 disabled={categoryId?.length! > 0}
-                defaultValue={categoryId ? categoryId : formik.values.categoryId}
+                defaultValue={
+                  categoryId ? categoryId : formik.values.categoryId
+                }
                 required
                 label="Category"
                 placeholder="Select category"
@@ -414,6 +418,7 @@ const NewProduct = () => {
                 label="Sale start"
                 placeholder="Enter date"
                 error={formik.touched.saleStart && formik.errors.saleStart}
+                defaultValue={formik.values.saleStart}
               />
               <FormInput
                 name="saleEnd"
@@ -424,6 +429,7 @@ const NewProduct = () => {
                 placeholder="Enter date"
                 error={formik.touched.saleEnd && formik.errors.saleEnd}
                 startDate={formik.values.saleStart}
+                defaultValue={formik.values.saleEnd}
               />
               <FormInput
                 name="stockLimit"
