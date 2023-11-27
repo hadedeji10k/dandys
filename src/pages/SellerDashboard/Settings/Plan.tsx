@@ -39,6 +39,7 @@ const Plan = ({ subscriptionDetails }: IProps) => {
     };
 
     const onSuccess = (reference: any) => {
+      console.log("Ref>>", reference)
       window.location.reload();
     };
 
