@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "@/api/hook";
 import {
   useDeleteAccountMutation,
@@ -12,20 +12,32 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
-import { Spin } from "antd";
+import { Avatar, Spin } from "antd";
 import Modal from "@/component/Modal/Modal";
 import Button from "@/component/Button";
 import { BiSolidLock } from "react-icons/bi";
 import { IoCheckbox } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@/api/context";
+import { FaRegUser } from "react-icons/fa6";
+import { HiPencil } from "react-icons/hi";
+import Loader from "@/component/Loader";
+import API from "@/utils/axiosInstance";
 
 const Profile = () => {
   const user = useAppSelector((state) => state.user.user);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [modal, setModal] = useState(false);
   const [passwordModal, setPasswordModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+
+  const fileInputRef = useRef(null) as any;
+
+  const handleButtonClick = () => {
+    fileInputRef?.current?.click();
+  };
 
   const handleModal = () => {
     setModal(!modal);
@@ -39,94 +51,172 @@ const Profile = () => {
     setDeleteModal(!deleteModal);
   };
 
-  return (
-    <div className="w-full p-4">
-      <div className="flex flex-col px-6 pb-16 pt-6 rounded-lg bg-white mb-5">
-        <div className="flex flex-row justify-between mt-2 gap-4 flex-wrap">
-          <h1 className="sm:text-[24px] text-[18px] font-bold">
-            Profile Information
-          </h1>
-          <button
-            onClick={handleModal}
-            className="bg-shades-white text-shades-primary hover:text-shades-white hover:bg-shades-primary py-1 px-3 rounded-md text-[14px] border-2 border-shades-primary transition-all ease-in-out flex flex-row items-center gap-x-2"
-          >
-            Edit
-          </button>
-        </div>
+  const handleFileSelect = (e: any) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setIsLoading(true);
 
-        {/* Profile info */}
-        <div className="w-full flex sm:flex-col flex-col justify-between">
-          <div className="w-full flex sm:flex-row flex-col flex-wrap justify-between gap-x-4">
-            <FormInput
-              className="max-w-full flex flex-1"
-              disabled
-              label="First name"
-              defaultValue={user?.fullName?.split(" ")[0]}
-            />
-            <FormInput
-              className="max-w-full flex flex-1"
-              disabled
-              label="Last name"
-              defaultValue={user?.fullName?.split(" ")[0]}
-            />
+      API.put(
+        "/user/avatar",
+        { avatar: selectedFile },
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        }
+      )
+        .then((res: any) => {
+          if (res.success === true) {
+            // success message
+            Swal.fire({
+              title: "Success!",
+              text: "Avatar uploaded successfully.",
+              icon: "success",
+              confirmButtonText: "Ok",
+            }).then((result) => {
+              if (result.isConfirmed || result.isDenied || result.isDismissed) {
+                // getCurrentUser().then(() => {
+                //   setIsLoading(false);
+                // });
+              }
+            });
+          } else if (res.success === false) {
+            Swal.fire({
+              title: "Error!",
+              text:
+                res.message ||
+                "Error uploading avatar, please try again later.",
+              icon: "error",
+              confirmButtonText: "Ok",
+            }).then((result) => {
+              if (result.isConfirmed || result.isDenied || result.isDismissed) {
+                setIsLoading(false);
+              }
+            });
+          }
+        })
+        .catch((err: any) => {
+          console.log("Err Response>>>", err);
+          toast.error(
+            err?.data?.message ||
+              "Error uploading avatar, please try again later"
+          );
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
+  console.log("USer>>", user)
+
+  return (
+    <Loader spinning={isLoading}>
+      <div className="w-full p-4">
+        <div className="flex flex-col px-6 pb-16 pt-6 rounded-lg bg-white mb-5">
+          <div className="flex flex-row justify-between mt-2 gap-4 flex-wrap">
+            <h1 className="sm:text-[24px] text-[18px] font-bold">
+              Profile Information
+            </h1>
+            <button
+              onClick={handleModal}
+              className="bg-shades-white text-shades-primary hover:text-shades-white hover:bg-shades-primary py-1 px-3 rounded-md text-[14px] border-2 border-shades-primary transition-all ease-in-out flex flex-row items-center gap-x-2"
+            >
+              Edit
+            </button>
           </div>
-          <div className="w-full flex sm:flex-row flex-col flex-wrap justify-between gap-x-4">
-            <FormInput
-              className="max-w-full flex flex-1"
-              disabled
-              label="Email"
-              defaultValue={user?.email}
-            />
-            <div className="flex flex-col my-3 max-w-full flex-1">
-              <label
-                htmlFor=""
-                className="text-[14px] font-semibold mb-[0.8px]"
-              >
-                Business Logo
-              </label>
+
+          {/* Profile info */}
+          <div className="w-full flex sm:flex-col flex-col justify-between">
+            <div className="w-full flex sm:flex-row flex-col flex-wrap justify-between gap-x-4">
+              <FormInput
+                className="max-w-full flex flex-1"
+                disabled
+                label="First name"
+                defaultValue={user?.fullName?.split(" ")[0]}
+              />
+              <FormInput
+                className="max-w-full flex flex-1"
+                disabled
+                label="Last name"
+                defaultValue={user?.fullName?.split(" ")[0]}
+              />
+            </div>
+            <div className="w-full flex sm:flex-row flex-col flex-wrap justify-between gap-x-4">
+              <FormInput
+                className="max-w-full flex flex-1"
+                disabled
+                label="Email"
+                defaultValue={user?.email}
+              />
+              <div className="flex flex-col my-3 max-w-full flex-1">
+                <label
+                  htmlFor=""
+                  className="text-[14px] font-semibold mb-[0.8px]"
+                >
+                  Business Logo
+                </label>
+                <div className="relative max-w-fit">
+                  <Avatar
+                    size={120}
+                    className="border-[3px] border-white flex justify-center items-center"
+                    src={user?.avatar}
+                    icon={<FaRegUser />}
+                  />
+                  <div className="absolute cursor-pointer right-[-10px] bottom-0 p-1.5 rounded-[50%] z-10 bg-shades-primary/90 hover:bg-shades-primary transition-all duration-200 ease-in-out text-white">
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      style={{ display: "none" }}
+                      onChange={handleFileSelect}
+                    />
+                    <HiPencil size="1.4rem" onClick={handleButtonClick} />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col px-6 pb-8 pt-6 rounded-lg bg-white mb-5">
-        <div className="flex flex-row justify-between mt-2 gap-4 flex-wrap">
-          <h1 className="sm:text-[24px] text-[18px] font-bold">
-            Change password
-          </h1>
-          <button
-            onClick={handlePasswordModal}
-            className="bg-shades-white text-shades-primary hover:text-shades-white hover:bg-shades-primary py-1 px-3 rounded-md text-[14px] border-2 border-shades-primary transition-all ease-in-out flex flex-row items-center gap-x-2"
-          >
-            Change
-          </button>
+        <div className="flex flex-col px-6 pb-8 pt-6 rounded-lg bg-white mb-5">
+          <div className="flex flex-row justify-between mt-2 gap-4 flex-wrap">
+            <h1 className="sm:text-[24px] text-[18px] font-bold">
+              Change password
+            </h1>
+            <button
+              onClick={handlePasswordModal}
+              className="bg-shades-white text-shades-primary hover:text-shades-white hover:bg-shades-primary py-1 px-3 rounded-md text-[14px] border-2 border-shades-primary transition-all ease-in-out flex flex-row items-center gap-x-2"
+            >
+              Change
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col px-6 pb-8 pt-6 rounded-lg bg-white">
-        <div className="flex flex-row justify-between mt-2 gap-4 flex-wrap">
-          <h1 className="sm:text-[24px] text-[18px] font-bold">
-            Delete account
-          </h1>
-          <button
-            onClick={handleDeleteModal}
-            className="bg-shades-primary text-shades-white hover:text-shades-primary hover:bg-shades-white py-1 px-3 rounded-md text-[14px] border-2 border-shades-primary transition-all ease-in-out flex flex-row items-center gap-x-2"
-          >
-            Delete my account
-          </button>
+        <div className="flex flex-col px-6 pb-8 pt-6 rounded-lg bg-white">
+          <div className="flex flex-row justify-between mt-2 gap-4 flex-wrap">
+            <h1 className="sm:text-[24px] text-[18px] font-bold">
+              Delete account
+            </h1>
+            <button
+              onClick={handleDeleteModal}
+              className="bg-shades-primary text-shades-white hover:text-shades-primary hover:bg-shades-white py-1 px-3 rounded-md text-[14px] border-2 border-shades-primary transition-all ease-in-out flex flex-row items-center gap-x-2"
+            >
+              Delete my account
+            </button>
+          </div>
         </div>
+
+        <Modal isOpen={modal} handleClose={handleModal}>
+          <EditAccountInformation handleClose={handleModal} />
+        </Modal>
+
+        <Modal isOpen={deleteModal} handleClose={handleDeleteModal}>
+          <DeleteAccount handleClose={handleDeleteModal} />
+        </Modal>
+
+        <Modal isOpen={passwordModal} handleClose={handlePasswordModal}>
+          <PasswordModal handleClose={handlePasswordModal} />
+        </Modal>
       </div>
-
-      <Modal isOpen={modal} handleClose={handleModal}>
-        <EditAccountInformation handleClose={handleModal} />
-      </Modal>
-
-      <Modal isOpen={deleteModal} handleClose={handleDeleteModal}>
-        <DeleteAccount handleClose={handleDeleteModal} />
-      </Modal>
-
-      <Modal isOpen={passwordModal} handleClose={handlePasswordModal}>
-        <PasswordModal handleClose={handlePasswordModal} />
-      </Modal>
-    </div>
+    </Loader>
   );
 };
 
@@ -176,7 +266,7 @@ const EditAccountInformation = ({ handleClose }: { handleClose: any }) => {
                   lastName: user?.lastName || "",
                 },
               });
-              handleClose()
+              handleClose();
             }
           });
         })
@@ -281,7 +371,7 @@ const PasswordModal = ({ handleClose }: { handleClose: any }) => {
                 values: {
                   oldPassword: "",
                   newPassword: "",
-                }
+                },
               });
               handleClose();
             }
@@ -413,7 +503,7 @@ const DeleteAccount = ({ handleClose }: { handleClose: any }) => {
   const navigate = useNavigate();
   const [deleteAccount, { isLoading }] = useDeleteAccountMutation();
 
-    const { logout } = useAuth();
+  const { logout } = useAuth();
 
   const handleDelete = () => {
     deleteAccount()
@@ -426,7 +516,7 @@ const DeleteAccount = ({ handleClose }: { handleClose: any }) => {
           confirmButtonText: "Ok",
         }).then((result) => {
           if (result.isConfirmed || result.isDenied || result.isDismissed) {
-            logout()
+            logout();
             navigate("/sign-in");
           }
         });

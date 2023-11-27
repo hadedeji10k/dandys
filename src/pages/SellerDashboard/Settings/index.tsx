@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Plan from "./Plan";
 import Billing from "./Billing";
-import Payment from "./Payment";
+// import Payment from "./Payment";
 import StoreDetails from "./StoreDetails";
+import { useGetSellerSubscriptionDetailsQuery } from "@/api/sellerApiCalls";
+import { ISubscriptionDetails } from "@/interface";
 
 const Menu = [
   {
@@ -20,15 +22,32 @@ const Menu = [
     title: "Billing",
     active: false,
   },
-  {
-    id: 4,
-    title: "Payment",
-    active: false,
-  },
+  // {
+  //   id: 4,
+  //   title: "Payment",
+  //   active: false,
+  // },
 ];
 
 const Settings = () => {
   const [menu, setMenu] = useState(Menu);
+
+  const [subscriptionDetails, setSubscriptionDetails] =
+    useState<ISubscriptionDetails>({
+      isActive: false,
+      currentPlan: "FREE",
+      lastSubscriptionDate: new Date(),
+      expiryDate: new Date(),
+      remainingDays: 0,
+    });
+
+  const { data: fetchedData } = useGetSellerSubscriptionDetailsQuery();
+
+  useEffect(() => {
+    if (fetchedData?.data) {
+      setSubscriptionDetails(fetchedData?.data);
+    }
+  }, [subscriptionDetails]);
 
   const handleTabChange = (id: number) => {
     const newMenu = menu.map((item) => {
@@ -62,16 +81,14 @@ const Settings = () => {
 
       <div className="w-full">
         {active.id === 1 ? (
-          <>
-            {" "}
-            <StoreDetails />
-          </>
+          <StoreDetails />
         ) : active.id === 2 ? (
-          <Plan />
+          <Plan subscriptionDetails={subscriptionDetails} />
         ) : active.id === 3 ? (
-          <Billing />
-        ) : active.id === 4 ? (
-          <Payment />
+          <Billing
+            subscriptionDetails={subscriptionDetails}
+            handleTabChange={handleTabChange}
+          />
         ) : null}
       </div>
     </div>

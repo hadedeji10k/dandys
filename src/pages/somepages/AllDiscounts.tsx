@@ -13,140 +13,145 @@ import { IDiscount } from "@/interface";
 import Modal from "@/component/Modal/Modal";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import Loader from "@/component/Loader";
 
 const AllDiscounts = () => {
   const navigate = useNavigate();
   const [discounts, setDiscounts] = useState<IDiscount[]>([]);
 
-  const { data: fetchedDiscounts, error: _ } = useGetSellerDiscountsQuery();
+  const { data: fetchedDiscounts, isLoading, error: _ } = useGetSellerDiscountsQuery();
   
   useEffect(() => {
       setDiscounts((fetchedDiscounts as any)?.data);
   }, [fetchedDiscounts]);
 
   return (
-    <div className="w-full flex flex-col">
-      <div className="flex flex-row justify-between gap-4 flex-wrap items-center bg-white p-3 rounded-lg">
-        <div className="flex flex-row gap-3 flex-wrap">
-          <button className="py-2 px-3 text-[14px] font-medium bg-[#DEC3D6]/90 text-shades-gray border border-[#DEC3D6] hover:bg-[#DEC3D6] hover:text-shades-white rounded-lg">
-            All
-          </button>
-          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray/30 text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
-            Active
-          </button>
-          <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray/30 text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
-            Expired
-          </button>
-        </div>
-        <div className="flex flex-row gap-3 flex-wrap">
-          <button className="text-shades-secondary py-2 px-3 rounded-md text-[14px] font-semibold border-2 border-shades-secondary hover:bg-shades-secondary hover:text-white transition-all ease-in-out flex flex-row items-center gap-x-2">
-            <AiOutlineExport /> Export
-          </button>
-          <button
-            onClick={() => navigate("/new-discount")}
-            className="bg-shades-secondary text-white hover:text-shades-secondary hover:bg-white py-2 px-3 rounded-md text-[14px] border hover:border-shades-secondary transition-all ease-in-out flex flex-row items-center gap-x-2"
-          >
-            Add new discount
-          </button>
-        </div>
-      </div>
-      <div className="w-full mt-3 flex flex-row justify-between gap-x-3 items-center bg-white py-2 px-3 rounded-lg text-shades-primary">
-        <div className="w-full bg-shades-secondary/[12%] h-8 rounded-lg px-2 flex flex-row items-center gap-x-2 ">
-          <BiSearch size="1.5rem" />
-          <input
-            type="text"
-            className="bg-transparent w-full border-none outline-none placeholder:text-shades-primary"
-            placeholder="Search discounts"
-          />
-        </div>
-        <button className="p-1 rounded-md bg-white border-2 border-shades-primary hover:bg-shades-primary hover:text-white">
-          <FiFilter size="1.5rem" />
-        </button>
-      </div>
-
-      {/* Table */}
-      {discounts?.length > 0 ? (
-        <div className="flex w-full flex-col mt-3 overflow-x-scroll font-medium no_scrollbar bg-white rounded-lg mb-5">
-          {/* Head */}
-          <div className="min-w-max w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
-            <div className="min-w-[150px] max-w-[150px] w-full flex items-center text-[14px]">
-              Title
-            </div>
-            <div className="min-w-[100px] max-w-[100px] w-full flex items-center text-[14px]">
-              Code
-            </div>
-            <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
-              Type
-            </div>
-            <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
-              Used
-            </div>
-            <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
-              Status
-            </div>
-            <div className="min-w-[40px] max-w-[40px] w-full flex items-center text-[14px] cursor-pointer">
-              <BsThreeDotsVertical size="1.2rem" />
-            </div>
+    <Loader spinning={isLoading}>
+      <div className="w-full flex flex-col">
+        <div className="flex flex-row justify-between gap-4 flex-wrap items-center bg-white p-3 rounded-lg">
+          <div className="flex flex-row gap-3 flex-wrap">
+            <button className="py-2 px-3 text-[14px] font-medium bg-[#DEC3D6]/90 text-shades-gray border border-[#DEC3D6] hover:bg-[#DEC3D6] hover:text-shades-white rounded-lg">
+              All
+            </button>
+            <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray/30 text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
+              Active
+            </button>
+            <button className="py-2 px-3 text-[14px] font-medium border border-shades-gray/30 text-shades-gray hover:bg-[#DEC3D6] hover:border-[#DEC3D6] hover:text-shades-white rounded-lg">
+              Expired
+            </button>
           </div>
-          {/* body */}
-          <div className="w-full">
-            {discounts?.map((item, index) => (
-              <div
-                key={index}
-                className={`w-full flex flex-row gap-x-3 justify-between py-2.5 px-3 bg-shades-white/80 my-1 border-shades-lightGray ${
-                  index + 1 === discounts.length ? "" : "border-b-2"
-                }`}
-              >
-                <div className="min-w-[150px] max-w-[150px] w-full flex items-center text-[14px]">
-                  {item?.title}
-                </div>
-                <div className="min-w-[100px] max-w-[100px] w-full flex items-center text-[14px] font-medium text-shades-primary">
-                  {item?.code}
-                </div>
-                <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
-                  {item?.type}
-                </div>
-                <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
-                  {item?.usedDiscounts}
-                </div>
-                <div className="min-w-[100px] max-w-[100px] w-full flex items-center text-[14px]">
-                  <span
-                    className={`py-2 px-2.5 rounded-md ${
-                      item?.status === "ACTIVE"
-                        ? "bg-shades-lightGreen text-status-success"
-                        : "bg-shades-lightGray/50 text-shades-gray"
-                    }`}
-                  >
-                    <Badge
-                      color={item?.status === "ACTIVE" ? "#34A853" : "#666"}
-                    />{" "}
-                    {item?.status}
-                  </span>
-                </div>
-                <div className="min-w-[40px] max-w-[40px] w-full flex items-center text-[14px] cursor-pointer">
-                  <Popover
-                    arrow={false}
-                    placement="bottomRight"
-                    content={<DiscountMenu id={item?.id!} />}
-                    trigger="click"
-                  >
-                    <BsThreeDotsVertical size="1.2rem" />
-                  </Popover>
-                </div>
+          <div className="flex flex-row gap-3 flex-wrap">
+            <button className="text-shades-secondary py-2 px-3 rounded-md text-[14px] font-semibold border-2 border-shades-secondary hover:bg-shades-secondary hover:text-white transition-all ease-in-out flex flex-row items-center gap-x-2">
+              <AiOutlineExport /> Export
+            </button>
+            <button
+              onClick={() => navigate("/new-discount")}
+              className="bg-shades-secondary text-white hover:text-shades-secondary hover:bg-white py-2 px-3 rounded-md text-[14px] border hover:border-shades-secondary transition-all ease-in-out flex flex-row items-center gap-x-2"
+            >
+              Add new discount
+            </button>
+          </div>
+        </div>
+        <div className="w-full mt-3 flex flex-row justify-between gap-x-3 items-center bg-white py-2 px-3 rounded-lg text-shades-primary">
+          <div className="w-full bg-shades-secondary/[12%] h-8 rounded-lg px-2 flex flex-row items-center gap-x-2 ">
+            <BiSearch size="1.5rem" />
+            <input
+              type="text"
+              className="bg-transparent w-full border-none outline-none placeholder:text-shades-primary"
+              placeholder="Search discounts"
+            />
+          </div>
+          <button className="p-1 rounded-md bg-white border-2 border-shades-primary hover:bg-shades-primary hover:text-white">
+            <FiFilter size="1.5rem" />
+          </button>
+        </div>
+
+        {/* Table */}
+        {discounts?.length > 0 ? (
+          <div className="flex w-full flex-col mt-3 overflow-x-scroll font-medium no_scrollbar bg-white rounded-lg mb-5">
+            {/* Head */}
+            <div className="min-w-max w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-lightGray/90">
+              <div className="min-w-[150px] max-w-[150px] w-full flex items-center text-[14px]">
+                Title
               </div>
-            ))}
+              <div className="min-w-[100px] max-w-[100px] w-full flex items-center text-[14px]">
+                Code
+              </div>
+              <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
+                Type
+              </div>
+              <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
+                Used
+              </div>
+              <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
+                Status
+              </div>
+              <div className="min-w-[40px] max-w-[40px] w-full flex items-center text-[14px] cursor-pointer">
+                <BsThreeDotsVertical size="1.2rem" />
+              </div>
+            </div>
+            {/* body */}
+            <div className="w-full">
+              {discounts?.map((item, index) => (
+                <div
+                  key={index}
+                  className={`w-full flex flex-row gap-x-3 justify-between py-2.5 px-3 bg-shades-white/80 my-1 border-shades-lightGray ${
+                    index + 1 === discounts.length ? "" : "border-b-2"
+                  }`}
+                >
+                  <div className="min-w-[150px] max-w-[150px] w-full flex items-center text-[14px]">
+                    {item?.title}
+                  </div>
+                  <div className="min-w-[100px] max-w-[100px] w-full flex items-center text-[14px] font-medium text-shades-primary">
+                    {item?.code}
+                  </div>
+                  <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
+                    {item?.type}
+                  </div>
+                  <div className="min-w-[120px] max-w-[120px] w-full flex items-center text-[14px]">
+                    {item?.usedDiscounts}
+                  </div>
+                  <div className="min-w-[100px] max-w-[100px] w-full flex items-center text-[14px]">
+                    <span
+                      className={`py-2 px-2.5 rounded-md ${
+                        item?.status === "ACTIVE"
+                          ? "bg-shades-lightGreen text-status-success"
+                          : "bg-shades-lightGray/50 text-shades-gray"
+                      }`}
+                    >
+                      <Badge
+                        color={item?.status === "ACTIVE" ? "#34A853" : "#666"}
+                      />{" "}
+                      {item?.status}
+                    </span>
+                  </div>
+                  <div className="min-w-[40px] max-w-[40px] w-full flex items-center text-[14px] cursor-pointer">
+                    <Popover
+                      arrow={false}
+                      placement="bottomRight"
+                      content={<DiscountMenu id={item?.id!} />}
+                      trigger="click"
+                    >
+                      <BsThreeDotsVertical size="1.2rem" />
+                    </Popover>
+                  </div>
+                </div>
+              ))}
 
-            {/* Pagination */}
-            <div></div>
+              {/* Pagination */}
+              <div></div>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="min-h-[30vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-          <h2 className="text-[18px] font-semibold">No Discount Added Yet!</h2>
-          <p>Your history will appear here when you have one</p>
-        </div>
-      )}
-    </div>
+        ) : (
+          <div className="min-h-[30vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
+            <h2 className="text-[18px] font-semibold">
+              No Discount Added Yet!
+            </h2>
+            <p>Your history will appear here when you have one</p>
+          </div>
+        )}
+      </div>
+    </Loader>
   );
 };
 

@@ -74,8 +74,17 @@ const FormInput = ({
     }
   };
 
-  if (type === "date") {
-    console.log("Date>>", defaultValue);
+  const numberInputOnWheelPreventChange = (e: any) => {
+    // Prevent the input value change
+    e.target.blur();
+
+    // Prevent the page/container scrolling
+    e.stopPropagation();
+
+    // Refocus immediately, on the next tick (after the current function is done)
+    setTimeout(() => {
+      e.target.focus();
+    }, 0);
   }
 
   return (
@@ -105,7 +114,7 @@ const FormInput = ({
           <DatePicker
             className={`resize-none no_scrollbar bg-transparent text-[14px] !border-none hover:!border-none focus:!border-none !shadow-none hover:!shadow-none focus:!shadow-none focus:!outline-none w-full text-[#666365]`}
             onChange={handleDateChange}
-            defaultValue={dayjs("01/01/2015", "YYYY-MM-DD")}
+            defaultValue={dayjs(new Date(), "YYYY-MM-DD")}
             placeholder={placeholder}
             disabledDate={disabledDate}
           />
@@ -119,6 +128,8 @@ const FormInput = ({
             placeholder={placeholder}
             disabled={disabled}
             defaultValue={defaultValue}
+            min={1}
+            onWheel={numberInputOnWheelPreventChange}
           />
         )}
         {type === "password" && (

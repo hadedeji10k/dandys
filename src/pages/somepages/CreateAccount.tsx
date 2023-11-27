@@ -17,10 +17,11 @@ import { toast } from "react-toastify";
 import Loader from "@/component/Loader";
 import { useAppSelector } from "@/api/hook";
 import FormSelect from "@/component/FormSelect";
+import banks from "@/api/banks.json";
 
 const CreateAccount = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState<ICreateSellerInformation>({
@@ -38,7 +39,7 @@ const CreateAccount = () => {
     accountNumber: "",
     accountName: "",
     bankName: "",
-    bankCode: "044",
+    bankCode: "",
   });
 
   const [createSellerInformation] = useSellerCreateInformationMutation();
@@ -390,12 +391,20 @@ const CreateAccount3 = ({
   bankForm: ICreateBankDetails;
   setBankForm: any;
 }) => {
+  
   const handleChange = (e: any) => {
     setBankForm({
       ...bankForm,
       [e.target.name]: e.target.value,
     });
   };
+
+  const options = banks.map((item) => {
+    return {
+      label: item.name,
+      value: item.code
+    }
+  })
 
   return (
     <div className="w-full max-w-[500px]">
@@ -404,13 +413,22 @@ const CreateAccount3 = ({
       </h2>
 
       <div className="w-full mt-8">
-        <FormInput
-          name="bankName"
+        <FormSelect
+          onChange={(value) => {
+            const selected = options.find(
+              (item) => value.toLowerCase() === item.value.toLowerCase()
+            );
+            setBankForm({
+              ...bankForm,
+              bankCode: selected?.value,
+              bankName: selected?.label,
+            });
+          }}
+          defaultValue={bankForm?.bankName!}
+          required
           label="Bank Name"
-          labelClassName="font-medium text-lg !mb-2"
-          placeholder="Bank Name"
-          className="mb-4"
-          onChange={handleChange}
+          placeholder="Select bank"
+          options={options}
         />
         <FormInput
           name="accountNumber"
@@ -419,6 +437,7 @@ const CreateAccount3 = ({
           placeholder="Bank account number"
           className="mb-4"
           onChange={handleChange}
+          defaultValue={bankForm?.accountNumber}
         />
         <FormInput
           name="accountName"
@@ -427,6 +446,7 @@ const CreateAccount3 = ({
           placeholder="Bank account name"
           className="mb-4"
           onChange={handleChange}
+          defaultValue={bankForm?.accountName}
         />
       </div>
     </div>

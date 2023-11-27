@@ -12,6 +12,12 @@ import {
   ISellerPreference,
   ICreateSellerInformation,
   ICreateBankDetails,
+  ISubscriptionDetails,
+  IVerifyOTP,
+  IResendOTP,
+  IForgotPassword,
+  ICompleteForgotPassword,
+  ICreateTransaction,
 } from "@/interface";
 
 export const sellerApi = createApi({
@@ -42,6 +48,34 @@ export const sellerApi = createApi({
     signIn: builder.mutation<any, ISignIn>({
       query: (body) => ({
         url: `/auth/signin`,
+        method: "POST",
+        body,
+      }),
+    }),
+    forgotPassword: builder.mutation<any, IForgotPassword>({
+      query: (body) => ({
+        url: `/auth/password/reset`,
+        method: "POST",
+        body,
+      }),
+    }),
+    completeForgotPassword: builder.mutation<any, ICompleteForgotPassword>({
+      query: (body) => ({
+        url: `/auth/password/reset`,
+        method: "PUT",
+        body,
+      }),
+    }),
+    resendOTP: builder.mutation<any, IResendOTP>({
+      query: (body) => ({
+        url: `/auth/confirmation/request/email`,
+        method: "POST",
+        body,
+      }),
+    }),
+    verifyOTP: builder.mutation<any, IVerifyOTP>({
+      query: (body) => ({
+        url: `/auth/confirmation/email`,
         method: "POST",
         body,
       }),
@@ -115,7 +149,7 @@ export const sellerApi = createApi({
     getProductsByCategoryId: builder.query<void, string>({
       query: (id) => `/products/category/${id}`,
     }),
-    createProduct: builder.mutation<any, ICreateProduct>({
+    createProduct: builder.mutation<any, any>({
       query: (body) => ({
         url: `/products`,
         method: "POST",
@@ -218,6 +252,23 @@ export const sellerApi = createApi({
         body,
       }),
     }),
+
+    // SUBSCRIPTION
+    getSellerSubscriptionDetails: builder.query<
+      { data: ISubscriptionDetails },
+      void
+    >({
+      query: () => `/seller/subscription`,
+    }),
+
+    // TRANSACTION
+    createTransaction: builder.mutation<any, ICreateTransaction>({
+      query: (body) => ({
+        url: `/transaction`,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -225,6 +276,10 @@ export const {
   useGetHomeQuery,
   useSignInMutation,
   useSignUpMutation,
+  useVerifyOTPMutation,
+  useResendOTPMutation,
+  useForgotPasswordMutation,
+  useCompleteForgotPasswordMutation,
 
   // User
   useGetCurrentUserQuery,
@@ -272,4 +327,10 @@ export const {
   // PREFERENCES
   useGetSellerPreferencesQuery,
   useSetSellerPreferencesMutation,
+
+  // SUBSCRIPTION
+  useGetSellerSubscriptionDetailsQuery,
+
+  // TRANSACTION
+  useCreateTransactionMutation,
 } = sellerApi;

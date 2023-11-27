@@ -6,17 +6,30 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import Button from "@/component/Button";
 import { RiMastercardLine } from "react-icons/ri";
+import { ISubscriptionDetails } from "@/interface";
+import { PlanAmount } from "@/utils/constant";
+import { formatDate } from "@/utils/helpers";
 
-const Billing = () => {
+interface IProps {
+  subscriptionDetails: ISubscriptionDetails;
+  handleTabChange: (id: number) => void;
+}
+
+
+const Billing = ({ subscriptionDetails, handleTabChange }: IProps) => {
   return (
     <div>
       <div className="w-full flex flex-row justify-betweeen gap-3">
         <div className="w-full px-5 pt-6 pb-8 rounded-lg bg-white">
           <div className="flex flex-row gap-2 flex-wrap items-center">
             <h3 className="text-[18px] font-semibold">Billing</h3>
-            <h4 className="text-[14px]">Basic plan</h4>
+            <h4 className="text-[14px] font-semibold">
+              {subscriptionDetails?.currentPlan} plan
+            </h4>
             <div className="px-3 py-0.5 rounded-[20px] text-shades-primary bg-shades-primary/20 text-[12px]">
-              Trial
+              {subscriptionDetails?.currentPlan === "FREE"
+                ? "Trial"
+                : "Monthly"}
             </div>
           </div>
 
@@ -25,12 +38,22 @@ const Billing = () => {
           </h3>
 
           <h3 className="font-semibold md:text-4xl sm:text-2xl text-lg mb-6 mt-8">
-            #3,000 <small className="sm:text-[16px] text-[12px]">/month</small>
+            {PlanAmount[subscriptionDetails?.currentPlan]}{" "}
+            <small className="sm:text-[16px] text-[12px]">/month</small>
           </h3>
 
-          <p className="">Your plan (days): 05 / 14</p>
+          <p className="">
+            Last payment Date:{" "}
+            {formatDate(subscriptionDetails?.lastSubscriptionDate)}
+          </p>
+          <p className="">
+            Expiry Date: {formatDate(subscriptionDetails?.expiryDate)}
+          </p>
 
-          <h4 className="flex flex-row gap-2 items-center text-shades-primary font-medium mt-8 text-[14px] cursor-pointer">
+          <h4
+            onClick={() => handleTabChange(2)}
+            className="flex flex-row gap-2 items-center text-shades-primary font-medium mt-8 text-[14px] cursor-pointer"
+          >
             Change plan <IoIosArrowForward />
           </h4>
         </div>

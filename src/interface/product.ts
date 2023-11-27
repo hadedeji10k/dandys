@@ -1,6 +1,7 @@
 import { IUser } from ".";
 
 export interface ICreateProduct {
+  images?: any;
   title: string;
   description: string;
   brandName: string;
@@ -52,6 +53,12 @@ export interface IProduct {
   eanNumber: string;
   categoryId: string;
   category: ICategory;
+  createdAt?: Date | string;
+  productImage: {
+    id: string;
+    filename: string;
+    imageUrl: string;
+  }[];
 }
 
 export interface IOrderItem {

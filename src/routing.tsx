@@ -25,12 +25,10 @@ import CustomerDetails from "./pages/somepages/CustomerDetails";
 import EditDiscount from "./pages/somepages/EditDiscount";
 import Dashboard from "./pages/somepages/Dashboard";
 import Settings from "./pages/SellerDashboard/Settings";
-import Plan from "./pages/SellerDashboard/Settings/Plan";
-import Billing from "./pages/SellerDashboard/Settings/Billing";
-import Payment from "./pages/SellerDashboard/Settings/Payment";
 import UserPermission from "./pages/SellerDashboard/Settings/UserPermission";
 import Analytics from "./pages/SellerDashboard/Analytics";
 import EditProduct from "./pages/somepages/EditProduct";
+import ForgotPasswordOTPVerification from "./pages/SignIn/ForgotPasswordOTP";
 
 function Routings() {
   return (
@@ -248,36 +246,7 @@ function Routings() {
           </Suspense>
         }
       />
-      <Route
-        path="/settings/plan"
-        element={
-          <Suspense fallback={<PageLoading />}>
-            <SellerDashboardLayout>
-              <Plan />
-            </SellerDashboardLayout>
-          </Suspense>
-        }
-      />
-      <Route
-        path="/settings/billing"
-        element={
-          <Suspense fallback={<PageLoading />}>
-            <SellerDashboardLayout>
-              <Billing />
-            </SellerDashboardLayout>
-          </Suspense>
-        }
-      />
-      <Route
-        path="/settings/payment"
-        element={
-          <Suspense fallback={<PageLoading />}>
-            <SellerDashboardLayout>
-              <Payment />
-            </SellerDashboardLayout>
-          </Suspense>
-        }
-      />
+
       <Route
         path="/settings/user-permission"
         element={
@@ -330,6 +299,14 @@ function Routings() {
         element={
           <Suspense fallback={<PageLoading />}>
             <OTPVerification />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/password-otp"
+        element={
+          <Suspense fallback={<PageLoading />}>
+            <ForgotPasswordOTPVerification />
           </Suspense>
         }
       />

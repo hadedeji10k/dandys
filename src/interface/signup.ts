@@ -20,3 +20,22 @@ export interface IUpdatePassword {
   oldPassword: string;
   newPassword: string;
 }
+
+export interface IVerifyOTP {
+  email: string;
+  otpCode: string;
+}
+
+export interface IResendOTP {
+  email: string;
+}
+
+export interface IForgotPassword {
+  email: string;
+}
+
+export interface ICompleteForgotPassword {
+  email: string;
+  otpCode: string;
+  password: string;
+}

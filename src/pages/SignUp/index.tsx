@@ -21,11 +21,9 @@ import { saveUser } from "@/api/slices/user";
 import { useAppDispatch } from "@/api/hook";
 import useAuth from "@/api/context";
 
-
 const SignUp = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-
 
   const [signUp] = useSignUpMutation();
   const dispatch = useAppDispatch();
@@ -69,6 +67,7 @@ const SignUp = () => {
             expires: res?.data?.expiresIn,
           };
           login(res?.data?.user, token);
+          localStorage.setItem("userEmail", values.email);
 
           refetchUser();
           Swal.fire({
@@ -78,9 +77,8 @@ const SignUp = () => {
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed || result.isDenied || result.isDismissed) {
-
               const currentUser = (userData as any)?.data;
-              
+
               dispatch(saveUser(currentUser));
 
               navigate("/otp");

@@ -28,3 +28,11 @@ export interface ICustomer {
   numberOfOrders: number;
   amountOfTotalOrders: number;
 }
+
+export interface ISubscriptionDetails {
+  isActive: boolean;
+  currentPlan: "FREE" | "BASIC" | "PREMIUM";
+  lastSubscriptionDate: string | Date;
+  expiryDate: string | Date;
+  remainingDays: number;
+}

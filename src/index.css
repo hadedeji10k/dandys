@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 :root {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -29,8 +29,8 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-[class*='ant'] {
-  font-family: 'Poppins', sans-serif !important;
+[class*="ant"] {
+  font-family: "Poppins", sans-serif !important;
 }
 
 .no_scrollbar::-webkit-scrollbar {
@@ -103,9 +103,15 @@ img {
 }
 
 .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
-    background: #8f3677;
+  background: #8f3677;
 }
 
 .ant-switch.ant-switch-checked {
   background: #8f3677;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

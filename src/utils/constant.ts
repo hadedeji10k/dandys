@@ -10,3 +10,12 @@ export const devBaseUrl =
 //prod
 export const prodBaseUrl =
   import.meta.env.VITE_APP_PROD_BASE_URL || "https://test.dandysapp.com";
+
+export const paystackPublicKey =
+  import.meta.env.VITE_APP_PAYSTACK_PUBLIC_KEY || "";
+
+export const PlanAmount = {
+  FREE: 0,
+  BASIC: 3000,
+  PREMIUM: 4500
+}

@@ -1,19 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoIosArrowBack, IoMdAddCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
-import Image from "@/assets/image.jpg";
 import FormInput from "@/component/FormInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  useCreateProductMutation,
-  useGetCategoriesQuery,
-} from "@/api/sellerApiCalls";
+import { useGetCategoriesQuery } from "@/api/sellerApiCalls";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import FormSelect from "@/component/FormSelect";
 import Loader from "@/component/Loader";
+import API from "@/utils/axiosInstance";
 
 interface ICategory {
   label: string;
@@ -26,11 +23,12 @@ const NewProduct = () => {
   const search = useLocation().search;
   const categoryId = new URLSearchParams(search).get("categoryId");
 
-  const [count, setCount] = useState<number[]>([]);
+  const hiddenFileInput = useRef(null);
+  const [images, setImages] = useState<any>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const [categories, setCategories] = useState<ICategory[]>([]);
 
-  const [createProduct] = useCreateProductMutation();
   const { data: fetchedCategories, error: _ } = useGetCategoriesQuery();
 
   useEffect(() => {
@@ -43,12 +41,35 @@ const NewProduct = () => {
     setCategories(mapped);
   }, [fetchedCategories]);
 
+  useEffect(() => {
+    if (images.length < 1) return;
+    const newImageUrls: string[] = [];
+    images.forEach((image: any) => {
+      newImageUrls.push(URL.createObjectURL(image));
+    });
+    console.log("Images>>>", images);
+    setImageUrls(newImageUrls);
+  }, [images]);
+
   const handleRemoveImage = (id: number) => {
-    const newCount = count.filter((_, index) => index !== id);
-    setCount(newCount as any);
+    const newImageUrls = imageUrls.filter((_, index) => index !== id);
+    setImageUrls(newImageUrls);
+    const newImages = images.filter((item: any, index: number) => {
+      if (index === id) {
+        return;
+      } else {
+        return item;
+      }
+    });
+    setImages(newImages);
   };
-  const handleAddImage = () => {
-    setCount([...count, count.length + 1]);
+
+  const handleAddImages = (e: any) => {
+    setImages([...images, ...e.target.files]);
+  };
+
+  const handleClick = () => {
+    (hiddenFileInput?.current as any).click();
   };
 
   const validationSchema = Yup.object().shape({
@@ -97,8 +118,26 @@ const NewProduct = () => {
     },
     validationSchema,
     onSubmit: (values, { setSubmitting }) => {
-      createProduct(values)
-        .unwrap()
+      if (images.length < 1) {
+        toast.error("Product Image is required.");
+        setSubmitting(false);
+        return;
+      }
+
+      let form_data = new FormData();
+      for (let [key, value] of Object.entries(values)) {
+        form_data.append(key, value.toString());
+      }
+
+      for (let i = 0; i < images.length; i++) {
+        form_data.append("images", images[i]);
+      }
+
+      API.post("/products", form_data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
         .then(() => {
           Swal.fire({
             title: "Success!",
@@ -163,13 +202,13 @@ const NewProduct = () => {
           <div className="flex-1 w-[50%] bg-white rounded-lg p-4">
             {/* Product Images */}
             <div className="w-full flex flex-row flex-wrap mb-6 gap-3">
-              {count.map((_, index) => (
+              {imageUrls.map((image, index) => (
                 <div
                   key={index}
                   className="w-[95px] h-[95px] rounded-md relative"
                 >
                   <img
-                    src={Image}
+                    src={image}
                     alt=""
                     className="w-full h-full rounded-md"
                   />
@@ -184,12 +223,20 @@ const NewProduct = () => {
 
               <div
                 className="w-[95px] h-[95px] rounded-md flex items-center justify-center bg-shades-lightGray/50 cursor-pointer"
-                onClick={() => handleAddImage()}
+                onClick={handleClick}
               >
                 <span className="text-shades-secondary">
                   <IoMdAddCircle size="3rem" />
                 </span>
               </div>
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                ref={hiddenFileInput}
+                onChange={handleAddImages}
+                className="hidden"
+              />
             </div>
             {/* Form */}
             <div>
@@ -201,6 +248,7 @@ const NewProduct = () => {
                 label="Title"
                 placeholder="Enter your title"
                 error={formik.touched.title && formik.errors.title}
+                defaultValue={formik.values.title}
               />
               <FormInput
                 name="brandName"
@@ -210,6 +258,7 @@ const NewProduct = () => {
                 label="Brand name"
                 placeholder="Enter your brand name"
                 error={formik.touched.brandName && formik.errors.brandName}
+                defaultValue={formik.values.brandName}
               />
               <FormInput
                 name="model"
@@ -219,6 +268,7 @@ const NewProduct = () => {
                 label="Model"
                 placeholder="Enter model"
                 error={formik.touched.model && formik.errors.model}
+                defaultValue={formik.values.model}
               />
               <FormInput
                 name="vendor"
@@ -227,6 +277,7 @@ const NewProduct = () => {
                 label="Vendor"
                 placeholder="Select vendor"
                 error={formik.touched.vendor && formik.errors.vendor}
+                defaultValue={formik.values.model}
               />
               <FormInput
                 name="description"
@@ -237,6 +288,7 @@ const NewProduct = () => {
                 label="Description"
                 placeholder="Enter your description"
                 error={formik.touched.description && formik.errors.description}
+                defaultValue={formik.values.description}
               />
               <FormInput
                 name="expiryDate"
@@ -272,6 +324,7 @@ const NewProduct = () => {
                 label="ISO certification number"
                 placeholder="Enter number"
                 error={formik.touched.isoNumber && formik.errors.isoNumber}
+                defaultValue={formik.values.isoNumber}
               />
               <FormInput
                 name="nafdacNumber"
@@ -283,6 +336,7 @@ const NewProduct = () => {
                 error={
                   formik.touched.nafdacNumber && formik.errors.nafdacNumber
                 }
+                defaultValue={formik.values.nafdacNumber}
               />
             </div>
           </div>
@@ -293,7 +347,7 @@ const NewProduct = () => {
                 onChange={(value) => formik.setFieldValue("categoryId", value)}
                 onBlur={formik.handleBlur}
                 disabled={categoryId?.length! > 0}
-                defaultValue={categoryId!}
+                defaultValue={categoryId ? categoryId : formik.values.categoryId}
                 required
                 label="Category"
                 placeholder="Select category"
@@ -309,6 +363,7 @@ const NewProduct = () => {
                 label="Quantity"
                 placeholder="Enter item quantity"
                 error={formik.touched.quantity && formik.errors.quantity}
+                defaultValue={formik.values.quantity}
               />
               <FormInput
                 name="height"
@@ -317,6 +372,7 @@ const NewProduct = () => {
                 label="Height"
                 placeholder="Enter height unit"
                 error={formik.touched.height && formik.errors.height}
+                defaultValue={formik.values.height}
               />
               <FormInput
                 name="weight"
@@ -325,6 +381,7 @@ const NewProduct = () => {
                 label="Weight"
                 placeholder="Enter weight unit"
                 error={formik.touched.weight && formik.errors.weight}
+                defaultValue={formik.values.weight}
               />
               <FormInput
                 name="costPrice"
@@ -335,6 +392,7 @@ const NewProduct = () => {
                 label="Cost price"
                 placeholder="Enter cost price"
                 error={formik.touched.costPrice && formik.errors.costPrice}
+                defaultValue={formik.values.costPrice}
               />
               <FormInput
                 name="sellingPrice"
@@ -347,6 +405,7 @@ const NewProduct = () => {
                 error={
                   formik.touched.sellingPrice && formik.errors.sellingPrice
                 }
+                defaultValue={formik.values.sellingPrice}
               />
               <FormInput
                 name="saleStart"
@@ -376,6 +435,7 @@ const NewProduct = () => {
                 label="Low stock limit"
                 placeholder="Input stock limit"
                 error={formik.touched.stockLimit && formik.errors.stockLimit}
+                defaultValue={formik.values.stockLimit}
               />
               <FormInput
                 name="eanNumber"
@@ -385,6 +445,7 @@ const NewProduct = () => {
                 label="EAN/UPC/ISBN"
                 placeholder="Input EAN/UPC/ISBN"
                 error={formik.touched.eanNumber && formik.errors.eanNumber}
+                defaultValue={formik.values.eanNumber}
               />
             </div>
           </div>

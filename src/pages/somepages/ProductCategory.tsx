@@ -8,53 +8,58 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import Modal from "@/component/Modal/Modal";
+import Loader from "@/component/Loader";
 
 const ProductCategory = () => {
     const [categories, setCategories] = useState<ICategory[]>([]);
 
-    const { data: fetchedCategories, error: _ } = useGetSellerCategoriesQuery();
+    const { data: fetchedCategories, isLoading, error: _ } = useGetSellerCategoriesQuery();
 
     useEffect(() => {
       setCategories((fetchedCategories as any)?.data);
     }, [fetchedCategories]);
 
   return (
-    <div className="flex flex-col p-6 rounded-lg bg-shades-white min-h-[40vh] h-full">
-      {categories?.length > 0 ? (
-        <div className="w-full flex flex-row gap-4 flex-wrap">
-          {categories.map((item) => (
-            <div className="flex flex-col gap-3 max-w-[250px]">
-              <div>
-                <img
-                  src={item?.imageUrl || Face}
-                  alt=""
-                  className="w-full max-h-[220px] rounded-lg"
-                />
-              </div>
-              <div className="w-full flex flex-row gap-4 flex-wrap justify-between items-center">
-                <h3 className="text-[18px] font-normal">{item?.name}</h3>
-                <Popover
-                  arrow={false}
-                  placement="bottomRight"
-                  content={<CategoryMenu id={item?.id!} />}
-                  trigger="click"
-                >
-                  <BsThreeDotsVertical
-                    className="cursor-pointer"
-                    size="1.2rem"
+    <Loader spinning={isLoading}>
+      <div className="flex flex-col p-6 rounded-lg bg-shades-white min-h-[40vh] h-full">
+        {categories?.length > 0 ? (
+          <div className="w-full flex flex-row gap-4 flex-wrap">
+            {categories.map((item, index) => (
+              <div key={index} className="flex flex-col gap-3 max-w-[250px]">
+                <div>
+                  <img
+                    src={item?.imageUrl || Face}
+                    alt=""
+                    className="w-full max-h-[220px] rounded-lg"
                   />
-                </Popover>
+                </div>
+                <div className="w-full flex flex-row gap-4 flex-wrap justify-between items-center">
+                  <h3 className="text-[18px] font-normal">{item?.name}</h3>
+                  <Popover
+                    arrow={false}
+                    placement="bottomRight"
+                    content={<CategoryMenu id={item?.id!} />}
+                    trigger="click"
+                  >
+                    <BsThreeDotsVertical
+                      className="cursor-pointer"
+                      size="1.2rem"
+                    />
+                  </Popover>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
+            ))}
+          </div>
+        ) : (
           <div className="w-full h-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-            <h2 className="text-[18px] font-semibold">No Categories Added Yet!</h2>
+            <h2 className="text-[18px] font-semibold">
+              No Categories Added Yet!
+            </h2>
             <p>Your history will appear here when you have one</p>
           </div>
-      )}
-    </div>
+        )}
+      </div>
+    </Loader>
   );
 };
 
