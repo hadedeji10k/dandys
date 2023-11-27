@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "@/assets/Logo 1.png";
 import Image from "@/assets/image.jpg";
 import Avatar from "@/assets/avatar.png";
@@ -16,6 +16,85 @@ import { saveNotification, saveUser } from "@/api/slices/user";
 import { MdClose, MdMenu } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 
+const Links = [
+  {
+    route: "/dashboard",
+    value: "Dashboard",
+  },
+  {
+    route: "/preferences",
+    value: "Preferences",
+  },
+  {
+    route: "/notification",
+    value: "Notification",
+  },
+  {
+    route: "/profile",
+    value: "Profile",
+  },
+  {
+    route: "/new-product",
+    value: "Product",
+  },
+  {
+    route: "/products",
+    value: "Product",
+  },
+  {
+    route: "/product-details/:id",
+    value: "Product",
+  },
+  {
+    route: "/edit-product",
+    value: "Product",
+  },
+  {
+    route: "/discount-details",
+    value: "Discount",
+  },
+  {
+    route: "/discounts",
+    value: "Discount",
+  },
+  {
+    route: "/new-discount",
+    value: "Discount",
+  },
+  {
+    route: "/edit-discount",
+    value: "Discount",
+  },
+  {
+    route: "/orders",
+    value: "Orders",
+  },
+  {
+    route: "/order-details",
+    value: "Orders",
+  },
+  {
+    route: "/analytics",
+    value: "Analytics",
+  },
+  {
+    route: "/customers",
+    value: "Customers",
+  },
+  {
+    route: "/customers/customer-details",
+    value: "Customers",
+  },
+  {
+    route: "/settings",
+    value: "Settings",
+  },
+  {
+    route: "/products/categories",
+    value: "Category",
+  },
+];
+
 const SellerDashboardLayoutHeader = ({
   setSidebarIsOpen,
   sidebarIsOpen,
@@ -25,6 +104,9 @@ const SellerDashboardLayoutHeader = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const location = useLocation();
+
+  const [currentRoute, setCurrentRoute] = useState("");
 
   const { data: userData, error: _ } = useGetCurrentUserQuery();
 
@@ -49,18 +131,33 @@ const SellerDashboardLayoutHeader = ({
     navigate("/sign-in");
   }
 
+  useEffect(() => {
+    const sliced = location.pathname.slice(1);
+    if (sliced.length > 0) {
+      const activeLink = Links.find((link) =>
+        sliced.toLowerCase().includes(link.route.slice(1).toLowerCase())
+      );
+      if (activeLink) {
+        setCurrentRoute(activeLink.value);
+      } else {
+        setCurrentRoute("");
+      }
+    } else {
+      setCurrentRoute("Dashboard");
+    }
+  }, [location.pathname]);
+
   return (
     <div className="w-full min-h-[100px] max-h-[100px] px-4 bg-shades-primary sticky top-0 flex flx-row items-center justify-between z-[1000]">
-      <div
-        className="cursor-pointer"
-        onClick={() => navigate("/dashboard")}
-      >
+      <div className="cursor-pointer" onClick={() => navigate("/dashboard")}>
         <img src={Logo} alt="" />
       </div>
 
-      {/* <div className="hidden md:flex flex-row gap-x-8">
-        <h3 className="text-[20px] font-semibold text-shades-white">Route</h3>
-      </div> */}
+      <div className="hidden md:flex flex-row gap-x-8">
+        <h3 className="text-[20px] font-semibold text-shades-white">
+          {currentRoute}
+        </h3>
+      </div>
 
       <div className="hidden md:flex flex-row gap-x-3 items-center">
         {isAuthenticated && user ? (
@@ -160,7 +257,11 @@ const ProfilePop = () => {
     <div className="md:min-w-[300px] max-w-[300px]">
       <div className="px-5 py-6 border-b-2 border-shades-lightGray w-full flex items-center flex-wrap gap-x-3">
         {user?.avatar?.length > 0 ? (
-          <img src={Avatar} className="w-[70px] h-[70px] rounded-md mb-1" alt="" />
+          <img
+            src={Avatar}
+            className="w-[70px] h-[70px] rounded-md mb-1"
+            alt=""
+          />
         ) : (
           <span className="p-2 rounded-md bg-shades-primary/20">
             <FaRegUser size="1.8rem" />
@@ -255,10 +356,7 @@ const Notification = () => {
           ))}
 
           <div className="w-full flex flex-col justify-center items-center cursor-pointer hover:underline">
-            <p
-              className="my-3"
-              onClick={() => navigate("/notification")}
-            >
+            <p className="my-3" onClick={() => navigate("/notification")}>
               View more
             </p>
           </div>

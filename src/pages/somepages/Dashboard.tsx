@@ -94,7 +94,9 @@ const Dashboard = () => {
       <div className="w-full flex md:flex-row flex-col gap-3 justify-between mt-4">
         <div className="w-full flex flex-col flex-1 bg-shades-white rounded-lg p-4 pb-6">
           <div className="w-full flex flex-row justify-between items-center">
-            <h3 className="text-[20px] font-semibold">Top Sold Products</h3>
+            <h3 className="sm:text-[20px] text-base font-semibold">
+              Top Sold Products
+            </h3>
             {/* <Button
               //   handleClick={handleSubmit}
               className={""}
@@ -121,8 +123,10 @@ const Dashboard = () => {
               ))
             ) : (
               <div className="min-h-[10vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-                <h2 className="text-[18px] font-semibold">No products Yet!</h2>
-                <p className="text-center">
+                <h2 className="sm:text-[18px] text-sm font-semibold">
+                  No products Yet!
+                </h2>
+                <p className="text-center sm:text-[14px] text-xs">
                   Your history will appear here when you have one
                 </p>
               </div>
@@ -132,7 +136,9 @@ const Dashboard = () => {
 
         <div className="w-full flex flex-col flex-1 bg-shades-white rounded-lg p-4 pb-6">
           <div className="w-full flex flex-row justify-between items-center">
-            <h3 className="text-[20px] font-semibold">Top Saved Item</h3>
+            <h3 className="sm:text-[20px] text-base font-semibold">
+              Top Saved Item
+            </h3>
             {/* <Button
               //   handleClick={handleSubmit}
               className={""}
@@ -159,10 +165,10 @@ const Dashboard = () => {
               ))
             ) : (
               <div className="min-h-[10vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-                <h2 className="text-[18px] font-semibold">
+                <h2 className="sm:text-[18px] text-sm font-semibold">
                   No saved items yet!
                 </h2>
-                <p className="text-center">
+                <p className="text-center sm:text-[14px] text-xs">
                   Your history will appear here when you have one
                 </p>
               </div>
@@ -174,7 +180,9 @@ const Dashboard = () => {
       <div className="w-full flex md:flex-row flex-col gap-3 justify-between mt-4">
         <div className="w-full flex flex-col flex-1 bg-shades-white rounded-lg p-4 pb-6">
           <div className="w-full flex flex-row justify-between items-center">
-            <h3 className="text-[20px] font-semibold">Payment History</h3>
+            <h3 className="sm:text-[20px] text-base font-semibold">
+              Payment History
+            </h3>
             {/* <Button
               //   handleClick={handleSubmit}
               className={""}
@@ -240,8 +248,10 @@ const Dashboard = () => {
             </div>
           ) : (
             <div className="min-h-[10vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-              <h2 className="text-[18px] font-semibold">No Payment Yet!</h2>
-              <p className="text-center">
+              <h2 className="sm:text-[18px] text-sm font-semibold">
+                No Payment Yet!
+              </h2>
+              <p className="text-center sm:text-[14px] text-xs">
                 Your history will appear here when you have one
               </p>
             </div>
@@ -249,7 +259,9 @@ const Dashboard = () => {
         </div>
         <div className="w-full flex flex-col flex-1 bg-shades-white rounded-lg p-4 pb-6">
           <div className="w-full flex flex-row justify-between items-center">
-            <h3 className="text-[20px] font-semibold">Order History</h3>
+            <h3 className="sm:text-[20px] text-base font-semibold">
+              Order History
+            </h3>
             {/* <Button
               //   handleClick={handleSubmit}
               className={""}
@@ -309,8 +321,10 @@ const Dashboard = () => {
             </div>
           ) : (
             <div className="min-h-[10vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-              <h2 className="text-[18px] font-semibold">No Orders Yet!</h2>
-              <p className="text-center">
+              <h2 className="sm:text-[18px] text-sm font-semibold">
+                No Orders Yet!
+              </h2>
+              <p className="text-center sm:text-[14px] text-xs">
                 Your history will appear here when you have one
               </p>
             </div>

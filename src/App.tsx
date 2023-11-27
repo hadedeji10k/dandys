@@ -11,7 +11,9 @@ import {
   Legend,
   PointElement,
   LineElement,
-  ArcElement
+  ArcElement,
+  BarController,
+  LineController
 } from "chart.js";
 import Routings from "./routing";
 import "./App.css";
@@ -19,6 +21,8 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 ChartJS.register(
+  BarController,
+  LineController,
   CategoryScale,
   LinearScale,
   BarElement,
