@@ -107,7 +107,6 @@ const EditProduct = () => {
           });
         })
         .catch((err: any) => {
-          console.log("Err Response>>>", err);
           toast.error(
             err?.data?.message ||
               "Error updating product, please try again later"

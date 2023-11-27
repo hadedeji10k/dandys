@@ -96,7 +96,6 @@ const Profile = () => {
           }
         })
         .catch((err: any) => {
-          console.log("Err Response>>>", err);
           toast.error(
             err?.data?.message ||
               "Error uploading avatar, please try again later"
@@ -107,8 +106,6 @@ const Profile = () => {
         });
     }
   };
-
-  console.log("USer>>", user)
 
   return (
     <Loader spinning={isLoading}>

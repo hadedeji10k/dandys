@@ -93,8 +93,6 @@ const FormInput = ({
     }, 0);
   };
 
-  console.log("name>>", name, defaultValue)
-
   return (
     <div className={`flex flex-col mt-3 ${error ? "" : "mb-3"} ${className}`}>
       <label

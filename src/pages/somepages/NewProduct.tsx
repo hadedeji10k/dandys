@@ -150,7 +150,6 @@ const NewProduct = () => {
           });
         })
         .catch((err: any) => {
-          console.log("Err Response>>>", err);
           toast.error(
             err?.data?.message ||
               "Error creating product, please try again later"

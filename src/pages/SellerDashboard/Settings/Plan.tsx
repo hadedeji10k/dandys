@@ -39,7 +39,6 @@ const Plan = ({ subscriptionDetails }: IProps) => {
     };
 
     const onSuccess = (reference: any) => {
-      console.log(reference);
       window.location.reload();
     };
 
@@ -62,7 +61,6 @@ const Plan = ({ subscriptionDetails }: IProps) => {
           paystackPayment(onSuccess as () => void, onClose);
         })
         .catch((err: any) => {
-          console.log("Err Response>>>", err);
           toast.error(
             err?.data?.message ||
               "Error creating transaction, please try again later"

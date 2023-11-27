@@ -82,7 +82,6 @@ const NewDiscount = () => {
     },
     validationSchema,
     onSubmit: (values, { setSubmitting, setFieldError }) => {
-      console.log("Values??", values);
       if (
         values.type !== "OFF_PRODUCT" &&
         values.type !== "OFF_ORDER" &&
@@ -94,15 +93,12 @@ const NewDiscount = () => {
       if (values.type === "OFF_PRODUCT" || values.type === "OFF_ORDER") {
         if (values.discountValueType === "PERCENTAGE") {
           if (values.percentage <= 0) {
-            console.log("Reached>>");
             setFieldError("percentage", "This field is required.");
             return;
           }
         } else if (values.discountValueType === "FIXED_AMOUNT") {
           if (values.amount <= 0) {
             setFieldError("amount", "This field is required.");
-            console.log("Reached>>");
-
             return;
           }
         }
@@ -133,7 +129,6 @@ const NewDiscount = () => {
           });
         })
         .catch((err: any) => {
-          console.log("Err Response>>>", err);
           toast.error(
             err?.data?.message ||
               "Error creating discount, please try again later"

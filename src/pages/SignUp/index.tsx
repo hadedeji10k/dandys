@@ -93,7 +93,6 @@ const SignUp = () => {
           });
         })
         .catch((err) => {
-          console.log("Err Response>>>", err);
           toast.error(err?.data?.message || "Signup failed, try again later");
         })
         .finally(() => {

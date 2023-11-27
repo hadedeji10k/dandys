@@ -83,7 +83,6 @@ const CreateAccount = () => {
         });
       })
       .catch((err: any) => {
-        console.log("Err Response>>>", err);
         toast.error(
           err?.data?.message ||
             "Error updating your account information, please try again later"
@@ -110,7 +109,6 @@ const CreateAccount = () => {
         });
       })
       .catch((err: any) => {
-        console.log("Err Response>>>", err);
         toast.error(
           err?.data?.message ||
             "Error updating your bank account information, please try again later"
@@ -296,8 +294,7 @@ const CreateAccount2 = ({
   setImage: any;
 }) => {
   const user = useAppSelector((state) => state.user.user);
-  console.log("User>", user);
-
+  
   const meansOfIdentification = [
     {
       id: 1,

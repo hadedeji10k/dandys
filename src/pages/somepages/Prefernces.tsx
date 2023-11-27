@@ -51,7 +51,6 @@ const Prefernces = () => {
         }).then(() => {});
       })
       .catch((err: any) => {
-        console.log("Err Response>>>", err);
         toast.error(
           err?.data?.message ||
             "Error updating your preferences, please try again later"
