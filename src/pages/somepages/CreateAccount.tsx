@@ -21,7 +21,7 @@ import API from "@/utils/axiosInstance";
 
 const CreateAccount = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
 
   const [image, setImage] = useState<any>({});

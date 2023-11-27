@@ -58,9 +58,9 @@ const SellerDashboardLayoutHeader = ({
         <img src={Logo} alt="" />
       </div>
 
-      <div className="hidden md:flex flex-row gap-x-8">
+      {/* <div className="hidden md:flex flex-row gap-x-8">
         <h3 className="text-[20px] font-semibold text-shades-white">Route</h3>
-      </div>
+      </div> */}
 
       <div className="hidden md:flex flex-row gap-x-3 items-center">
         {isAuthenticated && user ? (
