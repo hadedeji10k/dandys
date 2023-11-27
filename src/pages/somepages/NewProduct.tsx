@@ -197,8 +197,8 @@ const NewProduct = () => {
           </div>
         </div>
 
-        <div className="w-full flex flex-row justify-between flex-wrap gap-4 mt-3">
-          <div className="flex-1 w-[50%] bg-white rounded-lg p-4">
+        <div className="w-full flex sm:flex-row flex-col justify-between flex-wrap gap-4 mt-3">
+          <div className="flex-1 sm:w-[50%] w-full bg-white rounded-lg p-4">
             {/* Product Images */}
             <div className="w-full flex flex-row flex-wrap mb-6 gap-3">
               {imageUrls.map((image, index) => (
@@ -276,7 +276,7 @@ const NewProduct = () => {
                 label="Vendor"
                 placeholder="Select vendor"
                 error={formik.touched.vendor && formik.errors.vendor}
-                defaultValue={formik.values.model}
+                defaultValue={formik.values.vendor}
               />
               <FormInput
                 name="description"
@@ -341,7 +341,7 @@ const NewProduct = () => {
               />
             </div>
           </div>
-          <div className="flex-1 w-[50%] bg-white rounded-lg p-4">
+          <div className="flex-1 sm:w-[50%] w-full bg-white rounded-lg p-4">
             {/* Form */}
             <div>
               <FormSelect
