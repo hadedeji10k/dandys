@@ -229,7 +229,7 @@ const SellerDashboardLayoutHeader = ({
         )}
       </div>
 
-      <div className="md:hidden flex flex-row gap-2">
+      <div className="md:hidden flex flex-row gap-2 items-center justify-center">
         {isAuthenticated && user && (
           <>
             <Popover
@@ -238,7 +238,7 @@ const SellerDashboardLayoutHeader = ({
               content={<ProfilePop />}
               trigger="click"
             >
-              <div className="bg-shades-white/20 pl-4 pr-2 py-2 rounded-md flex flex-row gap-3 items-center cursor-pointer">
+              <div className="bg-shades-white/20 px-2 py-2 rounded-md flex flex-row gap-3 items-center cursor-pointer">
                 {user?.avatar?.length > 0 ? (
                   <img
                     src={Avatar}
