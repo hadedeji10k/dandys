@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/api/hook";
 import {
   useDeleteAccountMutation,
@@ -26,12 +26,19 @@ import API from "@/utils/axiosInstance";
 
 const Profile = () => {
   const user = useAppSelector((state) => state.user.user);
+  const dispatch = useAppDispatch();
+  const { data: userData, refetch } = useGetCurrentUserQuery();
 
   const [isLoading, setIsLoading] = useState(false);
 
   const [modal, setModal] = useState(false);
   const [passwordModal, setPasswordModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+
+  useEffect(() => {
+    const currentUser = (userData as any)?.data;
+    dispatch(saveUser(currentUser));
+  }, [userData]);
 
   const fileInputRef = useRef(null) as any;
 
@@ -55,7 +62,6 @@ const Profile = () => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setIsLoading(true);
-
       API.put(
         "/user/avatar",
         { avatar: selectedFile },
@@ -65,35 +71,14 @@ const Profile = () => {
           },
         }
       )
-        .then((res: any) => {
-          if (res.success === true) {
-            // success message
-            Swal.fire({
-              title: "Success!",
-              text: "Avatar uploaded successfully.",
-              icon: "success",
-              confirmButtonText: "Ok",
-            }).then((result) => {
-              if (result.isConfirmed || result.isDenied || result.isDismissed) {
-                // getCurrentUser().then(() => {
-                //   setIsLoading(false);
-                // });
-              }
-            });
-          } else if (res.success === false) {
-            Swal.fire({
-              title: "Error!",
-              text:
-                res.message ||
-                "Error uploading avatar, please try again later.",
-              icon: "error",
-              confirmButtonText: "Ok",
-            }).then((result) => {
-              if (result.isConfirmed || result.isDenied || result.isDismissed) {
-                setIsLoading(false);
-              }
-            });
-          }
+        .then(() => {
+          refetch();
+          Swal.fire({
+            title: "Success!",
+            text: "Avatar uploaded successfully.",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
         })
         .catch((err: any) => {
           toast.error(
@@ -357,7 +342,6 @@ const PasswordModal = () => {
       updatePassword(values)
         .unwrap()
         .then(() => {
-          
           Swal.fire({
             title: "Success!",
             text: "You have successfully updated your password.",
@@ -365,7 +349,7 @@ const PasswordModal = () => {
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed || result.isDenied || result.isDismissed) {
-              window.location.reload()
+              window.location.reload();
             }
           });
         })
