@@ -196,7 +196,7 @@ const NewDiscount = () => {
             {formik.values.type === "BUY_GET" ? (
               <>
                 <FormInput
-                  name="amount"
+                  name="noOfBuy"
                   type="number"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -206,7 +206,7 @@ const NewDiscount = () => {
                   error={formik.touched.noOfBuy && formik.errors.noOfBuy}
                 />
                 <FormInput
-                  name="amount"
+                  name="noOfGet"
                   type="number"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
