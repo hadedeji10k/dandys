@@ -229,7 +229,7 @@ const SellerDashboardLayoutHeader = ({
         )}
       </div>
 
-      <div className="md:hidden flex flex-row gap-2 items-center justify-center">
+      <div className="md:hidden flex flex-row gap-3 items-center justify-center">
         {isAuthenticated && user && (
           <>
             <Popover
