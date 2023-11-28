@@ -230,6 +230,31 @@ const SellerDashboardLayoutHeader = ({
       </div>
 
       <div className="md:hidden">
+        {isAuthenticated && user && (
+          <>
+            <Popover
+              overlayClassName="pr-3"
+              arrow={false}
+              content={<ProfilePop />}
+              trigger="click"
+            >
+              <div className="bg-shades-white/20 pl-4 pr-2 py-2 rounded-md flex flex-row gap-3 items-center cursor-pointer">
+                {user?.avatar?.length > 0 ? (
+                  <img
+                    src={Avatar}
+                    className="w-[40px] h-[40px] rounded-md"
+                    alt=""
+                  />
+                ) : (
+                  <span className="p-2 rounded-md bg-shades-white">
+                    <FaRegUser size="1.3rem" />
+                  </span>
+                )}
+              </div>
+            </Popover>
+          </>
+        )}
+
         <div onClick={() => setSidebarIsOpen(!sidebarIsOpen)}>
           {sidebarIsOpen ? (
             <MdClose
