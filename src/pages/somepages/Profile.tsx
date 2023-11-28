@@ -210,7 +210,7 @@ const Profile = () => {
         </Modal>
 
         <Modal isOpen={passwordModal} handleClose={handlePasswordModal}>
-          <PasswordModal handleClose={handlePasswordModal} />
+          <PasswordModal />
         </Modal>
       </div>
     </Loader>
@@ -320,7 +320,7 @@ const EditAccountInformation = ({ handleClose }: { handleClose: any }) => {
   );
 };
 
-const PasswordModal = ({ handleClose }: { handleClose: any }) => {
+const PasswordModal = () => {
   // states for mananging validation
   const [hasEightCharacters, setHasEightCharacters] = useState(false);
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(false);
@@ -353,10 +353,11 @@ const PasswordModal = ({ handleClose }: { handleClose: any }) => {
       newPassword: "",
     },
     validationSchema: passwordSchema,
-    onSubmit: (values, { setSubmitting, resetForm }) => {
+    onSubmit: (values, { setSubmitting }) => {
       updatePassword(values)
         .unwrap()
         .then(() => {
+          
           Swal.fire({
             title: "Success!",
             text: "You have successfully updated your password.",
@@ -364,13 +365,7 @@ const PasswordModal = ({ handleClose }: { handleClose: any }) => {
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed || result.isDenied || result.isDismissed) {
-              resetForm({
-                values: {
-                  oldPassword: "",
-                  newPassword: "",
-                },
-              });
-              handleClose();
+              window.location.reload()
             }
           });
         })
@@ -422,6 +417,7 @@ const PasswordModal = ({ handleClose }: { handleClose: any }) => {
             icon={<BiSolidLock />}
             onChange={formik.handleChange}
             error={formik.touched.oldPassword && formik.errors.oldPassword}
+            defaultValue={formik.values.oldPassword}
           />
           <FormInput
             name="newPassword"
@@ -434,6 +430,7 @@ const PasswordModal = ({ handleClose }: { handleClose: any }) => {
               handlePasswordChange(e);
             }}
             error={formik.touched.newPassword && formik.errors.newPassword}
+            defaultValue={formik.values.newPassword}
           />
           {formik.values.newPassword.length > 0 && (
             <div>
