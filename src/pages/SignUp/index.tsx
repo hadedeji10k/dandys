@@ -62,6 +62,7 @@ const SignUp = () => {
       fullName: "",
       password: "",
       email: "",
+      accountType: "SELLER"
     },
     validationSchema: signUpSchema,
     onSubmit: (values, { setSubmitting }) => {

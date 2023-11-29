@@ -2,6 +2,7 @@ export interface ISignUp {
   fullName: string;
   password: string;
   email: string;
+  accountType: string;
 }
 
 export interface ISignIn {
