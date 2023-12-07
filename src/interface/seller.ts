@@ -4,13 +4,20 @@ export interface ISellerPreference {
   returnOrder: boolean;
 }
 
+export type DocumentType =
+  | "NIN"
+  | "DRIVER'S_LICENSE"
+  | "VOTER'S_CARD"
+  | "INTL_PASSPORT"
+  | "";
+
 export interface ICreateSellerInformation {
   managerFullName: string;
-  businessImage?: string;
   shopName: string;
   cacNumber: string;
-  documentType: string;
-  document: string;
+  documentType: DocumentType;
+  documentNumber: string;
+  documentImage?: string;
   phoneNumber: string;
   accountType: "INDIVIDUAL" | "COMPANY";
 }

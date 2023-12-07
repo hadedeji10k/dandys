@@ -130,7 +130,7 @@ const OrderPage = () => {
         </div>
       ) : (
         <div className="min-h-[30vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-          <h2 className="text-[18px] font-semibold">No orders Yet!</h2>
+          <h2 className="text-[18px] font-semibold mb-2">No orders Yet!</h2>
           <p>Your history will appear here when you have one</p>
         </div>
       )}

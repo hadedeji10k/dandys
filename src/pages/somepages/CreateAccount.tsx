@@ -8,9 +8,7 @@ import Button from "@/component/Button";
 import { BiSolidCircle } from "react-icons/bi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import {
-  useCreateBankAccountMutation,
-} from "@/api/sellerApiCalls";
+import { useCreateBankAccountMutation } from "@/api/sellerApiCalls";
 import { ICreateBankDetails, ICreateSellerInformation } from "@/interface";
 import { toast } from "react-toastify";
 import Loader from "@/component/Loader";
@@ -31,7 +29,7 @@ const CreateAccount = () => {
     shopName: "",
     cacNumber: "",
     documentType: "",
-    document: "",
+    documentNumber: "",
     phoneNumber: "",
     accountType: "INDIVIDUAL",
   });
@@ -57,40 +55,69 @@ const CreateAccount = () => {
     setStep(1);
   };
 
-  const handleStep2 = () => {
-    setIsLoading(true);
+  const verifyStep2 = () => {
+    if (formData.managerFullName.length <= 0) {
+      message.error("Please fill in your name");
+      return false;
+    }
+    if (formData.phoneNumber.length <= 0) {
+      message.error("Please enter your phone number");
+      return false;
+    }
+    if (formData.documentType.length <= 0) {
+      message.error("Please select a documnent type");
+      return false;
+    }
+    if (formData.documentNumber.length <= 0) {
+      message.error("Please enter your document number");
+      return false;
+    }
+    if (!image?.name) {
+      message.error("Please upload a file");
+      return false;
+    }
+    return true;
+  };
 
-    let form_data = new FormData();
-    for (let [key, value] of Object.entries(formData)) {
-      form_data.append(key, value.toString());
+  const handleStep2 = () => {
+    const result = verifyStep2();
+
+    if (result) {
+      setIsLoading(true);
+
+      let form_data = new FormData();
+      for (let [key, value] of Object.entries(formData)) {
+        form_data.append(key, value.toString());
+      }
+
+      form_data.append("documentImage", image);
+
+      API.post("/seller", form_data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+        .then(() => {
+          Swal.fire({
+            title: "Success!",
+            text: "Account information updated successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          }).then(() => {
+            setStep(2);
+          });
+        })
+        .catch((err: any) => {
+          toast.error(
+            err?.data?.message ||
+              "Error updating your account information, please try again later"
+          );
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
 
-    form_data.append("businessImage", image);
-
-    API.post("/seller", form_data, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    })
-      .then(() => {
-        Swal.fire({
-          title: "Success!",
-          text: "Account information updated successfully",
-          icon: "success",
-          confirmButtonText: "Ok",
-        }).then(() => {
-          setStep(2);
-        });
-      })
-      .catch((err: any) => {
-        toast.error(
-          err?.data?.message ||
-            "Error updating your account information, please try again later"
-        );
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
     return;
   };
 
@@ -299,22 +326,22 @@ const CreateAccount2 = ({
     {
       id: 1,
       label: "Driver's License",
-      value: "Driver's License",
+      value: "DRIVER'S_LICENSE",
     },
     {
       id: 2,
       label: "Voter's Card",
-      value: "Voter's Card",
+      value: "VOTER'S_CARD",
     },
     {
       id: 3,
       label: "National ID Card",
-      value: "National ID Card",
+      value: "NIN",
     },
     {
       id: 4,
       label: "International Passport",
-      value: "International Passport",
+      value: "INTL_PASSPORT",
     },
   ];
 
@@ -383,6 +410,15 @@ const CreateAccount2 = ({
             placeholder="Select ID means"
             options={meansOfIdentification}
             defaultValue={formData.documentType}
+          />
+          <FormInput
+            label="Document Number"
+            labelClassName="font-medium text-[16px] !mb-2"
+            placeholder="Enter your document number"
+            required
+            name="documentNumber"
+            defaultValue={formData.documentNumber}
+            onChange={handleChange}
           />
           <FormInput
             label="Upload ID"

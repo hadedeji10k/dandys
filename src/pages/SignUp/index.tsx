@@ -42,9 +42,12 @@ const SignUp = () => {
   } = useGetCurrentUserQuery();
 
   const signUpSchema = Yup.object().shape({
-    fullName: Yup.string()
-      .min(2, "Full name is too short!")
-      .required("Full name required"),
+    firstName: Yup.string()
+      .min(2, "First name is too short!")
+      .required("First name required"),
+    lastName: Yup.string()
+      .min(2, "Last name is too short!")
+      .required("Last name required"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters!")
       .matches(
@@ -59,7 +62,8 @@ const SignUp = () => {
 
   const formik = useFormik({
     initialValues: {
-      fullName: "",
+      firstName: "",
+      lastName: "",
       password: "",
       email: "",
       accountType: "SELLER"
@@ -153,13 +157,22 @@ const SignUp = () => {
 
           <div className="w-full flex flex-col">
             <FormInput
-              name="fullName"
+              name="firstName"
               type="text"
-              label="Full name"
-              placeholder="Enter your full name"
+              label="First name"
+              placeholder="Enter your first name"
               onChange={formik.handleChange}
               icon={<FaUserLarge />}
-              error={formik.touched.email && formik.errors.fullName}
+              error={formik.touched.firstName && formik.errors.firstName}
+            />
+            <FormInput
+              name="lastName"
+              type="text"
+              label="Last name"
+              placeholder="Enter your last name"
+              onChange={formik.handleChange}
+              icon={<FaUserLarge />}
+              error={formik.touched.lastName && formik.errors.lastName}
             />
             <FormInput
               name="email"

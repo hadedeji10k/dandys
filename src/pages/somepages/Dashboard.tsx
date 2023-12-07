@@ -123,12 +123,12 @@ const Dashboard = () => {
               ))
             ) : (
               <div className="min-h-[10vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-                <h2 className="sm:text-[18px] text-sm font-semibold">
-                  No products Yet!
+                <h2 className="text-base font-medium mb-2">
+                  No Top Selling Products Yet!
                 </h2>
-                <p className="text-center sm:text-[14px] text-xs">
-                  Your history will appear here when you have one
-                </p>
+                <button className="text-shades-secondary py-2 px-3 rounded-[10px] text-[14px] font-normal border border-shades-secondary hover:bg-shades-secondary hover:text-white transition-all ease-in-out flex flex-row items-center gap-x-2">
+                  Add Product to Inventory
+                </button>
               </div>
             )}
           </div>
@@ -165,12 +165,9 @@ const Dashboard = () => {
               ))
             ) : (
               <div className="min-h-[10vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-                <h2 className="sm:text-[18px] text-sm font-semibold">
-                  No saved items yet!
+                <h2 className="sm:text-[18px] text-sm font-semibold mb-2">
+                  No buyers saved items yet!
                 </h2>
-                <p className="text-center sm:text-[14px] text-xs">
-                  Your history will appear here when you have one
-                </p>
               </div>
             )}
           </div>
@@ -248,7 +245,7 @@ const Dashboard = () => {
             </div>
           ) : (
             <div className="min-h-[10vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-              <h2 className="sm:text-[18px] text-sm font-semibold">
+              <h2 className="sm:text-[18px] text-sm font-semibold mb-2">
                 No Payment Yet!
               </h2>
               <p className="text-center sm:text-[14px] text-xs">
@@ -321,7 +318,7 @@ const Dashboard = () => {
             </div>
           ) : (
             <div className="min-h-[10vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-              <h2 className="sm:text-[18px] text-sm font-semibold">
+              <h2 className="sm:text-[18px] text-sm font-semibold mb-2">
                 No Orders Yet!
               </h2>
               <p className="text-center sm:text-[14px] text-xs">

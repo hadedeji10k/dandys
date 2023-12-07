@@ -311,12 +311,12 @@ const ProfilePop = () => {
         >
           Preferences
         </div>
-        <div className="w-full py-5 md:pl-8 pl-5 pr-3 font-medium text-base hover:bg-shades-primary/5 text-shades-primary">
+        <div className="w-full py-5 md:pl-8 pl-5 pr-3 font-medium text-base hover:bg-shades-primary/5">
           Help center
         </div>
         <div
           onClick={() => logout()}
-          className="w-full py-5 md:pl-8 pl-5 pr-3 font-medium text-base hover:bg-shades-primary/5"
+          className="w-full py-5 md:pl-8 pl-5 pr-3 font-medium text-base hover:bg-shades-primary/5 text-shades-primary"
         >
           Log out
         </div>

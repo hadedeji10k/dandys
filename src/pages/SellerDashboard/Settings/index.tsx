@@ -3,7 +3,7 @@ import Plan from "./Plan";
 import Billing from "./Billing";
 // import Payment from "./Payment";
 import StoreDetails from "./StoreDetails";
-import { useGetSellerSubscriptionDetailsQuery } from "@/api/sellerApiCalls";
+import { useGetSellerInformationQuery, useGetSellerSubscriptionDetailsQuery } from "@/api/sellerApiCalls";
 import { ISubscriptionDetails } from "@/interface";
 
 const Menu = [
@@ -41,13 +41,19 @@ const Settings = () => {
       remainingDays: 0,
     });
 
+    const [sellerInformation, setSellerInformation] = useState()
+
   const { data: fetchedData } = useGetSellerSubscriptionDetailsQuery();
+  const { data: sellerInfo } = useGetSellerInformationQuery();
 
   useEffect(() => {
     if (fetchedData?.data) {
       setSubscriptionDetails(fetchedData?.data);
     }
-  }, [subscriptionDetails]);
+    if (sellerInfo?.data) {
+      setSellerInformation(sellerInfo?.data);
+    }
+  }, [subscriptionDetails, sellerInfo]);
 
   const handleTabChange = (id: number) => {
     const newMenu = menu.map((item) => {

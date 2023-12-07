@@ -1,6 +1,9 @@
+import { useAppSelector } from "@/api/hook";
 import Image from "@/assets/avatar.png";
 
 const StoreDetails = () => {
+  const user = useAppSelector((state) => state.user.user);
+
   return (
     <div className="w-full mx-auto mt-6">
       <div className="flex flex-col min-w-0 break-words w-full mb-6 rounded-lg">
@@ -9,7 +12,7 @@ const StoreDetails = () => {
             <div className="flex flex-row gap-2">
               <img src={Image} alt="" className="w-[80px] h-[80x] rounded-md" />
               <div className="flex flex-col gap-2">
-                <h6 className="text-xl font-semibold">Hello3vans Store</h6>
+                <h6 className="text-xl font-semibold">{}</h6>
                 <h4 className="text-shades-primary bg-shades-primary/30 px-3 py-2 rounded-md">
                   Basic Plan
                 </h4>

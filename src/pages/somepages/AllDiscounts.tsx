@@ -144,7 +144,7 @@ const AllDiscounts = () => {
           </div>
         ) : (
           <div className="min-h-[30vh] w-full flex flex-col items-center justify-center bg-white rounded-lg mt-3">
-            <h2 className="text-[18px] font-semibold">
+            <h2 className="text-[18px] font-semibold mb-2">
               No Discount Added Yet!
             </h2>
             <p>Your history will appear here when you have one</p>

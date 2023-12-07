@@ -119,6 +119,12 @@ export const sellerApi = createApi({
         body,
       }),
     }),
+    getSellerInformation: builder.query<any, void>({
+      query: () => ({
+        url: `/seller`,
+        method: "GET"
+      }),
+    }),
 
     // User
     getCurrentUser: builder.query<void, void>({
@@ -291,7 +297,10 @@ export const {
 
   // SELLER
   useSellerCreateInformationMutation,
+  useGetSellerInformationQuery,
   useGetSellerDashboardQuery,
+
+  // Order
   useGetOrderByIdQuery,
   useGetSellerOrdersQuery,
   useGetSellerCustomersQuery,
