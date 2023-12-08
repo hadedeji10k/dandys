@@ -6,17 +6,17 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import Button from "@/component/Button";
 import { RiMastercardLine } from "react-icons/ri";
-import { ISubscriptionDetails } from "@/interface";
+import { ISellerInformation } from "@/interface";
 import { PlanAmount } from "@/utils/constant";
 import { formatDate } from "@/utils/helpers";
 
 interface IProps {
-  subscriptionDetails: ISubscriptionDetails;
+  sellerInformation: ISellerInformation;
   handleTabChange: (id: number) => void;
 }
 
 
-const Billing = ({ subscriptionDetails, handleTabChange }: IProps) => {
+const Billing = ({ sellerInformation, handleTabChange }: IProps) => {
   return (
     <div>
       <div className="w-full flex flex-row justify-betweeen gap-3">
@@ -24,10 +24,10 @@ const Billing = ({ subscriptionDetails, handleTabChange }: IProps) => {
           <div className="flex flex-row gap-2 flex-wrap items-center">
             <h3 className="text-[18px] font-semibold">Billing</h3>
             <h4 className="text-[14px] font-semibold">
-              {subscriptionDetails?.currentPlan} plan
+              {sellerInformation?.currentPlan} plan
             </h4>
             <div className="px-3 py-0.5 rounded-[20px] text-shades-primary bg-shades-primary/20 text-[12px]">
-              {subscriptionDetails?.currentPlan === "FREE"
+              {sellerInformation?.currentPlan === "FREE"
                 ? "Trial"
                 : "Monthly"}
             </div>
@@ -38,16 +38,16 @@ const Billing = ({ subscriptionDetails, handleTabChange }: IProps) => {
           </h3>
 
           <h3 className="font-semibold md:text-4xl sm:text-2xl text-lg mb-6 mt-8">
-            {PlanAmount[subscriptionDetails?.currentPlan]}{" "}
+            {PlanAmount[sellerInformation?.currentPlan]}{" "}
             <small className="sm:text-[16px] text-[12px]">/month</small>
           </h3>
 
           <p className="">
             Last payment Date:{" "}
-            {formatDate(subscriptionDetails?.lastSubscriptionDate)}
+            {formatDate(sellerInformation?.lastSubscriptionDate)}
           </p>
           <p className="">
-            Expiry Date: {formatDate(subscriptionDetails?.expiryDate)}
+            Expiry Date: {formatDate(sellerInformation?.expiryDate)}
           </p>
 
           <h4

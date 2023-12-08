@@ -36,7 +36,17 @@ export interface ICustomer {
   amountOfTotalOrders: number;
 }
 
-export interface ISubscriptionDetails {
+export interface ISellerInformation {
+  managerFullName: string;
+  businessImage: string;
+  shopName: string;
+  cacNumber: string;
+  documentNumber: string;
+  documentType: string;
+  documentVerified: boolean;
+  documentImageUrl: string;
+  phoneNumber: string;
+  accountType: string;
   isActive: boolean;
   currentPlan: "FREE" | "BASIC" | "PREMIUM";
   lastSubscriptionDate: string | Date;

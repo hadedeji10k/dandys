@@ -3,8 +3,10 @@ import Plan from "./Plan";
 import Billing from "./Billing";
 // import Payment from "./Payment";
 import StoreDetails from "./StoreDetails";
-import { useGetSellerInformationQuery, useGetSellerSubscriptionDetailsQuery } from "@/api/sellerApiCalls";
-import { ISubscriptionDetails } from "@/interface";
+import {
+  useGetSellerInformationQuery,
+} from "@/api/sellerApiCalls";
+import { ISellerInformation } from "@/interface";
 
 const Menu = [
   {
@@ -32,8 +34,18 @@ const Menu = [
 const Settings = () => {
   const [menu, setMenu] = useState(Menu);
 
-  const [subscriptionDetails, setSubscriptionDetails] =
-    useState<ISubscriptionDetails>({
+  const [sellerInformation, setSellerInformation] =
+    useState<ISellerInformation>({
+      managerFullName: "",
+      businessImage: "",
+      shopName: "",
+      cacNumber: "",
+      documentNumber: "",
+      documentType: "",
+      documentVerified: false,
+      documentImageUrl: "",
+      phoneNumber: "",
+      accountType: "",
       isActive: false,
       currentPlan: "FREE",
       lastSubscriptionDate: new Date(),
@@ -41,19 +53,13 @@ const Settings = () => {
       remainingDays: 0,
     });
 
-    const [sellerInformation, setSellerInformation] = useState()
-
-  const { data: fetchedData } = useGetSellerSubscriptionDetailsQuery();
   const { data: sellerInfo } = useGetSellerInformationQuery();
 
   useEffect(() => {
-    if (fetchedData?.data) {
-      setSubscriptionDetails(fetchedData?.data);
-    }
     if (sellerInfo?.data) {
       setSellerInformation(sellerInfo?.data);
     }
-  }, [subscriptionDetails, sellerInfo]);
+  }, [sellerInfo]);
 
   const handleTabChange = (id: number) => {
     const newMenu = menu.map((item) => {
@@ -87,12 +93,15 @@ const Settings = () => {
 
       <div className="w-full">
         {active.id === 1 ? (
-          <StoreDetails />
+          <StoreDetails
+            sellerInformation={sellerInformation}
+            handleTabChange={handleTabChange}
+          />
         ) : active.id === 2 ? (
-          <Plan subscriptionDetails={subscriptionDetails} />
+          <Plan sellerInformation={sellerInformation} />
         ) : active.id === 3 ? (
           <Billing
-            subscriptionDetails={subscriptionDetails}
+            sellerInformation={sellerInformation}
             handleTabChange={handleTabChange}
           />
         ) : null}

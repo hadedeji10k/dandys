@@ -1,6 +1,6 @@
 import Button from "@/component/Button";
 import { usePaystackPayment } from "react-paystack";
-import { ISubscriptionDetails } from "@/interface";
+import { ISellerInformation } from "@/interface";
 import { PlanAmount, paystackPublicKey } from "@/utils/constant";
 import { useAppSelector } from "@/api/hook";
 import { useState } from "react";
@@ -9,10 +9,10 @@ import { useCreateTransactionMutation } from "@/api/sellerApiCalls";
 import Loader from "@/component/Loader";
 
 interface IProps {
-  subscriptionDetails: ISubscriptionDetails;
+  sellerInformation: ISellerInformation;
 }
 
-const Plan = ({ subscriptionDetails }: IProps) => {
+const Plan = ({ sellerInformation }: IProps) => {
   const user = useAppSelector((state) => state.user.user);
 
   const [createTransaction] = useCreateTransactionMutation();
@@ -24,7 +24,6 @@ const Plan = ({ subscriptionDetails }: IProps) => {
   }: {
     plan: "FREE" | "BASIC" | "PREMIUM";
   }) => {
-
     const config = {
       reference: new Date().getTime().toString(),
       email: "user@example.com",
@@ -39,18 +38,18 @@ const Plan = ({ subscriptionDetails }: IProps) => {
     };
 
     const onSuccess = (reference: any) => {
-      console.log("Ref>>", reference)
+      console.log("Ref>>", reference);
       window.location.reload();
     };
 
     const onClose = () => {
-      window.location.reload()
+      window.location.reload();
     };
 
     const paystackPayment = usePaystackPayment(config);
 
     const createNewTransaction = () => {
-      setIsLoading(true)
+      setIsLoading(true);
       createTransaction({
         reference: config.reference,
         amount: PlanAmount[plan],
@@ -71,7 +70,6 @@ const Plan = ({ subscriptionDetails }: IProps) => {
           setIsLoading(false);
         });
     };
-
 
     return (
       <Button
@@ -102,20 +100,19 @@ const Plan = ({ subscriptionDetails }: IProps) => {
                 <div className="flex flex-row gap-2 flex-wrap items-center">
                   <h3 className="text-[18px] font-semibold">Current plan:</h3>
                   <h4 className="text-[14px]">
-                    {subscriptionDetails?.currentPlan}
+                    {sellerInformation?.currentPlan}
                   </h4>
 
                   <div className="px-3 py-0.5 rounded-[20px] text-shades-primary bg-shades-primary/20 text-[12px]">
-                    {subscriptionDetails?.currentPlan === "FREE"
+                    {sellerInformation?.currentPlan === "FREE"
                       ? "Trial"
                       : "Monthly"}
                   </div>
                 </div>
-                {subscriptionDetails?.currentPlan === "FREE" && (
+                {sellerInformation?.currentPlan === "FREE" && (
                   <p className="text-status-danger text-[12px] font-medium">
-                    Your trial has {subscriptionDetails?.remainingDays} day
-                    {subscriptionDetails?.remainingDays > 1 ? "s" : ""}{" "}
-                    remaining
+                    Your trial has {sellerInformation?.remainingDays} day
+                    {sellerInformation?.remainingDays > 1 ? "s" : ""} remaining
                   </p>
                 )}
               </div>

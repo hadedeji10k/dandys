@@ -12,7 +12,6 @@ import {
   ISellerPreference,
   ICreateSellerInformation,
   ICreateBankDetails,
-  ISubscriptionDetails,
   IVerifyOTP,
   IResendOTP,
   IForgotPassword,
@@ -259,14 +258,6 @@ export const sellerApi = createApi({
       }),
     }),
 
-    // SUBSCRIPTION
-    getSellerSubscriptionDetails: builder.query<
-      { data: ISubscriptionDetails },
-      void
-    >({
-      query: () => `/seller/subscription`,
-    }),
-
     // TRANSACTION
     createTransaction: builder.mutation<any, ICreateTransaction>({
       query: (body) => ({
@@ -336,9 +327,6 @@ export const {
   // PREFERENCES
   useGetSellerPreferencesQuery,
   useSetSellerPreferencesMutation,
-
-  // SUBSCRIPTION
-  useGetSellerSubscriptionDetailsQuery,
 
   // TRANSACTION
   useCreateTransactionMutation,
