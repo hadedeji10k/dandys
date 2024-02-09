@@ -189,7 +189,7 @@ const Profile = () => {
         </div>
 
         <Modal isOpen={modal} handleClose={handleModal}>
-          <EditAccountInformation handleClose={handleModal} />
+          <EditAccountInformation />
         </Modal>
 
         <Modal isOpen={deleteModal} handleClose={handleDeleteModal}>
@@ -204,7 +204,7 @@ const Profile = () => {
   );
 };
 
-const EditAccountInformation = ({ handleClose }: { handleClose: any }) => {
+const EditAccountInformation = () => {
   const user = useAppSelector((state) => state.user.user);
 
   const dispatch = useAppDispatch();

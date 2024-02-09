@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import ProductImage from "@/assets/image.jpg";
 import { useEffect, useState } from "react";
 import { IProduct } from "@/interface";
 import {
