@@ -139,6 +139,9 @@ export const sellerApi = createApi({
     getSellerProducts: builder.query<void, void>({
       query: () => `/products/seller-products`,
     }),
+    getSellerProductById: builder.query<void, string>({
+      query: (id) => `/products/seller/${id}`,
+    }),
     getProductById: builder.query<void, string>({
       query: (id) => `/products/${id}`,
     }),
@@ -163,7 +166,7 @@ export const sellerApi = createApi({
     }),
     updateProduct: builder.mutation<
       any,
-      { payload: Partial<ICreateProduct>; id: string }
+      { payload: any; id: string }
     >({
       query: (body) => ({
         url: `/products/${body.id}`,
@@ -306,6 +309,7 @@ export const {
   useDeleteProductMutation,
   useDeleteProductByCategoryMutation,
   useGetProductByIdQuery,
+  useGetSellerProductByIdQuery,
   useGetSellerProductsByCategoryIdQuery,
   useGetProductsByCategoryIdQuery,
   useGetCategoryProductsQuery,

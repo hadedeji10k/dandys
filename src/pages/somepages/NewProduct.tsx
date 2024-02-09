@@ -53,18 +53,33 @@ const NewProduct = () => {
   const handleRemoveImage = (id: number) => {
     const newImageUrls = imageUrls.filter((_, index) => index !== id);
     setImageUrls(newImageUrls);
-    const newImages = images.filter((item: any, index: number) => {
-      if (index === id) {
-        return;
-      } else {
-        return item;
-      }
-    });
+    const newImages = images.filter((_: any, index: number) => index !== id);
+
     setImages(newImages);
   };
 
   const handleAddImages = (e: any) => {
-    setImages([...images, ...e.target.files]);
+    const newFiles = e.target.files;
+    let newFilesToAdd = [];
+    for (let i = 0; i < newFiles.length; i++) {
+      const element = newFiles[i];
+      if (element.size > 1024 * 1024 * 2) {
+        toast.error(`${element.name} is larger than 2MB`);
+      } else {
+        newFilesToAdd.push(element);
+      }
+    }
+
+    (hiddenFileInput as any).current.value = null;
+
+    const allImages = [...images, ...newFilesToAdd];
+    if (allImages.length > 6) {
+      toast.error("You can only upload up to 6 images.");
+      const returned = allImages.slice(0, 6);
+      setImages(returned);
+    } else {
+      setImages(allImages);
+    }
   };
 
   const handleClick = () => {
@@ -79,7 +94,7 @@ const NewProduct = () => {
     vendor: Yup.string(),
     expiryDate: Yup.string().required("Expiry date is required"),
     manufactureDate: Yup.string().required("Manufacture date is required"),
-    isoNumber: Yup.string().required("ISO number is required"),
+    isoNumber: Yup.string(),
     nafdacNumber: Yup.string().required("NAFDAC number is required"),
     height: Yup.string(),
     weight: Yup.string(),
@@ -289,18 +304,6 @@ const NewProduct = () => {
                 defaultValue={formik.values.description}
               />
               <FormInput
-                name="expiryDate"
-                type="date"
-                onChange={(value) => formik.setFieldValue("expiryDate", value)}
-                onBlur={formik.handleBlur}
-                required
-                label="Product expiry date"
-                placeholder="Enter date"
-                error={formik.touched.expiryDate && formik.errors.expiryDate}
-                startDate={formik.values.manufactureDate}
-                defaultValue={formik.values.expiryDate}
-              />
-              <FormInput
                 name="manufactureDate"
                 type="date"
                 onChange={(value) =>
@@ -317,10 +320,21 @@ const NewProduct = () => {
                 defaultValue={formik.values.manufactureDate}
               />
               <FormInput
+                name="expiryDate"
+                type="date"
+                onChange={(value) => formik.setFieldValue("expiryDate", value)}
+                onBlur={formik.handleBlur}
+                required
+                label="Product expiry date"
+                placeholder="Enter date"
+                error={formik.touched.expiryDate && formik.errors.expiryDate}
+                startDate={formik.values.manufactureDate}
+                defaultValue={formik.values.expiryDate}
+              />
+              <FormInput
                 name="isoNumber"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                required
                 label="ISO certification number"
                 placeholder="Enter number"
                 error={formik.touched.isoNumber && formik.errors.isoNumber}
@@ -330,8 +344,7 @@ const NewProduct = () => {
                 name="nafdacNumber"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                required
-                label="NAFDAC registration number *"
+                label="NAFDAC registration number"
                 placeholder="Enter number"
                 error={
                   formik.touched.nafdacNumber && formik.errors.nafdacNumber

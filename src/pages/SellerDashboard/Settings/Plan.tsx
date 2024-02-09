@@ -111,8 +111,20 @@ const Plan = ({ sellerInformation }: IProps) => {
                 </div>
                 {sellerInformation?.currentPlan === "FREE" && (
                   <p className="text-status-danger text-[12px] font-medium">
-                    Your trial has {sellerInformation?.remainingDays} day
-                    {sellerInformation?.remainingDays > 1 ? "s" : ""} remaining
+                    {sellerInformation?.remainingDays < 0 &&
+                    sellerInformation?.currentPlan === "FREE"
+                      ? "Your trial has expired, kindly renew your subscription"
+                      : sellerInformation?.remainingDays < 0
+                      ? "Your plan has expired, kindly renew your subscription"
+                      : sellerInformation?.currentPlan === "FREE"
+                      ? `Your trial has ${
+                          sellerInformation?.remainingDays
+                        } day${
+                          sellerInformation?.remainingDays > 1 ? "s" : ""
+                        } remaining`
+                      : `Your plan has ${sellerInformation?.remainingDays} day${
+                          sellerInformation?.remainingDays > 1 ? "s" : ""
+                        } remaining`}
                   </p>
                 )}
               </div>

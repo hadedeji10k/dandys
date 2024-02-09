@@ -120,7 +120,7 @@ const FormInput = ({
           <DatePicker
             className={`resize-none no_scrollbar bg-transparent text-[14px] !border-none hover:!border-none focus:!border-none !shadow-none hover:!shadow-none focus:!shadow-none focus:!outline-none w-full text-[#666365]`}
             onChange={handleDateChange}
-            defaultValue={defaultValue && dayjs(defaultValue) as any}
+            value={defaultValue && dayjs(defaultValue) as any}
             placeholder={placeholder}
             disabledDate={disabledDate}
           />

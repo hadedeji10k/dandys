@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack, IoMdAddCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
-import Image from "@/assets/image.jpg";
 import FormInput from "@/component/FormInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
   useGetCategoriesQuery,
-  useGetProductByIdQuery,
-  useUpdateProductMutation,
+  useGetSellerProductByIdQuery,
 } from "@/api/sellerApiCalls";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import FormSelect from "@/component/FormSelect";
 import Loader from "@/component/Loader";
+import API from "@/utils/axiosInstance";
 
 interface ICategory {
   label: string;
@@ -29,8 +28,8 @@ const validationSchema = Yup.object().shape({
   vendor: Yup.string(),
   expiryDate: Yup.string().required("Expiry date is required"),
   manufactureDate: Yup.string().required("Manufacture date is required"),
-  isoNumber: Yup.string().required("ISO number is required"),
-  nafdacNumber: Yup.string().required("NAFDAC number is required"),
+  isoNumber: Yup.string(),
+  nafdacNumber: Yup.string(),
   height: Yup.string(),
   weight: Yup.string(),
   quantity: Yup.number().moreThan(0).required("Quantity is required"),
@@ -48,15 +47,26 @@ const EditProduct = () => {
 
   const { id } = useParams();
 
-  const [count, setCount] = useState<number[]>([]);
+  const [removedImages, setRemovedImages] = useState<any>([]);
+
+  const [images, setImages] = useState<any[]>([]);
 
   const [categories, setCategories] = useState<ICategory[]>([]);
+
+  const hiddenFileInput = useRef(null);
+
   const { data: fetchedCategories, isLoading: categoriesLoading } =
     useGetCategoriesQuery();
 
   const { data: fetchedProduct, isLoading: productLoading } =
-    useGetProductByIdQuery(id!);
-  const [updateProduct] = useUpdateProductMutation();
+    useGetSellerProductByIdQuery(id!);
+
+  useEffect(() => {
+    const productImages = (fetchedProduct as any)?.data?.productImage;
+    if (Array.isArray(productImages)) {
+      setImages(productImages);
+    }
+  }, [fetchedProduct]);
 
   useEffect(() => {
     const mapped = (fetchedCategories as any)?.data?.map((item: any) => {
@@ -92,8 +102,34 @@ const EditProduct = () => {
     },
     validationSchema,
     onSubmit: (values, { setSubmitting }) => {
-      updateProduct({ payload: values, id: id! })
-        .unwrap()
+      if (images.length < 1) {
+        toast.error("Product Image is required.");
+        setSubmitting(false);
+        return;
+      }
+
+      let form_data = new FormData();
+      for (let [key, value] of Object.entries(values)) {
+        form_data.append(key, value.toString());
+      }
+
+      const newImages = images.filter((item) => item.id === null);
+      for (let i = 0; i < newImages.length; i++) {
+        form_data.append("images", newImages[i]);
+      }
+
+      console.log("removd image>>", removedImages);
+
+      // for (let i = 0; i < removedImages.length; i++) {
+      //   form_data.append("removedImages", removedImages[i]);
+      // }
+      form_data.append("removedImages", removedImages);
+
+      API.put(`/products/${id}`, form_data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
         .then(() => {
           Swal.fire({
             title: "Success!",
@@ -145,12 +181,45 @@ const EditProduct = () => {
     });
   }, [fetchedProduct]);
 
-  const handleRemoveImage = (id: number) => {
-    const newCount = count.filter((_, index) => index !== id);
-    setCount(newCount as any);
+  const handleClick = () => {
+    (hiddenFileInput?.current as any).click();
   };
-  const handleAddImage = () => {
-    setCount([...count, count.length + 1]);
+
+  const handleRemoveImage = (id: number) => {
+    const image = images.find((_, index) => index === id);
+    if (image.id !== null) {
+      console.log([...removedImages, image]);
+      setRemovedImages([...removedImages, image]);
+    }
+    const newImages = images.filter((_: any, index: number) => index !== id);
+    setImages(newImages);
+  };
+
+  const handleAddImages = (e: any) => {
+    const newFiles = e.target.files;
+    let newFilesToAdd = [];
+    for (let i = 0; i < newFiles.length; i++) {
+      const element = newFiles[i];
+      if (element.size > 1024 * 1024 * 2) {
+        toast.error(`${element.name} is larger than 2MB`);
+      } else {
+        newFilesToAdd.push({
+          id: null,
+          filename: element.name,
+          imageUrl: URL.createObjectURL(element),
+        });
+      }
+    }
+    (hiddenFileInput as any).current.value = null;
+
+    const allImages = [...images, ...newFilesToAdd];
+    if (allImages.length > 6) {
+      toast.error("You can only upload up to 6 images.");
+      const returned = allImages.slice(0, 6);
+      setImages(returned);
+    } else {
+      setImages(allImages);
+    }
   };
 
   return categoriesLoading || productLoading ? (
@@ -195,13 +264,13 @@ const EditProduct = () => {
           <div className="flex-1 w-[50%] bg-white rounded-lg p-4">
             {/* Product Images */}
             <div className="w-full flex flex-row flex-wrap mb-6 gap-3">
-              {count.map((_, index) => (
+              {images.map((image, index) => (
                 <div
                   key={index}
                   className="w-[95px] h-[95px] rounded-md relative"
                 >
                   <img
-                    src={Image}
+                    src={image?.imageUrl}
                     alt=""
                     className="w-full h-full rounded-md"
                   />
@@ -216,12 +285,20 @@ const EditProduct = () => {
 
               <div
                 className="w-[95px] h-[95px] rounded-md flex items-center justify-center bg-shades-lightGray/50 cursor-pointer"
-                onClick={() => handleAddImage()}
+                onClick={handleClick}
               >
                 <span className="text-shades-secondary">
                   <IoMdAddCircle size="3rem" />
                 </span>
               </div>
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                ref={hiddenFileInput}
+                onChange={handleAddImages}
+                className="hidden"
+              />
             </div>
             {/* Form */}
             <div>
@@ -276,20 +353,6 @@ const EditProduct = () => {
                 error={formik.touched.description && formik.errors.description}
               />
               <FormInput
-                name="expiryDate"
-                type="date"
-                onChange={(value) => formik.setFieldValue("expiryDate", value)}
-                onBlur={formik.handleBlur}
-                defaultValue={new Date(
-                  formik.values.expiryDate || ""
-                )?.toString()}
-                required
-                label="Product expiry date"
-                placeholder="Enter date"
-                error={formik.touched.expiryDate && formik.errors.expiryDate}
-                startDate={formik.values.manufactureDate}
-              />
-              <FormInput
                 name="manufactureDate"
                 type="date"
                 onChange={(value) =>
@@ -308,11 +371,24 @@ const EditProduct = () => {
                 }
               />
               <FormInput
+                name="expiryDate"
+                type="date"
+                onChange={(value) => formik.setFieldValue("expiryDate", value)}
+                onBlur={formik.handleBlur}
+                defaultValue={new Date(
+                  formik.values.expiryDate || ""
+                )?.toString()}
+                required
+                label="Product expiry date"
+                placeholder="Enter date"
+                error={formik.touched.expiryDate && formik.errors.expiryDate}
+                startDate={formik.values.manufactureDate}
+              />
+              <FormInput
                 name="isoNumber"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 defaultValue={formik.values.isoNumber}
-                required
                 label="ISO certification number"
                 placeholder="Enter number"
                 error={formik.touched.isoNumber && formik.errors.isoNumber}
@@ -322,7 +398,6 @@ const EditProduct = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 defaultValue={formik.values.nafdacNumber}
-                required
                 label="NAFDAC registration number"
                 placeholder="Enter number"
                 error={

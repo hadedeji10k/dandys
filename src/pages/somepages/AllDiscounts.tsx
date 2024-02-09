@@ -19,7 +19,13 @@ const AllDiscounts = () => {
   const navigate = useNavigate();
   const [discounts, setDiscounts] = useState<IDiscount[]>([]);
 
-  const { data: fetchedDiscounts, isLoading, error: _ } = useGetSellerDiscountsQuery();
+  const {
+    data: fetchedDiscounts,
+    isLoading,
+    error: _,
+  } = useGetSellerDiscountsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   
   useEffect(() => {
       setDiscounts((fetchedDiscounts as any)?.data);

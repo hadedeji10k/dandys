@@ -12,7 +12,9 @@ import { formatDate } from "@/utils/helpers";
 const OrderPage = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
 
-  const { data: fetchedOrders } = useGetSellerOrdersQuery();
+  const { data: fetchedOrders } = useGetSellerOrdersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   useEffect(() => {
     setOrders((fetchedOrders as any)?.data?.result);

@@ -92,6 +92,8 @@ const Profile = () => {
     }
   };
 
+  console.log("Useer>>")
+
   return (
     <Loader spinning={isLoading}>
       <div className="w-full p-4">
@@ -115,13 +117,13 @@ const Profile = () => {
                 className="max-w-full flex flex-1"
                 disabled
                 label="First name"
-                defaultValue={user?.fullName?.split(" ")[0]}
+                defaultValue={user?.firstName || user?.fullName?.split(" ")[0]}
               />
               <FormInput
                 className="max-w-full flex flex-1"
                 disabled
                 label="Last name"
-                defaultValue={user?.fullName?.split(" ")[0]}
+                defaultValue={user?.lastName || user?.fullName?.split(" ")[1]}
               />
             </div>
             <div className="w-full flex sm:flex-row flex-col flex-wrap justify-between gap-x-4">
@@ -226,7 +228,7 @@ const EditAccountInformation = ({ handleClose }: { handleClose: any }) => {
       lastName: user?.lastName || "",
     },
     validationSchema: updateUserSchema,
-    onSubmit: (values, { setSubmitting, resetForm }) => {
+    onSubmit: (values, { setSubmitting }) => {
       updateUser(values)
         .unwrap()
         .then(() => {
@@ -242,13 +244,7 @@ const EditAccountInformation = ({ handleClose }: { handleClose: any }) => {
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed || result.isDenied || result.isDismissed) {
-              resetForm({
-                values: {
-                  firstName: user?.firstName || "",
-                  lastName: user?.lastName || "",
-                },
-              });
-              handleClose();
+              window.location.reload();
             }
           });
         })

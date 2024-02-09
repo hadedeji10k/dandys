@@ -24,7 +24,10 @@ const AllProduct = () => {
 
   const [products, setProducts] = useState<IProduct[]>([]);
 
-  const { data: fetchedProducts, isLoading: isProductLoading } = useGetSellerProductsQuery();
+  const { data: fetchedProducts, isLoading: isProductLoading } =
+    useGetSellerProductsQuery(undefined, {
+      refetchOnMountOrArgChange: true,
+    });
   const { data: fetchedProductsByCategory, isLoading: isCategoryProductLoading } = useGetSellerProductsByCategoryIdQuery(categoryId!);
   
   useEffect(() => {

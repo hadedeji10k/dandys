@@ -92,7 +92,7 @@ const ProductPage = () => {
         <div className="w-full flex flex-row justify-between gap-x-10 bg-white p-4 rounded-lg mt-3">
           <div className="max-w-[380px] max-h-[380px] rounded-lg">
             <img
-              src={ProductImage}
+              src={product?.productImage?.[0]?.imageUrl}
               alt=""
               className="w-full h-full rounded-lg"
             />

@@ -74,8 +74,8 @@ const NewDiscount = () => {
       percentage: 0,
       discountValueType: "FIXED_AMOUNT",
       numberOfDiscounts: "",
-      startDate: "",
-      endDate: "",
+      startDate: new Date().toString(),
+      endDate: new Date().toString(),
       type: "",
       noOfBuy: 0,
       noOfGet: 0,
@@ -114,7 +114,7 @@ const NewDiscount = () => {
         if (error) return;
       }
 
-      updateDiscount(values as any)
+      updateDiscount({ payload: values, id: id! })
         .unwrap()
         .then(() => {
           Swal.fire({
@@ -386,10 +386,12 @@ const NewDiscount = () => {
               type="date"
               onChange={(value) => formik.setFieldValue("startDate", value)}
               onBlur={formik.handleBlur}
+              defaultValue={new Date(
+                formik.values.startDate || ""
+              )?.toString()}
               required
               label="Start date"
               placeholder="Enter date"
-              defaultValue={formik.values.startDate}
               error={formik.touched.startDate && formik.errors.startDate}
             />
             <FormInput
@@ -397,11 +399,14 @@ const NewDiscount = () => {
               type="date"
               onChange={(value) => formik.setFieldValue("endDate", value)}
               onBlur={formik.handleBlur}
+              defaultValue={new Date(
+                formik.values.endDate || ""
+              )?.toString()}
               required
               label="End date"
               placeholder="Enter date"
-              defaultValue={formik.values.endDate}
               error={formik.touched.endDate && formik.errors.endDate}
+              startDate={formik.values.startDate}
             />
           </div>
         </div>
