@@ -269,6 +269,9 @@ export const sellerApi = createApi({
         body,
       }),
     }),
+    getTransactions: builder.query<{ data: any }, void>({
+      query: () => `/transaction/seller`,
+    }),
   }),
 });
 
@@ -334,4 +337,5 @@ export const {
 
   // TRANSACTION
   useCreateTransactionMutation,
+  useGetTransactionsQuery,
 } = sellerApi;

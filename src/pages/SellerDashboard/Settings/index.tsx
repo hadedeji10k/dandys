@@ -5,6 +5,7 @@ import Billing from "./Billing";
 import StoreDetails from "./StoreDetails";
 import {
   useGetSellerInformationQuery,
+  useGetTransactionsQuery
 } from "@/api/sellerApiCalls";
 import { ISellerInformation } from "@/interface";
 
@@ -33,6 +34,7 @@ const Menu = [
 
 const Settings = () => {
   const [menu, setMenu] = useState(Menu);
+  const [transactions, setTransactions] = useState<any[]>([]);
 
   const [sellerInformation, setSellerInformation] =
     useState<ISellerInformation>({
@@ -54,12 +56,19 @@ const Settings = () => {
     });
 
   const { data: sellerInfo } = useGetSellerInformationQuery();
+  const { data: sellerTransaction } = useGetTransactionsQuery();
 
   useEffect(() => {
     if (sellerInfo?.data) {
       setSellerInformation(sellerInfo?.data);
     }
   }, [sellerInfo]);
+
+  useEffect(() => {
+    if (sellerTransaction?.data) {
+      setTransactions(sellerTransaction?.data);
+    }
+  }, [sellerTransaction]);
 
   const handleTabChange = (id: number) => {
     const newMenu = menu.map((item) => {
@@ -102,6 +111,7 @@ const Settings = () => {
         ) : active.id === 3 ? (
           <Billing
             sellerInformation={sellerInformation}
+            transactions={transactions}
             handleTabChange={handleTabChange}
           />
         ) : null}

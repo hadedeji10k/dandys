@@ -12,11 +12,17 @@ import { formatDate } from "@/utils/helpers";
 
 interface IProps {
   sellerInformation: ISellerInformation;
+  transactions: any;
   handleTabChange: (id: number) => void;
 }
 
 
-const Billing = ({ sellerInformation, handleTabChange }: IProps) => {
+const Billing = ({
+  sellerInformation,
+  handleTabChange,
+  transactions,
+}: IProps) => {
+  console.log("Hello>.", transactions)
   return (
     <div>
       <div className="w-full flex flex-row justify-betweeen gap-3">
@@ -27,9 +33,7 @@ const Billing = ({ sellerInformation, handleTabChange }: IProps) => {
               {sellerInformation?.currentPlan} plan
             </h4>
             <div className="px-3 py-0.5 rounded-[20px] text-shades-primary bg-shades-primary/20 text-[12px]">
-              {sellerInformation?.currentPlan === "FREE"
-                ? "Trial"
-                : "Monthly"}
+              {sellerInformation?.currentPlan === "FREE" ? "Trial" : "Monthly"}
             </div>
           </div>
 
@@ -62,11 +66,11 @@ const Billing = ({ sellerInformation, handleTabChange }: IProps) => {
             <h3 className="text-[18px] font-semibold">Payment method</h3>
           </div>
 
-          <h3 className="text-[14px] mt-2 font-light">
+          {/* <h3 className="text-[14px] mt-2 font-light">
             Change your payment method
-          </h3>
+          </h3> */}
 
-          <div className="flex flex-col mt-6 border border-shades-lightGray rounded-lg p-3">
+          {/* <div className="flex flex-col mt-6 border border-shades-lightGray rounded-lg p-3">
             <div className="flex flex-row gap-3">
               <div>
                 <RiMastercardLine size="1.5rem" />
@@ -87,7 +91,7 @@ const Billing = ({ sellerInformation, handleTabChange }: IProps) => {
                 disabled={false}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -140,14 +144,10 @@ const Billing = ({ sellerInformation, handleTabChange }: IProps) => {
             Amount
           </div>
           <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
-            Plan
-          </div>
-
-          <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
-            Reason
-          </div>
-          <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
             Status
+          </div>
+          <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
+            Type
           </div>
           <div className="min-w-[20px] max-w-[20px] w-full flex items-center cursor-pointer">
             <BsThreeDotsVertical />
@@ -155,34 +155,31 @@ const Billing = ({ sellerInformation, handleTabChange }: IProps) => {
         </div>
         {/* body */}
         <div className="w-full">
-          <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-white my-1">
-            <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
-              #12345
-            </div>
-            <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
-              16/10/2023
-            </div>
-            <div className="min-w-[150px] max-w-[150px] w-full flex items-center">
-              Kelvin Mesh
-            </div>
-            <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
-              <span className="py-2 px-2.5 rounded-md bg-shades-lightGreen text-status-success">
-                <Badge status="success" /> Paid
-              </span>
-            </div>
+          {transactions?.map((transaction: any) => (
+            <div className="w-full flex flex-row gap-x-3 justify-between py-3 px-3 bg-shades-white my-1">
+              <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
+                {transaction?.id?.slice(0,8)?.toUpperCase()}
+              </div>
+              <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
+                {formatDate(transaction.createdAt)}
+              </div>
+              <div className="min-w-[150px] max-w-[150px] w-full flex items-center">
+                {transaction.amount?.toLocaleString()}
+              </div>
+              <div className="min-w-[100px] max-w-[100px] w-full flex items-center">
+                <span className="py-2 px-2.5 rounded-md bg-shades-lightGreen text-status-success">
+                  <Badge status="success" /> {transaction?.status}
+                </span>
+              </div>
 
-            <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
-              Plan Upgrade
+              <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
+                {transaction.type}
+              </div>
+              <div className="min-w-[20px] max-w-[20px] w-full flex items-center cursor-pointer">
+                <BsThreeDotsVertical />
+              </div>
             </div>
-            <div className="min-w-[120px] max-w-[120px] w-full flex items-center">
-              <span className="py-2 px-2.5 rounded-md bg-shades-lightGreen text-status-success">
-                <Badge status="success" /> Shipped
-              </span>
-            </div>
-            <div className="min-w-[20px] max-w-[20px] w-full flex items-center cursor-pointer">
-              <BsThreeDotsVertical />
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
